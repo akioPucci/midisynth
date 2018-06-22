@@ -108,6 +108,15 @@ public class Tecla implements KeyListener {
 		case 80:
 			this.note = 28;
 			break;
+		case 91:
+			this.note = 29;
+			break;
+		case 61:
+			this.note = 30;
+			break;
+		case 93:
+			this.note = 31;
+			break;
 		}
 		this.synth = synth;
 
