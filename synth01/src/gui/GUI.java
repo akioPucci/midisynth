@@ -1,11 +1,16 @@
 package gui;
 
 import java.awt.Color;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JButton;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+import java.awt.Dimension;
 
 /**
  * @author Carolina Arenas Okawa
@@ -37,6 +42,7 @@ public class GUI extends JFrame {
         FaSus1 = new JButton();
         SolSus1 = new JButton();
         LaSus1 = new JButton();
+        
         Do1 = new JButton();
         Re1 = new JButton();
         Mi1 = new JButton();
@@ -44,11 +50,13 @@ public class GUI extends JFrame {
         Sol1 = new JButton();
         La1 = new JButton();
         Si1 = new JButton();
+        
         DoSus2 = new JButton();
         ReSus2 = new JButton();
         FaSus2 = new JButton();
         SolSus2 = new JButton();
         LaSus2 = new JButton();
+        
         Do2 = new JButton();
         Re2 = new JButton();
         Mi2 = new JButton();
@@ -56,11 +64,13 @@ public class GUI extends JFrame {
         Sol2 = new JButton();
         La2 = new JButton();
         Si2 = new JButton();
+        
         DoSus3 = new JButton();
         ReSus3 = new JButton();
         FaSus3 = new JButton();
         SolSus3 = new JButton();
         LaSus3 = new JButton();
+        
         Do3 = new JButton();
         Re3 = new JButton();
         Mi3 = new JButton();
@@ -68,164 +78,189 @@ public class GUI extends JFrame {
         Sol3 = new JButton();
         La3 = new JButton();
         Si3 = new JButton();
+        
         Do4 = new JButton();
+        
+        Bar = new JMenuBar();
+        menu = new JMenu();
+        MIDI = new JMenuItem();
+        synth = new JMenuItem();
+        exit = new JMenuItem();
 
-        setSize(new java.awt.Dimension(1807, 1036));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(0, 0, 0));
+        setMinimumSize(new Dimension(1807, 1036));
         setResizable(false);
-        setLayout(null);
+        getContentPane().setLayout(null);
         
         icone = new ImageIcon("src/1.jpg");
         
         DoSus1.setIcon(icone);
-        add(DoSus1);
+        getContentPane().add(DoSus1);
         DoSus1.setBounds(120, 602, 45, 215);
 
         ReSus1.setIcon(icone);
-        add(ReSus1);
+        getContentPane().add(ReSus1);
         ReSus1.setBounds(215, 602, 45, 215);
 
         FaSus1.setIcon(icone);
-        add(FaSus1);
+        getContentPane().add(FaSus1);
         FaSus1.setBounds(340, 602, 45, 215);
 
         SolSus1.setIcon(icone);
-        add(SolSus1);
+        getContentPane().add(SolSus1);
         SolSus1.setBounds(427, 602, 46, 215);
 
         LaSus1.setIcon(icone);
-        add(LaSus1);
+        getContentPane().add(LaSus1);
         LaSus1.setBounds(515, 602, 45, 215);
         
         DoSus2.setIcon(icone);
-        add(DoSus2);
+        getContentPane().add(DoSus2);
         DoSus2.setBounds(640, 602, 45, 215);
 
         ReSus2.setIcon(icone);
-        add(ReSus2);
+        getContentPane().add(ReSus2);
         ReSus2.setBounds(740, 602, 45, 215);
 
         FaSus2.setIcon(icone);
-        add(FaSus2);
+        getContentPane().add(FaSus2);
         FaSus2.setBounds(865, 602, 45, 215);
 
         SolSus2.setIcon(icone);
-        add(SolSus2);
+        getContentPane().add(SolSus2);
         SolSus2.setBounds(952, 602, 45, 215);
 
         LaSus2.setIcon(icone);
-        add(LaSus2);
+        getContentPane().add(LaSus2);
         LaSus2.setBounds(1040, 602, 45, 215);
         
         DoSus3.setIcon(icone);
-        add(DoSus3);
+        getContentPane().add(DoSus3);
         DoSus3.setBounds(1165, 602, 45, 215);
 
         ReSus3.setIcon(icone);
-        add(ReSus3);
+        getContentPane().add(ReSus3);
         ReSus3.setBounds(1265, 602, 45, 215);
 
         FaSus3.setIcon(icone);
-        add(FaSus3);
+        getContentPane().add(FaSus3);
         FaSus3.setBounds(1390, 602, 45, 215);
 
         SolSus3.setIcon(icone);
-        add(SolSus3);
+        getContentPane().add(SolSus3);
         SolSus3.setBounds(1477, 602, 45, 215);
 
         LaSus3.setIcon(icone);
-        add(LaSus3);
+        getContentPane().add(LaSus3);
         LaSus3.setBounds(1565, 602, 45, 215);
         
         icone = new ImageIcon("src/2.png");
 
         Do1.setIcon(icone);
-        add(Do1);
+        getContentPane().add(Do1);
         Do1.setBounds(75, 602, 75, 350);
 
         Re1.setIcon(icone);
-        add(Re1);
+        getContentPane().add(Re1);
         Re1.setBounds(150, 602, 75, 350);
 
         Mi1.setIcon(icone);
-        add(Mi1);
+        getContentPane().add(Mi1);
         Mi1.setBounds(225, 602, 75, 350);
 
         Fa1.setIcon(icone);
-        add(Fa1);
+        getContentPane().add(Fa1);
         Fa1.setBounds(300, 602, 75, 350);
 
         Sol1.setIcon(icone);
-        add(Sol1);
+        getContentPane().add(Sol1);
         Sol1.setBounds(375, 602, 75, 350);
 
         La1.setIcon(icone);
-        add(La1);
+        getContentPane().add(La1);
         La1.setBounds(450, 602, 75, 350);
 
         Si1.setIcon(icone);
-        add(Si1);
+        getContentPane().add(Si1);
         Si1.setBounds(525, 602, 75, 350);
 
         Do2.setIcon(icone);
-        add(Do2);
+        getContentPane().add(Do2);
         Do2.setBounds(600, 602, 75, 350);
 
         Re2.setIcon(icone);
-        add(Re2);
+        getContentPane().add(Re2);
         Re2.setBounds(675, 602, 75, 350);
 
         Mi2.setIcon(icone);
-        add(Mi2);
+        getContentPane().add(Mi2);
         Mi2.setBounds(750, 602, 75, 350);
 
         Fa2.setIcon(icone);
-        add(Fa2);
+        getContentPane().add(Fa2);
         Fa2.setBounds(825, 602, 75, 350);
 
         Sol2.setIcon(icone);
-        add(Sol2);
+        getContentPane().add(Sol2);
         Sol2.setBounds(900, 602, 75, 350);
 
         La2.setIcon(icone);
-        add(La2);
+        getContentPane().add(La2);
         La2.setBounds(975, 602, 75, 350);
 
         Si2.setIcon(icone);
-        add(Si2);
+        getContentPane().add(Si2);
         Si2.setBounds(1050, 602, 75, 350);
 
         Do3.setIcon(icone);
-        add(Do3);
+        getContentPane().add(Do3);
         Do3.setBounds(1125, 602, 75, 350);
 
         Re3.setIcon(icone);
-        add(Re3);
+        getContentPane().add(Re3);
         Re3.setBounds(1200, 602, 75, 350);
 
         Mi3.setIcon(icone);
-        add(Mi3);
+        getContentPane().add(Mi3);
         Mi3.setBounds(1275, 602, 75, 350);
 
         Fa3.setIcon(icone);
-        add(Fa3);
+        getContentPane().add(Fa3);
         Fa3.setBounds(1350, 602, 75, 350);
 
         Sol3.setIcon(icone);
-        add(Sol3);
+        getContentPane().add(Sol3);
         Sol3.setBounds(1425, 602, 75, 350);
 
         La3.setIcon(icone);
-        add(La3);
+        getContentPane().add(La3);
         La3.setBounds(1500, 602, 75, 350);
 
         Si3.setIcon(icone);
-        add(Si3);
+        getContentPane().add(Si3);
         Si3.setBounds(1575, 602, 75, 350);
         
         Do4.setIcon(icone);
-        add(Do4);
+        getContentPane().add(Do4);
         Do4.setBounds(1650, 602, 75, 350);
+        
+        menu.setText("Menu");
+
+        MIDI.setText("MIDI");
+        menu.add(MIDI);
+
+        synth.setText("Sintetizador");
+        menu.add(synth);
+
+        exit.setText("Sair");
+        menu.add(exit);
+
+        Bar.add(menu);
+
+        setJMenuBar(Bar);
+
+        pack();
         
     }// </editor-fold>
     
@@ -235,6 +270,8 @@ public class GUI extends JFrame {
     	for (int i = 0; i < button.length; i++) {
 			button[i].setFocusable(false);
 		}
+    	
+    	Bar.setFocusable(false);
     }
     
     public JButton[] createJButtonArray() {
@@ -323,6 +360,11 @@ public class GUI extends JFrame {
     private JButton SolSus2;
     private JButton SolSus3;
     
+    private JMenuBar Bar;
+    private JMenu menu;
+    private JMenuItem exit;
+    private JMenuItem MIDI;
+    private JMenuItem synth;
     private Icon icone;
     // End of variables declaration                   
 }
