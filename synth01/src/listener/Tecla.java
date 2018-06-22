@@ -1,24 +1,26 @@
 package listener;
 
-import java.awt.event.KeyEvent;	
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.ButtonModel;
+import javax.swing.JButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import synth.AudioSynth;
 
 public class Tecla implements KeyListener {
-	
+
 	private int code;
 	private int note;
 	private AudioSynth synth;
 	private boolean playing;
-	
-	public Tecla(int code){
-		this.code = code;
-	}
-	
+	private JButton button;
+
 	public Tecla(int code, AudioSynth synth) {
 		this.code = code;
-		System.out.println(code);
-		switch(code){
+		switch (code) {
 		case 90:
 			this.note = 0;
 			break;
@@ -108,37 +110,61 @@ public class Tecla implements KeyListener {
 			break;
 		}
 		this.synth = synth;
-		
-		System.out.println(note);
+
 	}
-	
+
+	public void addJButton(JButton button) {
+		this.button = button;
+		addListener();
+	}
+
+	private void addListener() {
+		final ButtonModel b = button.getModel();
+		b.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+
+				if (b.isPressed() && !playing) {
+					play();
+				} else if (!b.isPressed() && playing) {
+					pause();
+				}
+
+			}
+		});
+	}
+
+	private void play() {
+		synth.playNote(note);
+		synth.noteOn(note);
+		playing = true;
+		button.setVisible(false);
+	}
+
+	private void pause() {
+		playing = false;
+		synth.noteOff(note);
+		button.setVisible(true);
+	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getKeyCode() == code && !playing) {
-			//mandar iniciar o som
-			synth.playNote(note);
-			synth.noteOn(note);
-			System.out.println("Pressed " + e.getKeyChar());
-			playing = true;
+			play();
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getKeyCode() == code && playing) {
-			//mandar parar o som
-			System.out.println("Released " + e.getKeyChar());
-			playing = false;
-			synth.noteOff(note);
+			pause();
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		//acho que isso a gente nao vai precisar usar
+		// not needed
 	}
 
 }

@@ -91,9 +91,9 @@ public class AudioSynth extends JFrame {
 	public void noteOn(int note) {
 		numOfKeys++;
 		keyEnable[note] = 1;
-		System.out.println("key on");
+		//System.out.println("key on");
 		if (sourceDataLine.isRunning() == false) {
-			System.out.println("start listener");
+			//System.out.println("start listener");
 			sourceDataLine.start();
 		}
 		sourceDataLine.flush();
@@ -105,7 +105,7 @@ public class AudioSynth extends JFrame {
 			makewave_sem.acquire();
 			numOfKeys--;
 			keyEnable[note] = 0;
-			System.out.println("key off");
+			//System.out.println("key off");
 			if (numOfKeys == 0) {
 				sourceDataLine.flush();
 				sourceDataLine.stop();
@@ -199,7 +199,7 @@ public class AudioSynth extends JFrame {
 						makewave_sem.release();
 					}
 					outBuffer = auxBuffer;
-					System.out.println(position++);
+					//System.out.println(position++);
 					sem.release();
 					if (blockSize * position >= (int) sampleRate)
 						position = 0;
