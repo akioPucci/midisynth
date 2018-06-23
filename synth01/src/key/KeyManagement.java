@@ -8,19 +8,38 @@ import javax.swing.JButton;
 import listener.Tecla;
 import synth.AudioSynth;
 
+/**
+ * Manage the keys
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
 public class KeyManagement {
 
 	private static AudioSynth synth = AudioSynth.getAudioSynth();
 	private static Tecla tecla[] = new Tecla[37];
 
+	/**
+	 * Create all needed to key management
+	 * 
+	 * @param g
+	 *            the GUI with the keys
+	 * @param button
+	 *            array of the key JButtons
+	 */
 	public static void create(GUI g, JButton[] button) {
 
 		System.out.println("Execute");
 		createKeys();
-		inicitiateKeys(g);
+		inicitiateKeyListeners(g);
 		addButtons(button);
 	}
 
+	/**
+	 * Initialize the array Tecla
+	 */
 	private static void createKeys() {
 		tecla[0] = new Tecla(KeyEvent.VK_Z, synth);
 		tecla[1] = new Tecla(KeyEvent.VK_S, synth);
@@ -61,25 +80,118 @@ public class KeyManagement {
 		tecla[36] = new Tecla(-1, synth);
 	}
 
-	private static void inicitiateKeys(GUI g) {
+	/**
+	 * Add all key listeners
+	 * 
+	 * @param g
+	 */
+	private static void inicitiateKeyListeners(GUI g) {
 		for (int i = 0; i < tecla.length; i++)
 			g.addKeyListener(tecla[i]);
 	}
 
+	/**
+	 * Add the buttons to the respective object Tecla
+	 * 
+	 * @param button
+	 *            array of JButtons
+	 */
 	private static void addButtons(JButton[] button) {
 		for (int i = 0; i < tecla.length; i++) {
 			tecla[i].addJButton(button[i]);
 		}
 	}
 
+	/**
+	 * Play a note
+	 * 
+	 * @param note
+	 *            to be played
+	 */
 	public static void playNoteFromMIDI(int note) {
 		if (note < tecla.length)
 			tecla[note].play();
 	}
 
+	/**
+	 * Pause a note
+	 * 
+	 * @param note
+	 *            to be paused
+	 */
 	public static void pauseNoteFromMIDI(int note) {
 		if (note < tecla.length)
 			tecla[note].pause();
+	}
+
+	public static int getNote(int code) {
+		switch (code) {
+		case 90:
+			return 0;
+		case 83:
+			return 1;
+		case 88:
+			return 2;
+		case 68:
+			return 3;
+		case 67:
+			return 4;
+		case 86:
+			return 5;
+		case 71:
+			return 6;
+		case 66:
+			return 7;
+		case 72:
+			return 8;
+		case 78:
+			return 9;
+		case 74:
+			return 10;
+		case 77:
+			return 11;
+		case 81:
+			return 12;
+		case 50:
+			return 13;
+		case 87:
+			return 14;
+		case 51:
+			return 15;
+		case 69:
+			return 16;
+		case 82:
+			return 17;
+		case 53:
+			return 18;
+		case 84:
+			return 19;
+		case 54:
+			return 20;
+		case 89:
+			return 21;
+		case 55:
+			return 22;
+		case 85:
+			return 23;
+		case 73:
+			return 24;
+		case 57:
+			return 25;
+		case 79:
+			return 26;
+		case 48:
+			return 27;
+		case 80:
+			return 28;
+		case 91:
+			return 29;
+		case 61:
+			return 30;
+		case 93:
+			return 31;
+		}
+		return -1;
 	}
 
 }

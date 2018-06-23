@@ -1,4 +1,4 @@
-package keyboard;
+package input;
 
 import java.util.List;
 
@@ -7,13 +7,17 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Transmitter;
 
-public class Keyboard {
+public class InputKeyboard {
 
-	public static void startKeyBoard() {
-		new Keyboard();
+	/**
+	 * Starts a input keyboard
+	 */
+	public static void start() {
+		new InputKeyboard();
 	}
 	
-	private Keyboard() {
+	
+	private InputKeyboard() {
 		MidiDevice device;
 		MidiDevice.Info[] infos = MidiSystem.getMidiDeviceInfo();
 		for (int i = 0; i < infos.length; i++) {

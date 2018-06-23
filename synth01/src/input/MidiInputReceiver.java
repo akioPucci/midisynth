@@ -1,4 +1,4 @@
-package keyboard;
+package input;
 
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
@@ -57,7 +57,7 @@ public class MidiInputReceiver implements Receiver {
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
+		
 
 	}
 }
