@@ -4,8 +4,6 @@ import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 
 import key.KeyManagement;
-import listener.Tecla;
-import main.Main;
 import synth.AudioSynth;
 
 public class MidiInputReceiver implements Receiver {

@@ -39,7 +39,7 @@ public class Main {
 				g.setVisible(true);
 				g.setFocusable(true);
 				KeyManagement.create(g, g.createJButtonArray());
-				Keyboard k = new Keyboard();
+				Keyboard.startKeyBoard();
 			}
 		});
 

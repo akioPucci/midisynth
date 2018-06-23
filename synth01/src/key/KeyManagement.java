@@ -71,13 +71,15 @@ public class KeyManagement {
 			tecla[i].addJButton(button[i]);
 		}
 	}
-	
+
 	public static void playNoteFromMIDI(int note) {
-		tecla[note].play();
+		if (note < tecla.length)
+			tecla[note].play();
 	}
-	
+
 	public static void pauseNoteFromMIDI(int note) {
-		tecla[note].pause();
+		if (note < tecla.length)
+			tecla[note].pause();
 	}
 
 }

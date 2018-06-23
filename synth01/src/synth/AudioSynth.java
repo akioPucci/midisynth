@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class AudioSynth extends JFrame {
 
+	//variavel para singleton
 	private static AudioSynth audioSynth;
 	
 	// criar sourceDataLine (saida de audio)
@@ -47,6 +48,7 @@ public class AudioSynth extends JFrame {
 	Semaphore makewave_sem;
 	Semaphore sem;
 
+	//aplicacao de singleton
 	public static AudioSynth getAudioSynth()  {
 		
 		if (audioSynth == null)

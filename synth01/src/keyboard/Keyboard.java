@@ -9,7 +9,11 @@ import javax.sound.midi.Transmitter;
 
 public class Keyboard {
 
-	public Keyboard() {
+	public static void startKeyBoard() {
+		new Keyboard();
+	}
+	
+	private Keyboard() {
 		MidiDevice device;
 		MidiDevice.Info[] infos = MidiSystem.getMidiDeviceInfo();
 		for (int i = 0; i < infos.length; i++) {
