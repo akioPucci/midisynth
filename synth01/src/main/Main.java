@@ -1,11 +1,10 @@
 package main;
 
-import gui.GUI;
-import input.InputKeyboard;
-
 import java.awt.RenderingHints.Key;
 import java.util.Scanner;
 
+import gui.GUI;
+import input.InputKeyboard;
 import key.KeyManagement;
 
 /**
@@ -46,7 +45,14 @@ public class Main {
 			}
 		});
 		
-		KeyManagement.playRecord("ei");
+		Scanner s = new Scanner(System.in);
+		System.out.println("Gravar?");
+		s.nextLine();
+		KeyManagement.startRecording(0);
+		System.out.println("Pausar?");
+		String f = s.nextLine();
+		KeyManagement.stopRecording(f);
+		KeyManagement.playRecord(f);
 		
 	}
 

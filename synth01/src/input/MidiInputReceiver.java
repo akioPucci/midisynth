@@ -20,7 +20,7 @@ public class MidiInputReceiver implements Receiver {
 		String tmp = bits(b[0]);
 		int message = convertBits(tmp);
 		int code = convertBits(bits(b[1]));
-		System.out.println("Message = " + message + " code = " + code);
+		//System.out.println("Message = " + message + " code = " + code);
 		
 				
 		if (message == 144) 

@@ -44,7 +44,6 @@ public class KeyManagement {
 	 */
 	public static void create(GUI g, JButton[] button) {
 
-		System.out.println("Execute");
 		createKeys();
 		inicitiateKeyListeners(g);
 		addButtons(button);
@@ -74,7 +73,6 @@ public class KeyManagement {
 		filename = "gravacoes/" + filename;
 		BufferedReader br = null;
 		String line = "";
-		Pair<Long, Integer> p = new Pair<Long, Integer>(10l, 1);
 
 		List<Pair<Long, Integer>> changes = new ArrayList<Pair<Long, Integer>>();
 
@@ -87,8 +85,8 @@ public class KeyManagement {
 
 				String[] note = line.split(",");
 
-				System.out.println("Start: " + note[0] + " end: " + note[1]
-						+ " note = " + note[2]);
+				//System.out.println("Start: " + note[0] + " end: " + note[1]
+				//		+ " note = " + note[2]);
 				changes.add(new Pair<Long, Integer>(Long.parseLong(note[0]),
 						Integer.parseInt(note[2])));
 				changes.add(new Pair<Long, Integer>(Long.parseLong(note[1]),
@@ -112,16 +110,17 @@ public class KeyManagement {
 			for (Pair<Long, Integer> pair : changes) {
 				pair.setFirst(pair.getFirst() - start);
 			}
-			
+
 			long playStart = Calendar.getInstance().getTimeInMillis();
-			
+
 			while (changes.size() > 0) {
-				
-				if ((Calendar.getInstance().getTimeInMillis() - playStart) >= changes.get(0).getFirst()) {
+
+				if ((Calendar.getInstance().getTimeInMillis() - playStart) >= changes
+						.get(0).getFirst()) {
 					tecla[getNote(changes.get(0).getSecond())].changeStatus();
 					changes.remove(0);
 				}
-				
+
 			}
 
 		} catch (FileNotFoundException e) {

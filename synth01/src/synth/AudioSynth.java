@@ -105,7 +105,7 @@ public class AudioSynth extends JFrame {
 		keyEnable[note] = 1;
 		//System.out.println("keys on: " + numOfKeys);
 		if (sourceDataLine.isRunning() == false) {
-			System.out.println("start listener");
+			//System.out.println("start listener");
 			sourceDataLine.start();
 		}
 		sourceDataLine.flush();
