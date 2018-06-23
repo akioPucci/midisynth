@@ -37,7 +37,7 @@ public class AudioSynth extends JFrame {
 	// mas anyway, copiei isso ai e funcionou
 	byte audioData[][] = new byte[32][16000];
 	byte noteBuffer[][] = new byte[32][16000];
-	byte outBuffer[];
+	byte outBuffer[] = new byte[2000];
 	int numOfKeys = 0;
 	int keyEnable[] = new int[32];
 
@@ -118,57 +118,52 @@ public class AudioSynth extends JFrame {
 	}
 
 	class SourceThread extends Thread {
+		
+		ByteBuffer outByteBuffer;
+		ShortBuffer outShortBuffer;
+		ByteBuffer byteBuffer;
+		ShortBuffer shortBuffer;
+		ByteBuffer byteBuffer1;
+		ShortBuffer shortBuffer1;
 
 		@Override
 		public void run() {
-			byte auxBuffer[];
+			byte auxBuffer[] = new byte[2000];
 			int position = 0;
 			int blockSize;
+			
+			outByteBuffer = ByteBuffer.wrap(auxBuffer); // C4
+			outShortBuffer = outByteBuffer.asShortBuffer();
+			byteBuffer = ByteBuffer.wrap(audioData[10]); // C4
+			shortBuffer = byteBuffer.asShortBuffer();
+			byteBuffer1 = ByteBuffer.wrap(audioData[11]); // C4
+			shortBuffer1 = byteBuffer1.asShortBuffer();
 			while (true) {
 				try {
-					auxBuffer = new byte[1000];
-					blockSize = auxBuffer.length;
+					blockSize = auxBuffer.length/2;
 					for (int i = 0; i < blockSize; i++) {
 						makewave_sem.acquire();
-						auxBuffer[i] = (byte) ((noteBuffer[0][i + blockSize * position] * keyEnable[0]
-								+ noteBuffer[1][i + blockSize * position] * keyEnable[1]
-								+ noteBuffer[2][i + blockSize * position] * keyEnable[2]
-								+ noteBuffer[3][i + blockSize * position] * keyEnable[3]
-								+ noteBuffer[4][i + blockSize * position] * keyEnable[4]
-								+ noteBuffer[5][i + blockSize * position] * keyEnable[5]
-								+ noteBuffer[6][i + blockSize * position] * keyEnable[6]
-								+ noteBuffer[7][i + blockSize * position] * keyEnable[7]
-								+ noteBuffer[8][i + blockSize * position] * keyEnable[8]
-								+ noteBuffer[9][i + blockSize * position] * keyEnable[9]
-								+ noteBuffer[10][i + blockSize * position] * keyEnable[10]
-								+ noteBuffer[11][i + blockSize * position] * keyEnable[11]
-								+ noteBuffer[12][i + blockSize * position] * keyEnable[12]
-								+ noteBuffer[13][i + blockSize * position] * keyEnable[13]
-								+ noteBuffer[14][i + blockSize * position] * keyEnable[14]
-								+ noteBuffer[15][i + blockSize * position] * keyEnable[15]
-								+ noteBuffer[16][i + blockSize * position] * keyEnable[16]
-								+ noteBuffer[17][i + blockSize * position] * keyEnable[17]
-								+ noteBuffer[18][i + blockSize * position] * keyEnable[18]
-								+ noteBuffer[19][i + blockSize * position] * keyEnable[19]
-								+ noteBuffer[20][i + blockSize * position] * keyEnable[20]
-								+ noteBuffer[21][i + blockSize * position] * keyEnable[21]
-								+ noteBuffer[22][i + blockSize * position] * keyEnable[22]
-								+ noteBuffer[23][i + blockSize * position] * keyEnable[23]
-								+ noteBuffer[24][i + blockSize * position] * keyEnable[24]
-								+ noteBuffer[25][i + blockSize * position] * keyEnable[25]
-								+ noteBuffer[26][i + blockSize * position] * keyEnable[26]
-								+ noteBuffer[27][i + blockSize * position] * keyEnable[27]
-								+ noteBuffer[28][i + blockSize * position] * keyEnable[28]
-								+ noteBuffer[29][i + blockSize * position] * keyEnable[29]
-								+ noteBuffer[30][i + blockSize * position] * keyEnable[30]
-								+ noteBuffer[31][i + blockSize * position] * keyEnable[31]) / numOfKeys);
+						outShortBuffer.put(i, (short)(shortBuffer.get(i+(position)) * keyEnable[0]+
+								shortBuffer1.get(i+(position)) * keyEnable[1]));
 						System.out.println(auxBuffer[i]);
 						makewave_sem.release();
 					}
-					outBuffer = auxBuffer;
-					position++;
+
+					InputStream byteArrayInputStream = new ByteArrayInputStream(auxBuffer);
+
+					audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat,
+							auxBuffer.length / audioFormat.getFrameSize());
+
+					try {
+						audioInputStream.read(outBuffer, 0, outBuffer.length);
+
+					} catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+
+					position = position + blockSize;
 					sem.release();
-					if (blockSize * position >= (int) sampleRate)
+					if (position >= (int) sampleRate/2)
 						position = 0;
 				} catch (InterruptedException ie) {
 					ie.printStackTrace();
@@ -193,10 +188,6 @@ public class AudioSynth extends JFrame {
 				while (true) {
 					sem.acquire();
 
-					// System.out.println("playing");
-					// sem.acquire();
-					// System.out.println("stopped");
-					// sourceDataLine.drain();
 					sourceDataLine.write(outBuffer, 0, outBuffer.length);
 					sem.drainPermits();
 
@@ -368,19 +359,6 @@ public class AudioSynth extends JFrame {
 			 * byteBuffer.asShortBuffer(); tones(shortBuffer, 2217.50f);
 			 */
 
-			for (int i = 0; i < 32; i++) {
-				InputStream byteArrayInputStream = new ByteArrayInputStream(synDataBuffer[i]);
-
-				audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat,
-						synDataBuffer[0].length / audioFormat.getFrameSize());
-
-				try {
-					audioInputStream.read(noteBuffer[i], 0, noteBuffer[i].length);
-
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
 
 		}
 
@@ -395,7 +373,7 @@ public class AudioSynth extends JFrame {
 			for (int cnt = 0; cnt < sampLength; cnt++) {
 				double time = cnt / sampleRate;
 				double sinValue = (Math.sin(2 * Math.PI * freq * time));
-				shortBuffer.put((short) (16000 * sinValue));
+				shortBuffer.put((short) (8000 * sinValue));
 			} // end for loop
 		}// end method tones
 	}
