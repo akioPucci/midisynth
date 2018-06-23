@@ -1,6 +1,7 @@
 package main;
 
 import key.KeyManagement;
+import keyboard.Keyboard;
 import gui.GUI;
 
 public class Main {
@@ -38,7 +39,7 @@ public class Main {
 				g.setVisible(true);
 				g.setFocusable(true);
 				KeyManagement.create(g, g.createJButtonArray());
-
+				Keyboard k = new Keyboard();
 			}
 		});
 

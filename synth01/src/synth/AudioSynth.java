@@ -16,8 +16,11 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class AudioSynth extends JFrame {
 
+	private static AudioSynth audioSynth;
+	
 	// criar sourceDataLine (saida de audio)
 	AudioFormat audioFormat;
 	AudioInputStream audioInputStream;
@@ -44,7 +47,15 @@ public class AudioSynth extends JFrame {
 	Semaphore makewave_sem;
 	Semaphore sem;
 
-	public AudioSynth() {// constructor
+	public static AudioSynth getAudioSynth()  {
+		
+		if (audioSynth == null)
+			audioSynth = new AudioSynth();
+		
+		return audioSynth;
+	}
+	
+	private AudioSynth() {// constructor
 		// E ELE RETORNARA O VETOR COM TUDO BONITINHO
 
 		// Get the required audio format
@@ -90,7 +101,7 @@ public class AudioSynth extends JFrame {
 	public void noteOn(int note) {
 		numOfKeys++;
 		keyEnable[note] = 1;
-		System.out.println("keys on: " + numOfKeys);
+		//System.out.println("keys on: " + numOfKeys);
 		if (sourceDataLine.isRunning() == false) {
 			System.out.println("start listener");
 			sourceDataLine.start();
@@ -104,7 +115,7 @@ public class AudioSynth extends JFrame {
 			makewave_sem.acquire();
 			numOfKeys--;
 			keyEnable[note] = 0;
-			System.out.println("key off");
+			//System.out.println("key off");
 			sourceDataLine.flush();
 			if (numOfKeys == 0) {
 				sourceDataLine.stop();
@@ -162,7 +173,7 @@ public class AudioSynth extends JFrame {
 								+ noteBuffer[29][i + blockSize * position] * keyEnable[29]
 								+ noteBuffer[30][i + blockSize * position] * keyEnable[30]
 								+ noteBuffer[31][i + blockSize * position] * keyEnable[31]) / numOfKeys);
-						System.out.println(auxBuffer[i]);
+						//System.out.println(auxBuffer[i]);
 						makewave_sem.release();
 					}
 					outBuffer = auxBuffer;

@@ -10,8 +10,8 @@ import synth.AudioSynth;
 
 public class KeyManagement {
 
-	private static AudioSynth synth = new AudioSynth();
-	private static Tecla tecla[] = new Tecla[32];
+	private static AudioSynth synth = AudioSynth.getAudioSynth();
+	private static Tecla tecla[] = new Tecla[37];
 
 	public static void create(GUI g, JButton[] button) {
 
@@ -54,6 +54,11 @@ public class KeyManagement {
 		tecla[29] = new Tecla(KeyEvent.VK_OPEN_BRACKET, synth);
 		tecla[30] = new Tecla(KeyEvent.VK_EQUALS, synth);
 		tecla[31] = new Tecla(KeyEvent.VK_CLOSE_BRACKET, synth);
+		tecla[32] = new Tecla(-1, synth);
+		tecla[33] = new Tecla(-1, synth);
+		tecla[34] = new Tecla(-1, synth);
+		tecla[35] = new Tecla(-1, synth);
+		tecla[36] = new Tecla(-1, synth);
 	}
 
 	private static void inicitiateKeys(GUI g) {
@@ -65,6 +70,14 @@ public class KeyManagement {
 		for (int i = 0; i < tecla.length; i++) {
 			tecla[i].addJButton(button[i]);
 		}
+	}
+	
+	public static void playNoteFromMIDI(int note) {
+		tecla[note].play();
+	}
+	
+	public static void pauseNoteFromMIDI(int note) {
+		tecla[note].pause();
 	}
 
 }

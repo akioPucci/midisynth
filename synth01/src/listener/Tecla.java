@@ -144,14 +144,14 @@ public class Tecla implements KeyListener {
 		});
 	}
 
-	private void play() {
+	public void play() {
 		synth.playNote(note);
 		synth.noteOn(note);
 		playing = true;
 		button.setVisible(false);
 	}
 
-	private void pause() {
+	public void pause() {
 		playing = false;
 		synth.noteOff(note);
 		button.setVisible(true);
