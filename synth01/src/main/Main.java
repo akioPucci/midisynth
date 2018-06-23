@@ -1,8 +1,12 @@
 package main;
 
-import input.InputKeyboard;
-import key.KeyManagement;
 import gui.GUI;
+import input.InputKeyboard;
+
+import java.awt.RenderingHints.Key;
+import java.util.Scanner;
+
+import key.KeyManagement;
 
 /**
  * Main Class starts the program
@@ -21,9 +25,7 @@ public class Main {
 	 *            arguments
 	 */
 	public static void main(String args[]) {
-
 		new Main().start();
-
 	}
 
 	/**
@@ -40,8 +42,12 @@ public class Main {
 				g.setFocusable(true);
 				KeyManagement.create(g, g.createJButtonArray());
 				InputKeyboard.start();
+				
 			}
 		});
+		
+		KeyManagement.playRecord("ei");
+		
 	}
 
 	/**

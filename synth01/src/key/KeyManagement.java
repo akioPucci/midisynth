@@ -3,10 +3,21 @@ package key;
 import gui.GUI;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import javax.swing.JButton;
 
-import listener.Tecla;
+import record.Record;
 import synth.AudioSynth;
+import tecla.Tecla;
 
 /**
  * Manage the keys
@@ -17,6 +28,8 @@ import synth.AudioSynth;
  * @author Vinícius
  */
 public class KeyManagement {
+
+	private static Record r;
 
 	private static AudioSynth synth = AudioSynth.getAudioSynth();
 	private static Tecla tecla[] = new Tecla[37];
@@ -35,6 +48,95 @@ public class KeyManagement {
 		createKeys();
 		inicitiateKeyListeners(g);
 		addButtons(button);
+
+	}
+
+	public static void startRecording(int wave) {
+		r = new Record(wave);
+
+		for (int i = 0; i < tecla.length; i++) {
+			tecla[i].setRecording(true);
+		}
+	}
+
+	public static void stopRecording(String filename) {
+
+		for (int i = 0; i < tecla.length; i++) {
+			if (tecla[i].getRecordTimes().size() > 0)
+				r.addAllNotes(tecla[i].getRecordTimes());
+			tecla[i].setRecording(false);
+		}
+		r.save(filename);
+	}
+
+	public static void playRecord(String filename) {
+		filename += ".csv";
+		filename = "gravacoes/" + filename;
+		BufferedReader br = null;
+		String line = "";
+		Pair<Long, Integer> p = new Pair<Long, Integer>(10l, 1);
+
+		List<Pair<Long, Integer>> changes = new ArrayList<Pair<Long, Integer>>();
+
+		try {
+
+			br = new BufferedReader(new FileReader(filename));
+			line = br.readLine();
+			System.out.println(line);
+			while ((line = br.readLine()) != null) {
+
+				String[] note = line.split(",");
+
+				System.out.println("Start: " + note[0] + " end: " + note[1]
+						+ " note = " + note[2]);
+				changes.add(new Pair<Long, Integer>(Long.parseLong(note[0]),
+						Integer.parseInt(note[2])));
+				changes.add(new Pair<Long, Integer>(Long.parseLong(note[1]),
+						Integer.parseInt(note[2])));
+			}
+
+			Collections.sort(changes, new Comparator<Pair<Long, Integer>>() {
+
+				@Override
+				public int compare(Pair<Long, Integer> p0,
+						Pair<Long, Integer> p1) {
+					if (p0.getFirst() > p1.getFirst())
+						return 1;
+					else if (p0.getFirst() < p1.getFirst())
+						return -1;
+					return p0.getSecond() - p1.getSecond();
+				}
+			});
+
+			long start = changes.get(0).getFirst();
+			for (Pair<Long, Integer> pair : changes) {
+				pair.setFirst(pair.getFirst() - start);
+			}
+			
+			long playStart = Calendar.getInstance().getTimeInMillis();
+			
+			while (changes.size() > 0) {
+				
+				if ((Calendar.getInstance().getTimeInMillis() - playStart) >= changes.get(0).getFirst()) {
+					tecla[getNote(changes.get(0).getSecond())].changeStatus();
+					changes.remove(0);
+				}
+				
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	/**
