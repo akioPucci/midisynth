@@ -35,11 +35,12 @@ public class AudioSynth extends JFrame {
 	// 16000 samples por segundo, aguenta 1 segundo stereo e 2 mono
 	// nao sei pq * 4, eu sei q stereo duplica a quantidade de bytes
 	// mas anyway, copiei isso ai e funcionou
-	byte audioData[][] = new byte[32][16000];
-	byte noteBuffer[][] = new byte[32][16000];
-	byte outBuffer[] = new byte[2000];
+	byte audioData[][] = new byte[37][16000];
+	byte noteBuffer[][] = new byte[37][16000];
+	byte outBuffer[] = new byte[16000];
 	int numOfKeys = 0;
 	int keyEnable[] = new int[32];
+	int waveSampleCount;
 
 	Semaphore makewave_sem;
 	Semaphore sem;
@@ -91,25 +92,28 @@ public class AudioSynth extends JFrame {
 		numOfKeys++;
 		keyEnable[note] = 1;
 		System.out.println("keys on: " + numOfKeys);
+		waveSampleCount = 0;
 		if (sourceDataLine.isRunning() == false) {
 			System.out.println("start listener");
 			sourceDataLine.start();
 		}
 		sourceDataLine.flush();
-		makewave_sem.release();
+		
+		if(numOfKeys == 1)
+			makewave_sem.release();
 	}
 
 	public void noteOff(int note) {
 		try {
-			makewave_sem.acquire();
+			sourceDataLine.flush();
+			if (numOfKeys == 1) {
+				sourceDataLine.stop();
+				makewave_sem.acquire();				
+			}
 			numOfKeys--;
 			keyEnable[note] = 0;
 			System.out.println("key off");
-			sourceDataLine.flush();
-			if (numOfKeys == 0) {
-				sourceDataLine.stop();
-
-			}
+			waveSampleCount = 0;
 
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
@@ -121,34 +125,49 @@ public class AudioSynth extends JFrame {
 		
 		ByteBuffer outByteBuffer;
 		ShortBuffer outShortBuffer;
-		ByteBuffer byteBuffer;
-		ShortBuffer shortBuffer;
-		ByteBuffer byteBuffer1;
-		ShortBuffer shortBuffer1;
+		int shortBufferSize;
+		
+		
+		byte auxBuffer[] = new byte[16000];
+		double sinValue[] = new double[36];
+		
 
 		@Override
 		public void run() {
-			byte auxBuffer[] = new byte[2000];
-			int position = 0;
-			int blockSize;
+			
+			
 			
 			outByteBuffer = ByteBuffer.wrap(auxBuffer); // C4
 			outShortBuffer = outByteBuffer.asShortBuffer();
-			byteBuffer = ByteBuffer.wrap(audioData[10]); // C4
-			shortBuffer = byteBuffer.asShortBuffer();
-			byteBuffer1 = ByteBuffer.wrap(audioData[11]); // C4
-			shortBuffer1 = byteBuffer1.asShortBuffer();
+			int j = 0;
+			
 			while (true) {
 				try {
-					blockSize = auxBuffer.length/2;
-					for (int i = 0; i < blockSize; i++) {
+					shortBufferSize = auxBuffer.length/2;
+					double time = 0;
+					for (waveSampleCount = 0; waveSampleCount < shortBufferSize; waveSampleCount++) {
 						makewave_sem.acquire();
-						outShortBuffer.put(i, (short)(shortBuffer.get(i+(position)) * keyEnable[0]+
-								shortBuffer1.get(i+(position)) * keyEnable[1]));
-						System.out.println(auxBuffer[i]);
+						
+						
+						j++; 
+						time = (j / sampleRate);
+						if(time == 1) {
+							j = 0;
+							time = 0;
+						}
+						
+						//calculo das ondas
+						sinValue[0] = (Math.sin(2 * Math.PI * 440.00f * time));
+						sinValue[1] = (Math.sin(2 * Math.PI * 602.01f  * time));
+							
+						
+						outShortBuffer.put(waveSampleCount, (short)((8000* sinValue[0]) * keyEnable[0]
+								+ (8000* sinValue[1]) * keyEnable[1]));
 						makewave_sem.release();
 					}
 
+					
+					//PROCESSANDO DADO EM AUDIO
 					InputStream byteArrayInputStream = new ByteArrayInputStream(auxBuffer);
 
 					audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat,
@@ -160,11 +179,11 @@ public class AudioSynth extends JFrame {
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
 					}
-
-					position = position + blockSize;
+					
+					
+					//COMUNICACAO COM A SAIDA DE AUDIO
 					sem.release();
-					if (position >= (int) sampleRate/2)
-						position = 0;
+					makewave_sem.acquire();
 				} catch (InterruptedException ie) {
 					ie.printStackTrace();
 				}
@@ -189,8 +208,9 @@ public class AudioSynth extends JFrame {
 					sem.acquire();
 
 					sourceDataLine.write(outBuffer, 0, outBuffer.length);
+					System.out.println("akakak");
 					sem.drainPermits();
-
+					makewave_sem.release();
 				}
 
 			} catch (Exception e) {
