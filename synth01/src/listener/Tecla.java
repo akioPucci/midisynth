@@ -136,7 +136,6 @@ public class Tecla implements KeyListener {
 	}
 
 	private void play() {
-		synth.playNote(note);
 		synth.noteOn(note);
 		playing = true;
 		button.setVisible(false);
