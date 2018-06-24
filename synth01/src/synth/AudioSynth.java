@@ -39,9 +39,13 @@ public class AudioSynth extends JFrame {
 	int numOfKeys = 0;
 	int keyEnable[] = new int[38];
 	int waveSampleCount;
+	int timeCount = 0;
+	double time;
+	double releaseTime;
 
 	Semaphore makewave_sem;
 	Semaphore sem;
+	Semaphore note_sem;
 	
 	double[] note_frequency;
 
@@ -88,6 +92,8 @@ public class AudioSynth extends JFrame {
 		note_frequency[36] = 2093.00f;
 		note_frequency[37] = 2217.50f;
 		
+		note_sem = new Semaphore(0);
+		
 
 
 		// Get the required audio format
@@ -115,6 +121,7 @@ public class AudioSynth extends JFrame {
 		// -------------------------------------------//
 
 	public void noteOn(int note) {
+		timeCount = 0;
 		numOfKeys++;
 		keyEnable[note] = 1;
 		System.out.println("keys on: " + numOfKeys);
@@ -130,21 +137,29 @@ public class AudioSynth extends JFrame {
 	}
 
 	public void noteOff(int note) {
+		releaseTime = time;
+		
+		try {
+			note_sem.acquire();
+			flush(note);
+		}catch(InterruptedException ie) {ie.printStackTrace();}
+
+	}
+	
+	public void flush(int note) {
 		try {
 			sourceDataLine.flush();
 			if (numOfKeys == 1) {
 				sourceDataLine.stop();
-				makewave_sem.acquire();				
+				makewave_sem.acquire();
+				timeCount = 0;
 			}
 			numOfKeys--;
 			keyEnable[note] = 0;
-			System.out.println("key off");
 			waveSampleCount = 0;
-
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
 		}
-
 	}
 
 	class SourceThread extends Thread {
@@ -161,6 +176,8 @@ public class AudioSynth extends JFrame {
 		double channel3SynthData [] = new double [38];
 		double mixedChannelSynthData[] = new double[38];
 		double mixedSample;
+		
+		
 		@Override
 		public void run() {
 			
@@ -168,30 +185,26 @@ public class AudioSynth extends JFrame {
 			
 			outByteBuffer = ByteBuffer.wrap(auxBuffer); // C4
 			outShortBuffer = outByteBuffer.asShortBuffer();
-			int j = 0;
+			
 			
 			while (true) {
 				try {
 					shortBufferSize = auxBuffer.length/2;
-					double time = 0;
+					
 					for (waveSampleCount = 0; waveSampleCount < shortBufferSize; waveSampleCount++) {
 						makewave_sem.acquire();
 						
 						
 						//get sample data
 						//TODO CLICKS
-						j++; 
-						time = (j / sampleRate);
-						if(time == 1) {
-							j = 0;
-							time = 0;
-						}
-						
-						channel1SynthData = getSynthData(2, 4, time);
-						channel2SynthData = getSynthData(3, 2, time);
+						 
+						time = (timeCount / sampleRate);
+						channel1SynthData = getSynthData(1, 2, time);
+						channel2SynthData = getSynthData(2, 2, time);
 
 						
 						//TODO filter sample
+						env(channel1SynthData, 0.5, 1, 1, time);
 						
 						//mix channels
 						mixedChannelSynthData = mixSynthChannels(channel1SynthData, channel2SynthData, channel3SynthData);
@@ -203,6 +216,8 @@ public class AudioSynth extends JFrame {
 						
 						outShortBuffer.put(waveSampleCount, (short) (4000*mixedSample));
 						makewave_sem.release();
+						
+						timeCount++;
 					}
 
 					
@@ -333,6 +348,32 @@ public class AudioSynth extends JFrame {
 		
 		
 		return synthData;
+	}
+	
+	void env(double[] channelData, double attackTime, double sustainTime, double seleaseTime, double time) {
+		
+		double attackMult = time/attackTime;
+		double sustainMult = 1 - (time-releaseTime)/sustainTime;
+		if(attackMult < 1) {
+			for(int i = 0; i < 38; i++) {
+				if(keyEnable[i] == 1) {
+					channelData[i] = channelData[i]*attackMult;
+				}
+				
+			}
+		}
+		if(releaseTime > 0) {
+			if(sustainMult > 0) {
+				for(int i = 0; i < 38; i++) {
+					if(keyEnable[i] == 1) {
+						channelData[i] = channelData[i]*sustainMult;
+					}
+					
+				}
+			}else {
+				note_sem.release();
+			}
+		}
 	}
 	
 	double[] mixSynthChannels(double[] channel1SynthData, double[] channel2SynthData, double[] channel3SynthData) {
