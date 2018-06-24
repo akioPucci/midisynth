@@ -3,6 +3,7 @@ package main;
 import java.awt.RenderingHints.Key;
 import java.util.Scanner;
 
+import genius.Genius;
 import gui.GUI;
 import input.InputKeyboard;
 import key.KeyManagement;
@@ -46,13 +47,15 @@ public class Main {
 		});
 		
 		Scanner s = new Scanner(System.in);
-		System.out.println("Gravar?");
+		System.out.println("Record?");
 		s.nextLine();
 		KeyManagement.startRecording(0);
-		System.out.println("Pausar?");
-		String f = s.nextLine();
-		KeyManagement.stopRecording(f);
-		KeyManagement.playRecord(f);
+		System.out.println("Pause?");
+		String l = s.nextLine();
+		KeyManagement.stopRecording(l);
+		System.out.println("Genius?");
+		s.nextLine();
+		Genius.startGenius(l);
 		
 	}
 

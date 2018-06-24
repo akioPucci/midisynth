@@ -24,9 +24,9 @@ public class MidiInputReceiver implements Receiver {
 		
 				
 		if (message == 144) 
-			KeyManagement.playNoteFromMIDI(getNote(code));
+			KeyManagement.playNote(getNote(code));
 		else if (message == 128)
-			KeyManagement.pauseNoteFromMIDI(getNote(code));
+			KeyManagement.pauseNote(getNote(code));
 		
 	}
 

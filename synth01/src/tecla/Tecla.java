@@ -24,6 +24,8 @@ public class Tecla implements KeyListener {
 	private boolean recording;
 	private List<Long> start;
 	private List<Long> end;
+	private boolean waitingClick;
+	private boolean geniusClicked;
 
 	public Tecla(int code, AudioSynth synth) {
 		this.code = code;
@@ -31,6 +33,8 @@ public class Tecla implements KeyListener {
 		this.synth = synth;
 		start = new ArrayList<Long>();
 		end = new ArrayList<Long>();
+		waitingClick = false;
+		geniusClicked = false;
 	}
 
 	public void addJButton(JButton button) {
@@ -97,6 +101,10 @@ public class Tecla implements KeyListener {
 		synth.noteOff(note);
 		button.setVisible(true);
 		recordOff();
+		if (waitingClick) {
+			geniusClicked = true;
+			waitingClick = false;
+		}
 	}
 	
 	public void changeStatus() {
@@ -126,5 +134,23 @@ public class Tecla implements KeyListener {
 	public boolean isRecording() {
 		return recording;
 	}
+
+	public boolean isWaitingClick() {
+		return waitingClick;
+	}
+
+	public void setWaitingClick(boolean waitingClick) {
+		this.waitingClick = waitingClick;
+	}
+
+	public boolean isGeniusClicked() {
+		return geniusClicked;
+	}
+
+	public void setGeniusClicked(boolean geniusClicked) {
+		this.geniusClicked = geniusClicked;
+	}
+	
+	
 
 }

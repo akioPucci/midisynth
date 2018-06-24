@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 
@@ -138,6 +139,31 @@ public class KeyManagement {
 		}
 	}
 
+	public static void playForMilliseconds(int code, long ms) {
+		int note = getNote(code);
+		tecla[note].setWaitingClick(true);
+		playNote(note);
+		try {
+			TimeUnit.MILLISECONDS.sleep(ms);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pauseNote(note);
+	}
+	
+	public static void waitClick(int code) {
+		
+		while (!tecla[getNote(code)].isGeniusClicked()) {
+			try {
+				TimeUnit.MILLISECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		tecla[getNote(code)].setGeniusClicked(false);
+	}
+	
 	/**
 	 * Initialize the array Tecla
 	 */
@@ -174,6 +200,7 @@ public class KeyManagement {
 		tecla[29] = new Tecla(KeyEvent.VK_OPEN_BRACKET, synth);
 		tecla[30] = new Tecla(KeyEvent.VK_EQUALS, synth);
 		tecla[31] = new Tecla(KeyEvent.VK_CLOSE_BRACKET, synth);
+		//TODO verificar teclas com -1
 		tecla[32] = new Tecla(-1, synth);
 		tecla[33] = new Tecla(-1, synth);
 		tecla[34] = new Tecla(-1, synth);
@@ -209,7 +236,7 @@ public class KeyManagement {
 	 * @param note
 	 *            to be played
 	 */
-	public static void playNoteFromMIDI(int note) {
+	public static void playNote(int note) {
 		if (note < tecla.length)
 			tecla[note].play();
 	}
@@ -220,7 +247,7 @@ public class KeyManagement {
 	 * @param note
 	 *            to be paused
 	 */
-	public static void pauseNoteFromMIDI(int note) {
+	public static void pauseNote(int note) {
 		if (note < tecla.length)
 			tecla[note].pause();
 	}
