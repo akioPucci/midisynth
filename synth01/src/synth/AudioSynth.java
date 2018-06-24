@@ -17,11 +17,10 @@ import javax.sound.sampled.SourceDataLine;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
+
 public class AudioSynth extends JFrame {
 
-	//variavel para singleton
 	private static AudioSynth audioSynth;
-	
 	// criar sourceDataLine (saida de audio)
 	AudioFormat audioFormat;
 	AudioInputStream audioInputStream;
@@ -29,7 +28,7 @@ public class AudioSynth extends JFrame {
 	SourceDataLine sourceDataLine;
 
 	// parametros de audio
-	float sampleRate = 16000.0F; // pode ser 8000,11025,16000,22050,44100
+	float sampleRate = 44100.0F; // pode ser 8000,11025,16000,22050,44100
 	int sampleSizeInBits = 16; // pode ser 8,16
 	int channels = 1; // pode ser 1,2
 	boolean signed = true; // pode ser true,false
@@ -39,16 +38,16 @@ public class AudioSynth extends JFrame {
 	// 16000 samples por segundo, aguenta 1 segundo stereo e 2 mono
 	// nao sei pq * 4, eu sei q stereo duplica a quantidade de bytes
 	// mas anyway, copiei isso ai e funcionou
-	byte audioData[][] = new byte[32][16000];
-	byte noteBuffer[][] = new byte[32][16000];
-	byte outBuffer[];
+	byte outBuffer[] = new byte[16000];
 	int numOfKeys = 0;
-	int keyEnable[] = new int[32];
+	int keyEnable[] = new int[38];
+	int waveSampleCount;
 
 	Semaphore makewave_sem;
 	Semaphore sem;
-
-	//aplicacao de singleton
+	
+	double[] note_frequency;
+	
 	public static AudioSynth getAudioSynth()  {
 		
 		if (audioSynth == null)
@@ -56,21 +55,59 @@ public class AudioSynth extends JFrame {
 		
 		return audioSynth;
 	}
-	
+
 	private AudioSynth() {// constructor
-		// E ELE RETORNARA O VETOR COM TUDO BONITINHO
+		// Defining notes frequencies
+		note_frequency = new double[38];
+		
+		note_frequency[0] = 261.63f;
+		note_frequency[1] = 277.18f;
+		note_frequency[2] = 293.66f;
+		note_frequency[3] = 311.13f;
+		note_frequency[4] = 329.63f;
+		note_frequency[5] = 349.23f;
+		note_frequency[6] = 369.99f;
+		note_frequency[7] = 392.00f;
+		note_frequency[8] = 415.30f;
+		note_frequency[9] = 440.00f;
+		note_frequency[10] = 466.16f;
+		note_frequency[11] = 493.88f;
+		note_frequency[12] = 523.25f;
+		note_frequency[13] = 554.40f;
+		note_frequency[14] = 587.30f;
+		note_frequency[15] = 622.30f;
+		note_frequency[16] = 659.30f;
+		note_frequency[17] = 698.50f;
+		note_frequency[18] = 740.00f;
+		note_frequency[19] = 784.00f;
+		note_frequency[20] = 830.60f;
+		note_frequency[21] = 880.00f;
+		note_frequency[22] = 932.30f;
+		note_frequency[23] = 987.80f;
+		note_frequency[24] = 1046.50f;
+		note_frequency[25] = 1108.70f;
+		note_frequency[26] = 1174.70f;
+		note_frequency[27] = 1244.50f;
+		note_frequency[28] = 1318.50f;
+		note_frequency[29] = 1396.90f;
+		note_frequency[30] = 1480.00f;
+		note_frequency[31] = 1568.00f;
+		note_frequency[32] = 1661.20f;
+		note_frequency[33] = 1760.00f;
+		note_frequency[34] = 1864.70f;
+		note_frequency[35] = 1975.50f;
+		note_frequency[36] = 2093.00f;
+		note_frequency[37] = 2217.50f;
+		
+
 
 		// Get the required audio format
 		audioFormat = new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
-
-		// metodo que adquire o sintetizador
-		new SynGen().getSyntheticData(audioData);
 
 		// Get info on the required data line
 		DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat);
 
 		// Get a SourceDataLine object
-
 		try {
 			sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
 			sourceDataLine.open();
@@ -88,41 +125,32 @@ public class AudioSynth extends JFrame {
 	}// end constructor
 		// -------------------------------------------//
 
-	// This method plays or files the synthetic
-	// audio data that has been generated and saved
-	// in an array in memory.
-	public void playNote(int note) {
-		try {
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(0);
-		} // end catch
-	}// end playOrFileData
-
 	public void noteOn(int note) {
 		numOfKeys++;
 		keyEnable[note] = 1;
-		//System.out.println("keys on: " + numOfKeys);
+		System.out.println("keys on: " + numOfKeys);
+		waveSampleCount = 0;
 		if (sourceDataLine.isRunning() == false) {
-			//System.out.println("start listener");
+			System.out.println("start listener");
 			sourceDataLine.start();
 		}
 		sourceDataLine.flush();
-		makewave_sem.release();
+		
+		if(numOfKeys == 1)
+			makewave_sem.release();
 	}
 
 	public void noteOff(int note) {
 		try {
-			makewave_sem.acquire();
+			sourceDataLine.flush();
+			if (numOfKeys == 1) {
+				sourceDataLine.stop();
+				makewave_sem.acquire();				
+			}
 			numOfKeys--;
 			keyEnable[note] = 0;
-			//System.out.println("key off");
-			sourceDataLine.flush();
-			if (numOfKeys == 0) {
-				sourceDataLine.stop();
-
-			}
+			System.out.println("key off");
+			waveSampleCount = 0;
 
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
@@ -131,58 +159,80 @@ public class AudioSynth extends JFrame {
 	}
 
 	class SourceThread extends Thread {
-
+		
+		ByteBuffer outByteBuffer;
+		ShortBuffer outShortBuffer;
+		int shortBufferSize;
+		
+		
+		byte auxBuffer[] = new byte[16000];
+		double sinValue[] = new double[36];
+		double channel1SynthData [] = new double [38];
+		double channel2SynthData [] = new double [38];
+		double channel3SynthData [] = new double [38];
+		double mixedChannelSynthData[] = new double[38];
+		double mixedSample;
 		@Override
 		public void run() {
-			byte auxBuffer[];
-			int position = 0;
-			int blockSize;
+			
+			
+			
+			outByteBuffer = ByteBuffer.wrap(auxBuffer); // C4
+			outShortBuffer = outByteBuffer.asShortBuffer();
+			int j = 0;
+			
 			while (true) {
 				try {
-					auxBuffer = new byte[1000];
-					blockSize = auxBuffer.length;
-					for (int i = 0; i < blockSize; i++) {
+					shortBufferSize = auxBuffer.length/2;
+					double time = 0;
+					for (waveSampleCount = 0; waveSampleCount < shortBufferSize; waveSampleCount++) {
 						makewave_sem.acquire();
-						auxBuffer[i] = (byte) ((noteBuffer[0][i + blockSize * position] * keyEnable[0]
-								+ noteBuffer[1][i + blockSize * position] * keyEnable[1]
-								+ noteBuffer[2][i + blockSize * position] * keyEnable[2]
-								+ noteBuffer[3][i + blockSize * position] * keyEnable[3]
-								+ noteBuffer[4][i + blockSize * position] * keyEnable[4]
-								+ noteBuffer[5][i + blockSize * position] * keyEnable[5]
-								+ noteBuffer[6][i + blockSize * position] * keyEnable[6]
-								+ noteBuffer[7][i + blockSize * position] * keyEnable[7]
-								+ noteBuffer[8][i + blockSize * position] * keyEnable[8]
-								+ noteBuffer[9][i + blockSize * position] * keyEnable[9]
-								+ noteBuffer[10][i + blockSize * position] * keyEnable[10]
-								+ noteBuffer[11][i + blockSize * position] * keyEnable[11]
-								+ noteBuffer[12][i + blockSize * position] * keyEnable[12]
-								+ noteBuffer[13][i + blockSize * position] * keyEnable[13]
-								+ noteBuffer[14][i + blockSize * position] * keyEnable[14]
-								+ noteBuffer[15][i + blockSize * position] * keyEnable[15]
-								+ noteBuffer[16][i + blockSize * position] * keyEnable[16]
-								+ noteBuffer[17][i + blockSize * position] * keyEnable[17]
-								+ noteBuffer[18][i + blockSize * position] * keyEnable[18]
-								+ noteBuffer[19][i + blockSize * position] * keyEnable[19]
-								+ noteBuffer[20][i + blockSize * position] * keyEnable[20]
-								+ noteBuffer[21][i + blockSize * position] * keyEnable[21]
-								+ noteBuffer[22][i + blockSize * position] * keyEnable[22]
-								+ noteBuffer[23][i + blockSize * position] * keyEnable[23]
-								+ noteBuffer[24][i + blockSize * position] * keyEnable[24]
-								+ noteBuffer[25][i + blockSize * position] * keyEnable[25]
-								+ noteBuffer[26][i + blockSize * position] * keyEnable[26]
-								+ noteBuffer[27][i + blockSize * position] * keyEnable[27]
-								+ noteBuffer[28][i + blockSize * position] * keyEnable[28]
-								+ noteBuffer[29][i + blockSize * position] * keyEnable[29]
-								+ noteBuffer[30][i + blockSize * position] * keyEnable[30]
-								+ noteBuffer[31][i + blockSize * position] * keyEnable[31]) / numOfKeys);
-						//System.out.println(auxBuffer[i]);
+						
+						//get sample data
+						//TODO CLICKS
+						j++; 
+						time = (j / sampleRate);
+						if(time == 1) {
+							j = 0;
+							time = 0;
+						}
+						
+						channel1SynthData = getSynthData(2, 4, time);
+						channel2SynthData = getSynthData(3, 2, time);
+
+						
+						//TODO filter sample
+						
+						//mix channels
+						mixedChannelSynthData = mixSynthChannels(channel1SynthData, channel2SynthData, channel3SynthData);
+						
+						//TODO filter channel
+						
+						//mix to output
+						mixedSample = mixOutputSample(mixedChannelSynthData);
+						
+						outShortBuffer.put(waveSampleCount, (short) (4000*mixedSample));
 						makewave_sem.release();
 					}
-					outBuffer = auxBuffer;
-					position++;
+
+					
+					//PROCESSANDO DADO EM AUDIO
+					InputStream byteArrayInputStream = new ByteArrayInputStream(auxBuffer);
+
+					audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat,
+							auxBuffer.length / audioFormat.getFrameSize());
+
+					try {
+						audioInputStream.read(outBuffer, 0, outBuffer.length);
+
+					} catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+					
+					
+					//COMUNICACAO COM A SAIDA DE AUDIO
 					sem.release();
-					if (blockSize * position >= (int) sampleRate)
-						position = 0;
+					makewave_sem.acquire();
 				} catch (InterruptedException ie) {
 					ie.printStackTrace();
 				}
@@ -191,6 +241,132 @@ public class AudioSynth extends JFrame {
 
 		}
 	}
+	
+	double squareWave(double rad) {
+		double square_function = 0;
+		
+		if(rad % (2*Math.PI) < Math.PI) {
+			square_function = 1;
+		}
+		
+		return square_function;
+	}
+	
+	double triangleWave(double rad) {
+		double triangle_function = 0;
+		
+		if(rad % (2*Math.PI) < Math.PI/2) {
+			triangle_function = (rad % (Math.PI/2)) / (Math.PI/2);
+		}else if(rad % (2*Math.PI) < Math.PI) {
+			triangle_function = 1 - (rad % (Math.PI/2))/ (Math.PI/2);
+		}else if(rad % (2*Math.PI) < 3*Math.PI/2) {
+			triangle_function = - (rad % (Math.PI/2)) / (Math.PI/2);
+		}else if(rad % (2*Math.PI) < 2*Math.PI) {
+			triangle_function = (-1 + (rad % (Math.PI/2)) / (Math.PI/2));
+		}
+		return triangle_function;
+	}
+	
+	double sawWave(double rad) {
+		double triangle_function = 0;
+		
+		if(rad % (2*Math.PI) < Math.PI) {
+			triangle_function = (rad % (Math.PI)) / (Math.PI);
+		}else if(rad % (2*Math.PI) < 2*Math.PI) {
+			triangle_function = (-1 + (rad % (Math.PI)) / (Math.PI));
+		}
+		return triangle_function;
+	}
+	
+	double [] getSynthData(int synthType,int octave, double time) {
+		double[] synthData = new double[38];
+		double frequencyMult = 1;
+		
+		switch(octave) {
+		case 0:
+			frequencyMult = 0.25;
+			break;
+		case 1:
+			frequencyMult = 0.5;
+			break;
+		case 2:
+			frequencyMult = 1;
+			break;
+		case 3:
+			frequencyMult = 2;
+			break;
+		case 4:
+			frequencyMult = 4;
+			break;
+		case 5:
+			frequencyMult = 8;
+		break;
+		}
+		
+		switch(synthType) {
+		case 0://SINE
+			for(int i = 0; i < 38; i++) {
+				if(keyEnable[i] == 1) {
+					synthData[i] = (Math.sin(2 * Math.PI * (note_frequency[i]*frequencyMult) * time));
+				}
+				
+			}
+			break;
+			
+		case 1://SQUARE
+			for(int i = 0; i < 38; i++) {
+				if(keyEnable[i] == 1) {
+					synthData[i] = (squareWave(2 * Math.PI * (note_frequency[i]*frequencyMult) * time));
+				}
+				
+			}
+			break;
+			
+		case 2://TRIANGLE
+			for(int i = 0; i < 38; i++) {
+				if(keyEnable[i] == 1) {
+					synthData[i] = (triangleWave(2 * Math.PI * (note_frequency[i]*frequencyMult) * time));
+				}
+				
+			}
+			break;
+			
+		case 3://Saw
+			for(int i = 0; i < 38; i++) {
+				if(keyEnable[i] == 1) {
+					synthData[i] = (sawWave(2 * Math.PI * (note_frequency[i]*frequencyMult) * time));
+				}
+				
+			}
+			break;
+		}
+		
+		
+		return synthData;
+	}
+	
+	double[] mixSynthChannels(double[] channel1SynthData, double[] channel2SynthData, double[] channel3SynthData) {
+		double[] mixedSynthChannel = new double[38];
+		for(int i = 0; i < 38; i++) {
+			if(keyEnable[i] == 1) {
+				mixedSynthChannel[i] = channel1SynthData[i] + channel2SynthData[i] + channel3SynthData[i];
+			}
+			
+		}
+		
+		return mixedSynthChannel;
+	}
+	
+	double mixOutputSample( double[] noteToMix) {
+		double mixedSample = 0;
+		
+		for(int i = 0; i < 38; i++ ) {
+			mixedSample = mixedSample + noteToMix[i];
+		}
+		
+		return mixedSample;
+	}
+
 
 	class ListenThread extends Thread {
 		// This is a working buffer used to transfer
@@ -206,13 +382,9 @@ public class AudioSynth extends JFrame {
 				while (true) {
 					sem.acquire();
 
-					// System.out.println("playing");
-					// sem.acquire();
-					// System.out.println("stopped");
-					// sourceDataLine.drain();
 					sourceDataLine.write(outBuffer, 0, outBuffer.length);
 					sem.drainPermits();
-
+					makewave_sem.release();
 				}
 
 			} catch (Exception e) {
@@ -232,168 +404,8 @@ public class AudioSynth extends JFrame {
 			// Prepare the ByteBuffer and the shortBuffer
 			// for use
 
-			byteLength = synDataBuffer[0].length;
 
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[0]); // C4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 261.63f);
 
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[1]); // C#4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 277.18f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[2]); // D4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 293.66f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[3]); // D#4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 311.13f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[4]); // E4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 329.63f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[5]); // F4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 349.23f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[6]); // F#4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 369.99f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[7]); // G4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 392.00f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[8]); // G#4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 415.30f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[9]); // A4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 440.00f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[10]); // A#4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 466.16f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[11]); // B4
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 493.88f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[12]); // C5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 523.25f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[13]); // C#5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 554.40f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[14]); // D5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 587.30f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[15]); // D#5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 622.30f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[16]); // E5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 659.30f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[17]); // F5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 698.50f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[18]); // F#5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 740.00f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[19]); // G5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 784.00f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[20]); // G#5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 830.60f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[21]); // A5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 880.00f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[22]); // A#5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 932.30f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[23]); // B5
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 987.80f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[24]); // C6
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 1046.50f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[25]); // C#6
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 1108.70f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[26]); // D6
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 1174.70f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[27]); // D#6
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 1244.50f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[28]); // E6
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 1318.50f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[29]); // F6
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 1396.90f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[30]); // F#6
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 1480.00f);
-
-			byteBuffer = ByteBuffer.wrap(synDataBuffer[31]); // G6
-			shortBuffer = byteBuffer.asShortBuffer();
-			tones(shortBuffer, 1568.00f);
-			/*
-			 * byteBuffer = ByteBuffer.wrap(synDataBuffer[32]); // G#6 shortBuffer =
-			 * byteBuffer.asShortBuffer(); tones(shortBuffer, 1661.20f);
-			 * 
-			 * byteBuffer = ByteBuffer.wrap(synDataBuffer[33]); // A6 shortBuffer =
-			 * byteBuffer.asShortBuffer(); tones(shortBuffer, 1760.00f);
-			 * 
-			 * byteBuffer = ByteBuffer.wrap(synDataBuffer[34]); // A#6 shortBuffer =
-			 * byteBuffer.asShortBuffer(); tones(shortBuffer, 1864.70f);
-			 * 
-			 * byteBuffer = ByteBuffer.wrap(synDataBuffer[35]); // B6 shortBuffer =
-			 * byteBuffer.asShortBuffer(); tones(shortBuffer, 1975.50f);
-			 * 
-			 * byteBuffer = ByteBuffer.wrap(synDataBuffer[36]); // C7 shortBuffer =
-			 * byteBuffer.asShortBuffer(); tones(shortBuffer, 2093.00f);
-			 * 
-			 * byteBuffer = ByteBuffer.wrap(synDataBuffer[37]); // C#7 shortBuffer =
-			 * byteBuffer.asShortBuffer(); tones(shortBuffer, 2217.50f);
-			 */
-
-			for (int i = 0; i < 32; i++) {
-				InputStream byteArrayInputStream = new ByteArrayInputStream(synDataBuffer[i]);
-
-				audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat,
-						synDataBuffer[0].length / audioFormat.getFrameSize());
-
-				try {
-					audioInputStream.read(noteBuffer[i], 0, noteBuffer[i].length);
-
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
 
 		}
 
@@ -408,7 +420,7 @@ public class AudioSynth extends JFrame {
 			for (int cnt = 0; cnt < sampLength; cnt++) {
 				double time = cnt / sampleRate;
 				double sinValue = (Math.sin(2 * Math.PI * freq * time));
-				shortBuffer.put((short) (16000 * sinValue));
+				shortBuffer.put((short) (8000 * sinValue));
 			} // end for loop
 		}// end method tones
 	}
