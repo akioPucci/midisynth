@@ -48,7 +48,7 @@ public class Paint {
 			BasicStroke.JOIN_ROUND, 1.7f);
 	private RenderingHints renderingHints;
 
-	private List<Pair<Integer, Integer>> pontos;
+	private static List<Pair<Integer, Integer>> pontos = null;
 
 	private int Xsize = 1000;
 	private int Ysize = 300;
@@ -109,13 +109,6 @@ public class Paint {
 
 					clear(canvasImage);
 
-					List<Pair<Integer, Double>> l = generatePointsList();
-
-					x = new double[l.size()];
-					for (Pair<Integer, Double> pair : l) {
-						x[pair.getFirst()] = pair.getSecond();
-					}
-					System.out.println("Liberando semaforo");
 					semaphore.release();
 
 				}
@@ -134,15 +127,13 @@ public class Paint {
 
 		List<Pair<Integer, Double>> points = new ArrayList<Pair<Integer, Double>>();
 
-		int pos = 0;
-		for (int i = 0; i < 16000; i += (16000 / Xsize)) {
-			for (int j = 0; j < (16000 / Xsize); j++) {
-				points.add(new Pair<Integer, Double>(i + j, ((double) pontos
-						.get(pos).getSecond() * (-1) + (Ysize / 2))
-						/ (double) (Ysize / 2)));
-			}
-			pos++;
+		for (int i = 0; i < 1000; i++) {
+
+			points.add(new Pair<Integer, Double>(i, ((double) pontos.get(i)
+					.getSecond() * (-1) + (Ysize / 2))
+					/ (double) (Ysize / 2)));
 		}
+
 		System.out.println("Size: " + points.size());
 
 		return points;
@@ -191,13 +182,28 @@ public class Paint {
 		try {
 			System.out.println("Semaforo");
 			semaphore.acquire();
-			System.out.println("done");
+
+			List<Pair<Integer, Double>> l = generatePointsList();
+
+			double x[] = new double[l.size()];
+			for (Pair<Integer, Double> pair : l) {
+				x[pair.getFirst()] = pair.getSecond();
+			}
+			System.out.println("Liberando semaforo");
 			return x;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return null;
+	}
+
+	public double[] getX() {
+		return x;
+	}
+
+	public void setX(double[] x) {
+		this.x = x;
 	}
 
 	public static void main(String[] args) {
