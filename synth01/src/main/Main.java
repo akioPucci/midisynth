@@ -43,6 +43,7 @@ public class Main {
 				KeyManagement.create(g, g.createJButtonArray());
 				InputKeyboard.start();
 				
+				
 			}
 		});
 		
