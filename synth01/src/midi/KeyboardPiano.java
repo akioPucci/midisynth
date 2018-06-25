@@ -1,3 +1,4 @@
+package midi;
 
 import java.awt.Canvas;
 import java.awt.event.KeyEvent;
