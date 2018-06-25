@@ -1,3 +1,4 @@
+package midi;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -10,7 +11,7 @@ import javax.sound.midi.Synthesizer;
 import javax.swing.JFrame;
 
 
-public class midi extends JFrame {
+public class Midi extends JFrame {
   MidiChannel channel; // The channel we play on: 10 is for percussion
 
   int velocity = 100; // Default volume is 50%
@@ -20,14 +21,14 @@ public class midi extends JFrame {
     // events directly to the Synthesizer instead.
     Synthesizer synthesizer = MidiSystem.getSynthesizer();
     synthesizer.open();
-    JFrame frame = new midi(synthesizer);
+    JFrame frame = new Midi(synthesizer);
 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(50, 128); // We use window width as volume control
     frame.setVisible(true);
   }
 
-  public midi(Synthesizer synth) {
+  public Midi(Synthesizer synth) {
     super("Fck");
 
     // Channel 10 is the GeneralMidi percussion channel. In Java code, we
