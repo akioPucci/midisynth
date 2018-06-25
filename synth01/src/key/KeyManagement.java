@@ -154,8 +154,8 @@ public class KeyManagement {
 	
 	public static void waitClick(int code) {
 		
-		while (!tecla[getNote(code)].isGeniusClicked()) {
-			try {
+		while (tecla[getNote(code)].isGeniusClicked()) {
+			try { 
 				TimeUnit.MILLISECONDS.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

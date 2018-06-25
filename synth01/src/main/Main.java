@@ -47,15 +47,14 @@ public class Main {
 		});
 		
 		Scanner s = new Scanner(System.in);
-		System.out.println("Record?");
+		/**System.out.println("Record?");
 		s.nextLine();
 		KeyManagement.startRecording(0);
 		System.out.println("Pause?");
 		String l = s.nextLine();
-		KeyManagement.stopRecording(l);
+		KeyManagement.stopRecording(l);**/
 		System.out.println("Genius?");
-		s.nextLine();
-		Genius.startGenius(l);
+		Genius.startGenius(s.nextLine());
 		
 	}
 
