@@ -35,7 +35,7 @@ import key.Pair;
 
 public class Paint {
 
-	private final Semaphore semaphore = new Semaphore(0);
+	private Semaphore semaphore = new Semaphore(0);
 	private BufferedImage canvasImage;
 	private JPanel gui;
 	private Color color = Color.WHITE;
@@ -55,7 +55,7 @@ public class Paint {
 
 	private double x[];
 
-	public JComponent getGui() {
+	public JComponent getGui(Semaphore semaphore) {
 
 		pontos = new ArrayList<Pair<Integer, Integer>>();
 
@@ -185,7 +185,7 @@ public class Paint {
 
 	public double[] open(JFrame f) {
 
-		f.setContentPane(new Paint().getGui());
+		f.setContentPane(new Paint().getGui(semaphore));
 		f.setVisible(true);
 
 		try {
