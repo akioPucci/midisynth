@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 
+
+
 public class AudioSynth extends JFrame {
 
 	private static AudioSynth audioSynth;
@@ -34,6 +36,9 @@ public class AudioSynth extends JFrame {
 	private boolean bigEndian; // pode ser true,false
 	
 	//componentes
+	double[] noteFrequency = new double[38];
+
+	
 	private Oscillator osc1;
 	private Oscillator osc2;
 	private Oscillator osc3;
@@ -88,6 +93,46 @@ public class AudioSynth extends JFrame {
 		keysEnabled = 0;
 		numOfKeys = 38;
 		keyEnable = new boolean[numOfKeys];
+		
+		//definicao de frequencias
+		noteFrequency[0] = 261.63f;
+		noteFrequency[1] = 277.18f;
+		noteFrequency[2] = 293.66f;
+		noteFrequency[3] = 311.13f;
+		noteFrequency[4] = 329.63f;
+		noteFrequency[5] = 349.23f;
+		noteFrequency[6] = 369.99f;
+		noteFrequency[7] = 392.00f;
+		noteFrequency[8] = 415.30f;
+		noteFrequency[9] = 440.00f;
+		noteFrequency[10] = 466.16f;
+		noteFrequency[11] = 493.88f;
+		noteFrequency[12] = 523.25f;
+		noteFrequency[13] = 554.40f;
+		noteFrequency[14] = 587.30f;
+		noteFrequency[15] = 622.30f;
+		noteFrequency[16] = 659.30f;
+		noteFrequency[17] = 698.50f;
+		noteFrequency[18] = 740.00f;
+		noteFrequency[19] = 784.00f;
+		noteFrequency[20] = 830.60f;
+		noteFrequency[21] = 880.00f;
+		noteFrequency[22] = 932.30f;
+		noteFrequency[23] = 987.80f;
+		noteFrequency[24] = 1046.50f;
+		noteFrequency[25] = 1108.70f;
+		noteFrequency[26] = 1174.70f;
+		noteFrequency[27] = 1244.50f;
+		noteFrequency[28] = 1318.50f;
+		noteFrequency[29] = 1396.90f;
+		noteFrequency[30] = 1480.00f;
+		noteFrequency[31] = 1568.00f;
+		noteFrequency[32] = 1661.20f;
+		noteFrequency[33] = 1760.00f;
+		noteFrequency[34] = 1864.70f;
+		noteFrequency[35] = 1975.50f;
+		noteFrequency[36] = 2093.00f;
+		noteFrequency[37] = 2217.50f;
 		
 		//componentes
 		osc1 = new Oscillator("sine",   1, sampleRate);
@@ -188,7 +233,6 @@ public class AudioSynth extends JFrame {
 				try {
 					for (inputBlockCounter = 0; inputBlockCounter < shortBufferSize; inputBlockCounter++) {
 						input_sem.acquire();
-						System.out.println("zasd");
 						
 						//Oscillator
 						//TODO CLICKS
@@ -216,7 +260,7 @@ public class AudioSynth extends JFrame {
 					audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat,
 							inBuffer.length / audioFormat.getFrameSize());
 					try {
-						audioInputStream.read(outBuffer, 0, outBuffer.length);
+						audioInputStream.read(outBuffer);
 
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
@@ -235,6 +279,17 @@ public class AudioSynth extends JFrame {
 		}
 	}
 	
+class isSoundOn extends Thread {
+		
+		@Override
+		public void run() {
+			
+			while(true) {
+				
+			}
+		}
+			
+	}
 
 
 
@@ -245,6 +300,7 @@ public class AudioSynth extends JFrame {
 					output_sem.acquire();
 
 					sourceDataLine.write(outBuffer, 0, outBuffer.length);
+					System.out.println("aaa");
 					output_sem.drainPermits();
 					input_sem.release();
 					//TODO ouvir constantemente 

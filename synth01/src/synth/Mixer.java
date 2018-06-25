@@ -50,7 +50,6 @@ public class Mixer {
 				mixedSynthChannel[i] = channel1SynthData[i] + channel2SynthData[i] + channel3SynthData[i];
 			
 		}
-		System.out.println("aa");
 		
 		return mixedSynthChannel;
 	}

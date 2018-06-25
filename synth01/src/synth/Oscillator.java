@@ -13,66 +13,6 @@ public class Oscillator {
 	public Oscillator(String type, int octave, float sampleRate) {
 		this.type = type;
 		
-		switch(octave) {
-		case 0:
-			frequencyMult = 0.25;
-			break;
-		case 1:
-			frequencyMult = 0.5;
-			break;
-		case 2:
-			frequencyMult = 1;
-			break;
-		case 3:
-			frequencyMult = 2;
-			break;
-		case 4:
-			frequencyMult = 4;
-			break;
-		case 5:
-			frequencyMult = 8;
-		break;
-		}
-		
-		noteFrequency = new double[38];
-		noteFrequency[0] = 261.63f;
-		noteFrequency[1] = 277.18f;
-		noteFrequency[2] = 293.66f;
-		noteFrequency[3] = 311.13f;
-		noteFrequency[4] = 329.63f;
-		noteFrequency[5] = 349.23f;
-		noteFrequency[6] = 369.99f;
-		noteFrequency[7] = 392.00f;
-		noteFrequency[8] = 415.30f;
-		noteFrequency[9] = 440.00f;
-		noteFrequency[10] = 466.16f;
-		noteFrequency[11] = 493.88f;
-		noteFrequency[12] = 523.25f;
-		noteFrequency[13] = 554.40f;
-		noteFrequency[14] = 587.30f;
-		noteFrequency[15] = 622.30f;
-		noteFrequency[16] = 659.30f;
-		noteFrequency[17] = 698.50f;
-		noteFrequency[18] = 740.00f;
-		noteFrequency[19] = 784.00f;
-		noteFrequency[20] = 830.60f;
-		noteFrequency[21] = 880.00f;
-		noteFrequency[22] = 932.30f;
-		noteFrequency[23] = 987.80f;
-		noteFrequency[24] = 1046.50f;
-		noteFrequency[25] = 1108.70f;
-		noteFrequency[26] = 1174.70f;
-		noteFrequency[27] = 1244.50f;
-		noteFrequency[28] = 1318.50f;
-		noteFrequency[29] = 1396.90f;
-		noteFrequency[30] = 1480.00f;
-		noteFrequency[31] = 1568.00f;
-		noteFrequency[32] = 1661.20f;
-		noteFrequency[33] = 1760.00f;
-		noteFrequency[34] = 1864.70f;
-		noteFrequency[35] = 1975.50f;
-		noteFrequency[36] = 2093.00f;
-		noteFrequency[37] = 2217.50f;
 		
 		time = 0;
 		this.sampleCounter = 0;
