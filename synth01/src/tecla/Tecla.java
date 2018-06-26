@@ -139,7 +139,7 @@ public class Tecla implements KeyListener {
 			synth.noteOn(note);
 		playing = true;
 		button.setVisible(false);
-		Tela_MIDI.setNotVisible(note);
+		//Tela_MIDI.setNotVisible(note);
 		//System.out.println("Deixando falso: " + button.isVisible());
 		recordOn();
 	}

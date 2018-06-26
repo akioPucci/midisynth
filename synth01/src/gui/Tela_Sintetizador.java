@@ -4,15 +4,20 @@ import java.awt.Color;
 
 import javax.swing.WindowConstants;
 
+import genius.Genius;
+
 import java.awt.Dimension;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 import key.KeyManagement;
@@ -24,6 +29,11 @@ public class Tela_Sintetizador extends JFrame{
     public JMenu menu;
     public JMenuItem exit;
     public JMenuItem MIDI;
+    
+	private JButton gravar;
+	private JButton reproduzir;
+	private JButton pausar;
+	private JButton genius;
 	
 	public Tela_Sintetizador() {
 		t = new Teclado();
@@ -45,6 +55,106 @@ public class Tela_Sintetizador extends JFrame{
 	}
 	
 	public void initMenu() {
+		
+		gravar = new JButton();
+		gravar.setBounds(1100, 100, 100, 50);
+		gravar.setText("Gravar");
+		gravar.setVisible(true);
+		getContentPane().add(gravar);
+
+		gravar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				KeyManagement.startRecording(0);
+
+			}
+		});
+
+		pausar = new JButton();
+		pausar.setBounds(1200, 100, 100, 50);
+		pausar.setText("Parar");
+		pausar.setVisible(true);
+		getContentPane().add(pausar);
+
+		pausar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nome = JOptionPane.showInputDialog("Nome do arquivo");
+				KeyManagement.stopRecording(nome);
+
+			}
+		});
+
+		reproduzir = new JButton();
+		reproduzir.setBounds(1300, 100, 100, 50);
+		reproduzir.setText("Reproduzir");
+		reproduzir.setVisible(true);
+		getContentPane().add(reproduzir);
+
+		reproduzir.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser file = new JFileChooser(System
+						.getProperty("user.dir") + "/gravacoes");
+
+				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int i = file.showSaveDialog(null);
+				if (i == 1) {
+					// TODO nao escolheu nada
+				} else {
+					File arquivo = file.getSelectedFile();
+					int last = arquivo.getPath().lastIndexOf('\\');
+					String path = arquivo.getPath().substring(last + 1);
+					path = path.substring(0, path.indexOf('.'));
+					try {
+						KeyManagement.playRecord(path);
+					} catch (Exception e1) {
+						// TODO arquivo invalido
+						// e1.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+		genius = new JButton();
+		genius.setBounds(1400, 100, 100, 50);
+		genius.setText("Genius");
+		genius.setVisible(true);
+		getContentPane().add(genius);
+
+		genius.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser file = new JFileChooser(System
+						.getProperty("user.dir") + "/gravacoes");
+
+				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int i = file.showSaveDialog(null);
+				if (i == 1) {
+					// TODO nao escolheu nada
+				} else {
+					File arquivo = file.getSelectedFile();
+					int last = arquivo.getPath().lastIndexOf('\\');
+					String path = arquivo.getPath().substring(last + 1);
+					path = path.substring(0, path.indexOf('.'));
+					try {
+						Genius.startGenius(path);
+						// KeyManagement.playRecord(path);
+					} catch (Exception e1) {
+						// TODO arquivo invalido
+						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", JOptionPane.ERROR_MESSAGE);
+						// e1.printStackTrace();
+					}
+				}
+
+			}
+		});
+
 		Bar = new JMenuBar();
         menu = new JMenu();
         MIDI = new JMenuItem();
@@ -132,7 +242,10 @@ public class Tela_Sintetizador extends JFrame{
     	for (int i = 0; i < button.length; i++) {
 			button[i].setFocusable(false);
 		}
-    	
+		gravar.setFocusable(false);
+		pausar.setFocusable(false);
+		reproduzir.setFocusable(false);
+		genius.setFocusable(false);
     	Bar.setFocusable(false);
     	menu.setFocusable(false);
     	exit.setFocusable(false);
