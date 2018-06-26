@@ -275,7 +275,7 @@ public class KeyManagement {
 	 * @param button
 	 *            array of JButtons
 	 */
-	private static void addButtons(JButton[] button) {
+	public static void addButtons(JButton[] button) {
 		for (int i = 0; i < tecla.length; i++) {
 			if(i < 37)
 				tecla[i].addJButton(button[i]);
