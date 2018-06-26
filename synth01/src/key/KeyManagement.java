@@ -14,8 +14,8 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
-import gui.GUI;
 import record.Record;
 import synth.AudioSynth;
 import tecla.Tecla;
@@ -45,10 +45,10 @@ public class KeyManagement {
 	 * @param button
 	 *            array of the key JButtons
 	 */
-	public static void create(GUI g, JButton[] button) {
+	public static void create(JFrame j, JButton[] button) {
 
 		createKeys();
-		inicitiateKeyListeners(g);
+		inicitiateKeyListeners(j);
 		addButtons(button);
 
 	}
@@ -243,9 +243,9 @@ public class KeyManagement {
 	 * 
 	 * @param g
 	 */
-	private static void inicitiateKeyListeners(GUI g) {
+	private static void inicitiateKeyListeners(JFrame j) {
 		for (int i = 0; i < tecla.length; i++)
-			g.addKeyListener(tecla[i]);
+			j.addKeyListener(tecla[i]);
 	}
 
 	/**
