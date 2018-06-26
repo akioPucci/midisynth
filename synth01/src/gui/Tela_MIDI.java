@@ -144,6 +144,7 @@ public class Tela_MIDI extends JFrame {
 						// KeyManagement.playRecord(path);
 					} catch (Exception e1) {
 						// TODO arquivo invalido
+						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", JOptionPane.ERROR_MESSAGE);
 						// e1.printStackTrace();
 					}
 				}
