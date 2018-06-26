@@ -1,18 +1,32 @@
 package synth;
 
+/**
+ * Oscillator, contains 5 types of oscillator,
+ *  sine, square, triangle, saw, and drawn
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
 public class Oscillator {
 	
 	private String type;
+	private int octave;
 	private double frequencyMult;
 	double[] noteFrequency;
+	double amp;
 	
 	private double time;
 	private int sampleCounter;
 	private float sampleRate;
 	
+	private double[] drawnWaveSample;
+	
 	public Oscillator(String type, int octave, float sampleRate) {
 		this.type = type;
 		
+		this.octave = octave;
 		switch(octave) {
 		case 0:
 			frequencyMult = 0.25;
@@ -74,9 +88,14 @@ public class Oscillator {
 		noteFrequency[36] = 2093.00f;
 		noteFrequency[37] = 2217.50f;
 		
+		amp = 1;
+		
 		time = 0;
 		this.sampleCounter = 0;
 		this.sampleRate = sampleRate;
+		
+		//drawn wave
+		drawnWaveSample = new double[1000];
 	}
 
 	public String getType() {
@@ -87,12 +106,32 @@ public class Oscillator {
 		this.type = type;
 	}
 
-	public double getFrequencyMult() {
-		return frequencyMult;
+	public int getOctave() {
+		return octave;
 	}
 
-	public void setFrequencyMult(double frequencyMult) {
-		this.frequencyMult = frequencyMult;
+	public void setOctave(int octave) {
+		this.octave = octave;
+		switch(octave) {
+		case 0:
+			frequencyMult = 0.25;
+			break;
+		case 1:
+			frequencyMult = 0.5;
+			break;
+		case 2:
+			frequencyMult = 1;
+			break;
+		case 3:
+			frequencyMult = 2;
+			break;
+		case 4:
+			frequencyMult = 4;
+			break;
+		case 5:
+			frequencyMult = 8;
+		break;
+		}
 	}
 
 	public double[] getNoteFrequency() {
@@ -101,6 +140,14 @@ public class Oscillator {
 
 	public void setNoteFrequency(double[] noteFrequency) {
 		this.noteFrequency = noteFrequency;
+	}
+	
+	public double getAmp() {
+		return amp;
+	}
+	
+	public void setAmp(double value) {
+		this.amp = value;
 	}
 
 	public double getTime() {
@@ -119,11 +166,29 @@ public class Oscillator {
 		this.sampleRate = sampleRate;
 	}
 	
+	/**
+	 * counts the oscillator time to simulate his behavior
+	 */
 	public void countTime() {
 		time = (sampleCounter / sampleRate);
 		sampleCounter++;
 	}
+	
+	/**
+	 * gets the sampled data
+	 * @param sample
+	 */
+	public void setDrawnWaveSample(double[] sample) {
+		this.drawnWaveSample = sample;
+	}
 
+	
+	/**
+	 * returns a array of samples(for each keyboard key)
+	 * the oscillator differs, depending on the type of oscillator
+	 * @param keyEnable
+	 * @return
+	 */
 	double [] oscillate(boolean[] keyEnable) {
 		double[] synthData = new double[38];
 		
@@ -156,7 +221,7 @@ public class Oscillator {
 			}
 			break;
 			
-		case "saw"://Saw
+		case "saw":
 			for(int i = 0; i < 38; i++) {
 				if(keyEnable[i]) {
 					synthData[i] = (sawWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
@@ -164,13 +229,27 @@ public class Oscillator {
 				
 			}
 			break;
+			
+		case "drawn":
+			for(int i = 0; i < 38; i++) {
+				if(keyEnable[i]) {
+					synthData[i] = (drawnWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
+				}
+				
+			}
 		}
 		
 		countTime();
 		
+		
 		return synthData;
 	}
 	
+	/**
+	 * square function
+	 * @param rad
+	 * @return
+	 */
 	double squareWave(double rad) {
 		double square_function = 0;
 		
@@ -181,6 +260,11 @@ public class Oscillator {
 		return square_function;
 	}
 	
+	/**
+	 * triangle function
+	 * @param rad
+	 * @return
+	 */
 	double triangleWave(double rad) {
 		double triangle_function = 0;
 		
@@ -196,15 +280,32 @@ public class Oscillator {
 		return triangle_function;
 	}
 	
+	/**
+	 * saw wave function
+	 * @param rad
+	 * @return
+	 */
 	double sawWave(double rad) {
-		double triangle_function = 0;
+		double saw_function = 0;
 		
 		if(rad % (2*Math.PI) < Math.PI) {
-			triangle_function = (rad % (Math.PI)) / (Math.PI);
+			saw_function = (rad % (Math.PI)) / (Math.PI);
 		}else if(rad % (2*Math.PI) < 2*Math.PI) {
-			triangle_function = (-1 + (rad % (Math.PI)) / (Math.PI));
+			saw_function = (-1 + (rad % (Math.PI)) / (Math.PI));
 		}
-		return triangle_function;
+		return saw_function;
 	}
-
+	
+	/**
+	 * mapping of the sampled data into a 2*PI interval, 
+	 * simulates a approximated function of the sampled wave
+	 * @param rad
+	 * @return
+	 */
+	double drawnWave(double rad) {
+		System.out.println((int)((rad % 2*Math.PI) * (1000/(2*Math.PI)))-1);
+		//return drawnWaveSample[(int)((rad % 2*Math.PI) * (1000/2*Math.PI))-1];
+		return 0;
+		
+	}
 }

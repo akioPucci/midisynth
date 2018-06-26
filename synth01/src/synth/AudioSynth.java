@@ -18,6 +18,15 @@ import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 
+/**
+ * Synthesizer Components Logic
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
+
 public class AudioSynth extends JFrame {
 
 	private static AudioSynth audioSynth;
@@ -34,13 +43,8 @@ public class AudioSynth extends JFrame {
 	private boolean bigEndian; // pode ser true,false
 	
 	//componentes
-	private Oscillator osc1;
-	private Oscillator osc2;
-	private Oscillator osc3;
-	private double[] channel1;
-	private double[] channel2;
-	private double[] channel3;
-	private int numOfChannels;
+	private Oscillator[] osc;
+	private AudioChannel[] outputChannel;
 	private Mixer mixer;
 	
 	//Informações Teclado
@@ -64,7 +68,9 @@ public class AudioSynth extends JFrame {
 	private Semaphore output_sem;
 	
 	
-	
+	/**
+	 * static method, creates the object
+	 */
 	public static AudioSynth getAudioSynth()  {
 		
 		if (audioSynth == null)
@@ -73,6 +79,9 @@ public class AudioSynth extends JFrame {
 		return audioSynth;
 	}
 
+	/**
+	 * constructor, initialize all synthesizer parameters
+	 */
 	private AudioSynth() {
 		
 		// parametros de audio
@@ -90,17 +99,20 @@ public class AudioSynth extends JFrame {
 		keyEnable = new boolean[numOfKeys];
 		
 		//componentes
-		osc1 = new Oscillator("sine",   1, sampleRate);
-		osc2 = new Oscillator("square", 1, sampleRate);
-		osc3 = new Oscillator("sine",   4, sampleRate);
-		channel1 = new double[numOfKeys];
-		channel2 = new double[numOfKeys];
-		channel3 = new double[numOfKeys];
-		numOfChannels = 3;
-		mixer = new Mixer(numOfChannels);
+		osc = new Oscillator[3];
+		osc[0] = new Oscillator("sine",   5, sampleRate);
+		osc[1] = new Oscillator("square",   1, sampleRate);
+		osc[2] = new Oscillator("saw",   3, sampleRate);
+
+		
+		outputChannel = new AudioChannel[3];
+		outputChannel[0] = new AudioChannel(numOfKeys);
+		outputChannel[1] = new AudioChannel(numOfKeys);
+		outputChannel[2] = new AudioChannel(numOfKeys);
+		mixer = new Mixer(outputChannel.length);
 		
 		//block communications
-		blockSize = 4000;
+		blockSize = 1000;
 
 		//buffer entrada
 		inBuffer = new byte[blockSize];
@@ -134,7 +146,10 @@ public class AudioSynth extends JFrame {
 
 	}
 
-	//interface with keyboard
+	/**
+	 * play a note
+	 * @param note
+	 */
 	public void noteOn(int note) {
 		keysEnabled++;
 		keyEnable[note] = true;
@@ -148,9 +163,12 @@ public class AudioSynth extends JFrame {
 			input_sem.release();
 	}
 
+	/**
+	 * stop a note
+	 * @param note
+	 */
 	public void noteOff(int note) {
 		try {
-			sourceDataLine.flush();
 			if (keysEnabled == 1) {
 				sourceDataLine.stop();
 				input_sem.acquire();				
@@ -158,14 +176,66 @@ public class AudioSynth extends JFrame {
 			keysEnabled--;
 			keyEnable[note] = false;
 			inputBlockCounter = 0;
+			sourceDataLine.flush();
 
 		} catch (InterruptedException ie) {
 			ie.printStackTrace();
 		}
 
 	}
-
 	
+	/**
+	 * sets the main volume
+	 * @param value
+	 */
+	public void setVolumeMaster(double value) {
+		mixer.setVolumeMaster(value);
+	}
+	
+	/**
+	 * sets the type of Oscillator (sine, square, triangle, saw or drawn)
+	 * @param oscNum
+	 * @param type
+	 */
+	public void setOscType(int oscNum, String type) {
+		osc[oscNum].setType(type);
+	}
+	
+	/**
+	 * sets the oscillator amplitude
+	 * @param oscNum
+	 * @param value
+	 */
+	public void setOscAmp(int oscNum, double value) {
+		osc[oscNum].setAmp(value);
+	}
+	
+	/**
+	 * sets the oscillator octave base
+	 * @param oscNum
+	 * @param octave
+	 */
+	public void setOscOctave(int oscNum, int octave) {
+		osc[oscNum].setOctave(octave);
+	}
+	
+	/**
+	 * sets the sample to be oscillated
+	 * @param oscNum
+	 * @param sample
+	 */
+	public void setOscDrawnSample(int oscNum, double[] sample) {
+		osc[oscNum].setDrawnWaveSample(sample);
+	}
+	
+
+	/**
+	 * runs all the input processes, communicates with the output thread
+	 * @author Carolina Arenas Okawa
+	 * @author Eric
+	 * @author Fernando Akio
+	 * @author Vinícius
+	 */
 	class InputThread extends Thread {
 		
 		//final sample to send to output
@@ -188,30 +258,24 @@ public class AudioSynth extends JFrame {
 				try {
 					for (inputBlockCounter = 0; inputBlockCounter < shortBufferSize; inputBlockCounter++) {
 						input_sem.acquire();
-						System.out.println("zasd");
 						
 						//Oscillator
-						//TODO CLICKS
-						channel1 = osc1.oscillate(keyEnable);
-						channel2 = osc2.oscillate(keyEnable);
-						channel3 = osc3.oscillate(keyEnable);
-						
-						
-						//TODO filter sample
-						
-						//mix channels
-						
-						//TODO filter channel
+						outputChannel[0].setKeysOutput(osc[0].oscillate(keyEnable));
+						outputChannel[1].setKeysOutput(osc[1].oscillate(keyEnable));
+						outputChannel[2].setKeysOutput(osc[2].oscillate(keyEnable));
 						
 						//mix to output
-						mixedSampleBuffer = mixer.mixOutputSample(channel1, channel2, channel3);
+						mixedSampleBuffer = mixer.mixOutputSample(
+								outputChannel[0].getKeysOutput(),
+								outputChannel[1].getKeysOutput(),
+								outputChannel[2].getKeysOutput());
+						outShortBuffer.put(inputBlockCounter, (short) (mixedSampleBuffer));
 						
-						outShortBuffer.put(inputBlockCounter, (short) (2000*mixedSampleBuffer));
 						input_sem.release();
 					}
 
 					
-					//PROCESSANDO DADO EM AUDIO
+					//processing audio
 					byteArrayInputStream = new ByteArrayInputStream(inBuffer);
 					audioInputStream = new AudioInputStream(byteArrayInputStream, audioFormat,
 							inBuffer.length / audioFormat.getFrameSize());
@@ -223,7 +287,7 @@ public class AudioSynth extends JFrame {
 					}
 					
 					
-					//COMUNICACAO COM A SAIDA DE AUDIO
+					//I/O communication
 					output_sem.release();
 					input_sem.acquire();
 				} catch (InterruptedException ie) {
@@ -237,7 +301,13 @@ public class AudioSynth extends JFrame {
 	
 
 
-
+	/**
+	 * communicates with the speaker, communicates with the input thread
+	 * @author Carolina Arenas Okawa
+	 * @author Eric
+	 * @author Fernando Akio
+	 * @author Vinícius
+	 */
 	class OutputThread extends Thread {
 		public void run() {
 			try {
@@ -256,5 +326,7 @@ public class AudioSynth extends JFrame {
 			} 
 		}
 	}
+	
+	
 
 }

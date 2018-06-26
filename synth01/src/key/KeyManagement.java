@@ -51,6 +51,10 @@ public class KeyManagement {
 
 	}
 
+	/**
+	 * starts recording
+	 * @param wave
+	 */
 	public static void startRecording(int wave) {
 		r = new Record(wave);
 
@@ -59,6 +63,11 @@ public class KeyManagement {
 		}
 	}
 
+	/**
+	 * stops recording, save to a file
+	 * @param filename
+	 * 					name of the file
+	 */
 	public static void stopRecording(String filename) {
 
 		for (int i = 0; i < tecla.length; i++) {
@@ -69,6 +78,11 @@ public class KeyManagement {
 		r.save(filename);
 	}
 
+	/**
+	 * play a recorded file
+	 * @param filename
+	 * 					name of the file
+	 */
 	public static void playRecord(String filename) {
 		filename += ".csv";
 		filename = "gravacoes/" + filename;
@@ -139,6 +153,13 @@ public class KeyManagement {
 		}
 	}
 
+	/**
+	 * makes a note plays with a determined time
+	 * @param code
+	 * 				code of the note
+	 * @param ms
+	 * 				milisseconds
+	 */
 	public static void playForMilliseconds(int code, long ms) {
 		int note = getNote(code);
 		tecla[note].setWaitingClick(true);
@@ -152,6 +173,10 @@ public class KeyManagement {
 		pauseNote(note);
 	}
 	
+	/**
+	 * waits for a note do be played
+	 * @param code
+	 */
 	public static void waitClick(int code) {
 		
 		while (tecla[getNote(code)].isGeniusClicked()) {

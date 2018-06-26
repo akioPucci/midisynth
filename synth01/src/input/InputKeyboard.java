@@ -7,6 +7,15 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Transmitter;
 
+
+/**
+ * communication with the MIDI controller
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
 public class InputKeyboard {
 
 	/**

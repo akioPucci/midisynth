@@ -1,5 +1,13 @@
 package key;
 
+/**
+ * duplas para lista
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
 public class Pair<T, S> {
 
 	private T first;
