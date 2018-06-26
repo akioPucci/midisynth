@@ -55,6 +55,7 @@ public class KeyManagement {
 
 	/**
 	 * starts recording
+	 * 
 	 * @param wave
 	 */
 	public static void startRecording(int wave) {
@@ -67,8 +68,9 @@ public class KeyManagement {
 
 	/**
 	 * stops recording, save to a file
+	 * 
 	 * @param filename
-	 * 					name of the file
+	 *            name of the file
 	 */
 	public static void stopRecording(String filename) {
 
@@ -82,8 +84,9 @@ public class KeyManagement {
 
 	/**
 	 * play a recorded file
+	 * 
 	 * @param filename
-	 * 					name of the file
+	 *            name of the file
 	 */
 	public static void playRecord(String filename) {
 		filename += ".csv";
@@ -97,13 +100,16 @@ public class KeyManagement {
 
 			br = new BufferedReader(new FileReader(filename));
 			line = br.readLine();
-			System.out.println(line);
+			if (!line.startsWith("Wave number:")) {
+				// TODO erro arquivo inválido
+			}
+			// System.out.println(line);
 			while ((line = br.readLine()) != null) {
 
 				String[] note = line.split(",");
-
-				// System.out.println("Start: " + note[0] + " end: " + note[1]
-				// + " note = " + note[2]);
+				if (note.length != 3) {
+					// TODO erro arquivo inválido
+				}
 				changes.add(new Pair<Long, Integer>(Long.parseLong(note[0]),
 						Integer.parseInt(note[2])));
 				changes.add(new Pair<Long, Integer>(Long.parseLong(note[1]),
@@ -134,6 +140,9 @@ public class KeyManagement {
 
 				if ((Calendar.getInstance().getTimeInMillis() - playStart) >= changes
 						.get(0).getFirst()) {
+					if (changes.get(0).getSecond() < 0) {
+						// TODO Erro arquivo inválido
+					}
 					tecla[getNote(changes.get(0).getSecond())].changeStatus();
 					changes.remove(0);
 				}
@@ -141,9 +150,11 @@ public class KeyManagement {
 			}
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			//TODO erro arquivo não encontrado
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//TODO erro de entrada/saida
+			//e.printStackTrace();
 		} finally {
 			if (br != null) {
 				try {
@@ -157,12 +168,15 @@ public class KeyManagement {
 
 	/**
 	 * makes a note plays with a determined time
+	 * 
 	 * @param code
-	 * 				code of the note
+	 *            code of the note
 	 * @param ms
-	 * 				milisseconds
+	 *            milisseconds
 	 */
 	public static void playForMilliseconds(int code, long ms) {
+		if (getNote(code) < 0)
+			return;
 		int note = getNote(code);
 		playNote(note);
 		try {
@@ -176,16 +190,19 @@ public class KeyManagement {
 
 	/**
 	 * waits for a note do be played
+	 * 
 	 * @param code
 	 */
 	public static void waitClick(int code) {
 
 		semaphore = new Semaphore(0);
+		if (getNote(code) < 0)
+			return;
 		tecla[getNote(code)].setSemaphore(semaphore);
 		try {
-			System.out.println("Esperando");
+			// System.out.println("Esperando");
 			semaphore.acquire();
-			System.out.println("Pronto");
+			// System.out.println("Pronto");
 
 			TimeUnit.MILLISECONDS.sleep(500);
 
@@ -196,7 +213,6 @@ public class KeyManagement {
 
 	}
 
-	
 	private static void createKeys() {
 		tecla[0] = new Tecla(KeyEvent.VK_Z, synth);
 		tecla[1] = new Tecla(KeyEvent.VK_S, synth);
@@ -230,7 +246,7 @@ public class KeyManagement {
 		tecla[29] = new Tecla(KeyEvent.VK_OPEN_BRACKET, synth);
 		tecla[30] = new Tecla(KeyEvent.VK_EQUALS, synth);
 		tecla[31] = new Tecla(KeyEvent.VK_CLOSE_BRACKET, synth);
-		//TODO verificar teclas com -1
+		// TODO verificar teclas com -1
 		tecla[32] = new Tecla(-1, synth);
 		tecla[33] = new Tecla(-1, synth);
 		tecla[34] = new Tecla(-1, synth);
