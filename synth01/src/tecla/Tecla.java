@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.ButtonModel;
 import javax.swing.JButton;
@@ -14,6 +13,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import key.KeyManagement;
+import midi.MidiSynth;
 import synth.AudioSynth;
 
 /**
@@ -30,6 +30,7 @@ public class Tecla implements KeyListener {
 	private int code;
 	private int note;
 	private AudioSynth synth;
+	private MidiSynth midi;
 	private boolean playing;
 	private JButton button;
 	private boolean recording;
@@ -39,10 +40,11 @@ public class Tecla implements KeyListener {
 	private boolean geniusClicked;
 	private Semaphore semaphore;
 
-	public Tecla(int code, AudioSynth synth) {
+	public Tecla(int code, AudioSynth synth, MidiSynth midi) {
 		this.code = code;
 		this.note = KeyManagement.getNote(code);
 		this.synth = synth;
+		this.midi = midi;
 		start = new ArrayList<Long>();
 		end = new ArrayList<Long>();
 		waitingClick = false;
@@ -65,7 +67,7 @@ public class Tecla implements KeyListener {
 			public void stateChanged(ChangeEvent e) {
 
 				if (b.isPressed() && !playing) {
-					play();
+						play();
 				} else if (!b.isPressed() && playing) {
 					pause();
 				}
@@ -80,7 +82,11 @@ public class Tecla implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == code && !playing) {
-			play();
+			System.out.println(e.getKeyCode());
+			if(e.getKeyCode() < 40)
+				changeInstrument();
+			else
+				play();
 		}
 	}
 
@@ -124,6 +130,7 @@ public class Tecla implements KeyListener {
 	 * play note from the synthesizer or midi
 	 */
 	public void play() {
+		//midi.noteOn(note);
 		synth.noteOn(note);
 		playing = true;
 		button.setVisible(false);
@@ -135,6 +142,8 @@ public class Tecla implements KeyListener {
 	 */
 	public void pause() {
 		playing = false;
+		
+		//midi.noteOff(note);
 		synth.noteOff(note);
 		button.setVisible(true);
 		recordOff();
@@ -143,6 +152,10 @@ public class Tecla implements KeyListener {
 			geniusClicked = true;
 			waitingClick = false;
 		}
+	}
+	
+	public void changeInstrument() {
+		midi.changeInstrument(note);
 	}
 	
 	public void changeStatus() {

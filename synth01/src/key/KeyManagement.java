@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import midi.MidiSynth;
 import record.Record;
 import synth.AudioSynth;
 import tecla.Tecla;
@@ -35,7 +36,8 @@ public class KeyManagement {
 	private static Record r;
 
 	private static AudioSynth synth = AudioSynth.getAudioSynth();
-	private static Tecla tecla[] = new Tecla[37];
+	private static MidiSynth midi = MidiSynth.getMidiSynth();
+	private static Tecla tecla[] = new Tecla[39];
 
 	/**
 	 * Create all needed to key management
@@ -214,44 +216,47 @@ public class KeyManagement {
 	}
 
 	private static void createKeys() {
-		tecla[0] = new Tecla(KeyEvent.VK_Z, synth);
-		tecla[1] = new Tecla(KeyEvent.VK_S, synth);
-		tecla[2] = new Tecla(KeyEvent.VK_X, synth);
-		tecla[3] = new Tecla(KeyEvent.VK_D, synth);
-		tecla[4] = new Tecla(KeyEvent.VK_C, synth);
-		tecla[5] = new Tecla(KeyEvent.VK_V, synth);
-		tecla[6] = new Tecla(KeyEvent.VK_G, synth);
-		tecla[7] = new Tecla(KeyEvent.VK_B, synth);
-		tecla[8] = new Tecla(KeyEvent.VK_H, synth);
-		tecla[9] = new Tecla(KeyEvent.VK_N, synth);
-		tecla[10] = new Tecla(KeyEvent.VK_J, synth);
-		tecla[11] = new Tecla(KeyEvent.VK_M, synth);
-		tecla[12] = new Tecla(KeyEvent.VK_Q, synth);
-		tecla[13] = new Tecla(KeyEvent.VK_2, synth);
-		tecla[14] = new Tecla(KeyEvent.VK_W, synth);
-		tecla[15] = new Tecla(KeyEvent.VK_3, synth);
-		tecla[16] = new Tecla(KeyEvent.VK_E, synth);
-		tecla[17] = new Tecla(KeyEvent.VK_R, synth);
-		tecla[18] = new Tecla(KeyEvent.VK_5, synth);
-		tecla[19] = new Tecla(KeyEvent.VK_T, synth);
-		tecla[20] = new Tecla(KeyEvent.VK_6, synth);
-		tecla[21] = new Tecla(KeyEvent.VK_Y, synth);
-		tecla[22] = new Tecla(KeyEvent.VK_7, synth);
-		tecla[23] = new Tecla(KeyEvent.VK_U, synth);
-		tecla[24] = new Tecla(KeyEvent.VK_I, synth);
-		tecla[25] = new Tecla(KeyEvent.VK_9, synth);
-		tecla[26] = new Tecla(KeyEvent.VK_O, synth);
-		tecla[27] = new Tecla(KeyEvent.VK_0, synth);
-		tecla[28] = new Tecla(KeyEvent.VK_P, synth);
-		tecla[29] = new Tecla(KeyEvent.VK_OPEN_BRACKET, synth);
-		tecla[30] = new Tecla(KeyEvent.VK_EQUALS, synth);
-		tecla[31] = new Tecla(KeyEvent.VK_CLOSE_BRACKET, synth);
+		tecla[0] = new Tecla(KeyEvent.VK_Z, synth, midi);
+		tecla[1] = new Tecla(KeyEvent.VK_S, synth, midi);
+		tecla[2] = new Tecla(KeyEvent.VK_X, synth, midi);
+		tecla[3] = new Tecla(KeyEvent.VK_D, synth, midi);
+		tecla[4] = new Tecla(KeyEvent.VK_C, synth, midi);
+		tecla[5] = new Tecla(KeyEvent.VK_V, synth, midi);
+		tecla[6] = new Tecla(KeyEvent.VK_G, synth, midi);
+		tecla[7] = new Tecla(KeyEvent.VK_B, synth, midi);
+		tecla[8] = new Tecla(KeyEvent.VK_H, synth, midi);
+		tecla[9] = new Tecla(KeyEvent.VK_N, synth, midi);
+		tecla[10] = new Tecla(KeyEvent.VK_J, synth, midi);
+		tecla[11] = new Tecla(KeyEvent.VK_M, synth, midi);
+		tecla[12] = new Tecla(KeyEvent.VK_Q, synth, midi);
+		tecla[13] = new Tecla(KeyEvent.VK_2, synth, midi);
+		tecla[14] = new Tecla(KeyEvent.VK_W, synth, midi);
+		tecla[15] = new Tecla(KeyEvent.VK_3, synth, midi);
+		tecla[16] = new Tecla(KeyEvent.VK_E, synth, midi);
+		tecla[17] = new Tecla(KeyEvent.VK_R, synth, midi);
+		tecla[18] = new Tecla(KeyEvent.VK_5, synth, midi);
+		tecla[19] = new Tecla(KeyEvent.VK_T, synth, midi);
+		tecla[20] = new Tecla(KeyEvent.VK_6, synth, midi);
+		tecla[21] = new Tecla(KeyEvent.VK_Y, synth, midi);
+		tecla[22] = new Tecla(KeyEvent.VK_7, synth, midi);
+		tecla[23] = new Tecla(KeyEvent.VK_U, synth, midi);
+		tecla[24] = new Tecla(KeyEvent.VK_I, synth, midi);
+		tecla[25] = new Tecla(KeyEvent.VK_9, synth, midi);
+		tecla[26] = new Tecla(KeyEvent.VK_O, synth, midi);
+		tecla[27] = new Tecla(KeyEvent.VK_0, synth, midi);
+		tecla[28] = new Tecla(KeyEvent.VK_P, synth, midi);
+		tecla[29] = new Tecla(KeyEvent.VK_OPEN_BRACKET, synth, midi);
+		tecla[30] = new Tecla(KeyEvent.VK_EQUALS, synth, midi);
+		tecla[31] = new Tecla(KeyEvent.VK_CLOSE_BRACKET, synth, midi);
 		// TODO verificar teclas com -1
-		tecla[32] = new Tecla(-1, synth);
-		tecla[33] = new Tecla(-1, synth);
-		tecla[34] = new Tecla(-1, synth);
-		tecla[35] = new Tecla(-1, synth);
-		tecla[36] = new Tecla(-1, synth);
+		tecla[32] = new Tecla(-1, synth, midi);
+		tecla[33] = new Tecla(-1, synth, midi);
+		tecla[34] = new Tecla(-1, synth, midi);
+		tecla[35] = new Tecla(-1, synth, midi);
+		tecla[36] = new Tecla(-1, synth, midi);
+		tecla[37] = new Tecla(KeyEvent.VK_LEFT, synth, midi);
+		tecla[38] = new Tecla(KeyEvent.VK_RIGHT, synth, midi);
+	
 	}
 
 	/**
@@ -272,7 +277,8 @@ public class KeyManagement {
 	 */
 	private static void addButtons(JButton[] button) {
 		for (int i = 0; i < tecla.length; i++) {
-			tecla[i].addJButton(button[i]);
+			if(i < 37)
+				tecla[i].addJButton(button[i]);
 		}
 	}
 
