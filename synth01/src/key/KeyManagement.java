@@ -30,6 +30,8 @@ import tecla.Tecla;
  */
 public class KeyManagement {
 
+	public static Semaphore semaphore;
+
 	private static Record r;
 
 	private static AudioSynth synth = AudioSynth.getAudioSynth();
@@ -100,8 +102,8 @@ public class KeyManagement {
 
 				String[] note = line.split(",");
 
-				//System.out.println("Start: " + note[0] + " end: " + note[1]
-				//		+ " note = " + note[2]);
+				// System.out.println("Start: " + note[0] + " end: " + note[1]
+				// + " note = " + note[2]);
 				changes.add(new Pair<Long, Integer>(Long.parseLong(note[0]),
 						Integer.parseInt(note[2])));
 				changes.add(new Pair<Long, Integer>(Long.parseLong(note[1]),
@@ -162,35 +164,37 @@ public class KeyManagement {
 	 */
 	public static void playForMilliseconds(int code, long ms) {
 		int note = getNote(code);
-		tecla[note].setWaitingClick(true);
 		playNote(note);
 		try {
 			TimeUnit.MILLISECONDS.sleep(ms);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		pauseNote(note);
+		tecla[note].setWaitingClick(true);
 	}
-	
+
 	/**
 	 * waits for a note do be played
 	 * @param code
 	 */
 	public static void waitClick(int code) {
-		
-		while (tecla[getNote(code)].isGeniusClicked()) {
-			try { 
-				TimeUnit.MILLISECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
+		semaphore = new Semaphore(0);
+		tecla[getNote(code)].setSemaphore(semaphore);
+		try {
+			System.out.println("Esperando");
+			semaphore.acquire();
+			System.out.println("Pronto");
+
+			TimeUnit.MILLISECONDS.sleep(500);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		tecla[getNote(code)].setGeniusClicked(false);
+
 	}
-	
-	/**
-	 * Initialize the array Tecla
 	 */
 	private static void createKeys() {
 		tecla[0] = new Tecla(KeyEvent.VK_Z, synth);
