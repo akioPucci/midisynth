@@ -31,6 +31,7 @@ public class Tecla implements KeyListener {
 	private int note;
 	private AudioSynth synth;
 	private MidiSynth midi;
+	private int midiOrSynth;
 	private boolean playing;
 	private JButton button;
 	private boolean recording;
@@ -40,11 +41,12 @@ public class Tecla implements KeyListener {
 	private boolean geniusClicked;
 	private Semaphore semaphore;
 
-	public Tecla(int code, AudioSynth synth, MidiSynth midi) {
+	public Tecla(int code, AudioSynth synth, MidiSynth midi, int midiOrSynth) {
 		this.code = code;
 		this.note = KeyManagement.getNote(code);
 		this.synth = synth;
 		this.midi = midi;
+		this.midiOrSynth = midiOrSynth;
 		start = new ArrayList<Long>();
 		end = new ArrayList<Long>();
 		waitingClick = false;
@@ -82,9 +84,8 @@ public class Tecla implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == code && !playing) {
-			System.out.println(e.getKeyCode());
 			if(e.getKeyCode() < 40)
-				changeInstrument();
+				changeInstrument(e.getKeyCode());
 			else
 				play();
 		}
@@ -130,8 +131,10 @@ public class Tecla implements KeyListener {
 	 * play note from the synthesizer or midi
 	 */
 	public void play() {
-		//midi.noteOn(note);
-		synth.noteOn(note);
+		if(midiOrSynth == 0)
+			midi.noteOn(note);
+		else
+			synth.noteOn(note);
 		playing = true;
 		button.setVisible(false);
 		recordOn();
@@ -143,8 +146,10 @@ public class Tecla implements KeyListener {
 	public void pause() {
 		playing = false;
 		
-		//midi.noteOff(note);
-		synth.noteOff(note);
+		if(midiOrSynth == 0)
+			midi.noteOff(note);
+		else
+			synth.noteOff(note);
 		button.setVisible(true);
 		recordOff();
 		if (waitingClick) {
@@ -154,8 +159,11 @@ public class Tecla implements KeyListener {
 		}
 	}
 	
-	public void changeInstrument() {
-		midi.changeInstrument(note);
+	public void changeInstrument(int keyCode) {
+		if(midiOrSynth == 0)
+			midi.changeInstrument(keyCode);
+		else
+			synth.changeOscillator(keyCode);
 	}
 	
 	public void changeStatus() {

@@ -30,7 +30,7 @@ public class Tela_MIDI extends JFrame{
 		initMenu();
 		initTeclado();
 		setAllNotFocusable();
-		KeyManagement.create(this, this.createJButtonArray());
+		KeyManagement.create(this, this.createJButtonArray(), 0);
 	}
 	
 	

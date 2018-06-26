@@ -43,6 +43,7 @@ public class AudioSynth extends JFrame {
 	private boolean bigEndian; // pode ser true,false
 	
 	//componentes
+	private int oscSelector;
 	private Oscillator[] osc;
 	private AudioChannel[] outputChannel;
 	private Mixer mixer;
@@ -99,10 +100,11 @@ public class AudioSynth extends JFrame {
 		keyEnable = new boolean[numOfKeys];
 		
 		//componentes
+		oscSelector = 0;
 		osc = new Oscillator[3];
-		osc[0] = new Oscillator("sine",   5, sampleRate);
-		osc[1] = new Oscillator("square",   1, sampleRate);
-		osc[2] = new Oscillator("saw",   3, sampleRate);
+		osc[0] = new Oscillator("sine",   2, sampleRate);
+		osc[1] = new Oscillator("sine",   3, sampleRate);
+		osc[2] = new Oscillator("sine",   4, sampleRate);
 
 		
 		outputChannel = new AudioChannel[3];
@@ -201,6 +203,45 @@ public class AudioSynth extends JFrame {
 		osc[oscNum].setType(type);
 	}
 	
+	public void changeOscillator(int key) {
+		int keyboardDirection;
+    	if(key == 37)
+    		keyboardDirection = -1;
+    	else
+    		keyboardDirection = 1;
+    	
+    	if(oscSelector + keyboardDirection == -1)
+    		oscSelector = 3;
+    	else
+    		oscSelector = (oscSelector + keyboardDirection) % 4;
+    	
+    	switch(oscSelector) {
+    	case 0://sine
+    		System.out.println("sine set");
+    		setOscType(0, "sine");
+    		setOscType(1, "sine");
+    		setOscType(2, "sine");
+    		break;
+    	case 1://square
+    		System.out.println("square set");
+    		setOscType(0, "square");
+    		setOscType(1, "square");
+    		setOscType(2, "square");
+    		break;
+    	case 2://triangle
+    		System.out.println("triangle set");
+    		setOscType(0, "triangle");
+    		setOscType(1, "triangle");
+    		setOscType(2, "triangle");
+    		break;
+    	case 3://saw
+    		System.out.println(" set");
+    		setOscType(0, "saw");
+    		setOscType(1, "saw");
+    		setOscType(2, "saw");
+    		break;
+    	}
+	}
 	/**
 	 * sets the oscillator amplitude
 	 * @param oscNum
@@ -218,6 +259,7 @@ public class AudioSynth extends JFrame {
 	public void setOscOctave(int oscNum, int octave) {
 		osc[oscNum].setOctave(octave);
 	}
+	
 	
 	/**
 	 * sets the sample to be oscillated

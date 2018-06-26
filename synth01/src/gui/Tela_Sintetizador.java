@@ -32,7 +32,7 @@ public class Tela_Sintetizador extends JFrame{
 		initMenu();
 		initMixer();
 		setAllNotFocusable();
-		KeyManagement.create(this, this.createJButtonArray());
+		KeyManagement.create(this, this.createJButtonArray(), 1);
 	}
 	
 	public void initTela() {
