@@ -6,6 +6,14 @@ import javax.sound.midi.Receiver;
 import key.KeyManagement;
 import synth.AudioSynth;
 
+/**
+ * MIDI controller receiver
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
 public class MidiInputReceiver implements Receiver {
 	AudioSynth synth = AudioSynth.getAudioSynth();
 	public String name;
@@ -14,6 +22,9 @@ public class MidiInputReceiver implements Receiver {
 		this.name = name;
 	}
 
+	/**
+	 * gets message from the controlller
+	 */
 	public void send(MidiMessage msg, long timeStamp) {
 
 		byte[] b = msg.getMessage();

@@ -16,6 +16,15 @@ import javax.swing.event.ChangeListener;
 import key.KeyManagement;
 import synth.AudioSynth;
 
+/**
+ * Synthesizer Components Logic
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
+
 public class Tecla implements KeyListener {
 
 	private int code;
@@ -45,6 +54,9 @@ public class Tecla implements KeyListener {
 		addListener();
 	}
 
+	/**
+	 * chama evento de tecla
+	 */
 	private void addListener() {
 		final ButtonModel b = button.getModel();
 		b.addChangeListener(new ChangeListener() {
@@ -62,6 +74,9 @@ public class Tecla implements KeyListener {
 		});
 	}
 	
+	/**
+	 * tecla pressionada
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == code && !playing) {
@@ -69,6 +84,10 @@ public class Tecla implements KeyListener {
 		}
 	}
 
+	
+	/**
+	 * tecla solta
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == code && playing) {
@@ -76,22 +95,34 @@ public class Tecla implements KeyListener {
 		}
 	}
 
+	/**
+	 * idk
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// not needed
 	}
 
+	/**
+	 * activates recording
+	 */
 	private void recordOn() {
 		if (isRecording()) {
 			start.add(Calendar.getInstance().getTimeInMillis());
 		}
 	}
 	
+	/**
+	 * stops recording
+	 */
 	private void recordOff() {
 		if (isRecording())
 			end.add(Calendar.getInstance().getTimeInMillis());
 	}
 
+	/**
+	 * play note from the synthesizer or midi
+	 */
 	public void play() {
 		synth.noteOn(note);
 		playing = true;
@@ -99,6 +130,9 @@ public class Tecla implements KeyListener {
 		recordOn();
 	}
 
+	/**
+	 * pause note played
+	 */
 	public void pause() {
 		playing = false;
 		synth.noteOff(note);
@@ -118,6 +152,11 @@ public class Tecla implements KeyListener {
 			play();
 	}
 
+	/**
+	 * gets information to record
+	 * @return
+	 * 			returns a list of start time, end time and note code
+	 */
 	public List<String> getRecordTimes() {
 		List<String> recordTimes = new ArrayList<String>();
 		for (int i = 0; i < start.size(); i++) {
@@ -126,6 +165,11 @@ public class Tecla implements KeyListener {
 		return recordTimes;
 	}
 
+	/**
+	 * set recording parameter
+	 * @param recording
+	 * 					flag if recording is actvated
+	 */
 	public void setRecording(boolean recording) {
 		this.recording = recording;
 		

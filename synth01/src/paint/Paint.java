@@ -33,6 +33,14 @@ import javax.swing.border.EmptyBorder;
 
 import key.Pair;
 
+/**
+ * Paint Canvas to draw the wave
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
 public class Paint {
 
 	private Semaphore semaphore = new Semaphore(0);
@@ -55,6 +63,13 @@ public class Paint {
 
 	private double x[];
 
+	/**
+	 * gets the canvas and the hud
+	 * @param semaphore
+	 * 					for communication thread
+	 * @return
+	 * 			canvas window
+	 */
 	public JComponent getGui(Semaphore semaphore) {
 
 		pontos = new ArrayList<Pair<Integer, Integer>>();
@@ -123,6 +138,11 @@ public class Paint {
 		return gui;
 	}
 
+	/**
+	 * generates the list of samples made from the draw
+	 * @return
+	 * 			the list with the samples
+	 */
 	public List<Pair<Integer, Double>> generatePointsList() {
 
 		List<Pair<Integer, Double>> points = new ArrayList<Pair<Integer, Double>>();
@@ -138,7 +158,11 @@ public class Paint {
 
 		return points;
 	}
-
+	
+	/**
+	 * clear canvas
+	 * @param bi
+	 */
 	public void clear(BufferedImage bi) {
 		Graphics2D g = bi.createGraphics();
 		g.setRenderingHints(renderingHints);
@@ -150,6 +174,10 @@ public class Paint {
 
 	}
 
+	/**
+	 * sets the canvas parameters
+	 * @param image
+	 */
 	public void setImage(BufferedImage image) {
 		int w = image.getWidth();
 		int h = image.getHeight();
@@ -169,11 +197,22 @@ public class Paint {
 		}
 	}
 
+	/**
+	 * sets the brush color
+	 * @param color
+	 */
 	public void setColor(Color color) {
 		this.color = color;
 		clear(colorSample);
 	}
 
+	/**
+	 * open de canvas window
+	 * @param f
+	 * 			canvas object
+	 * @return
+	 * 			null
+	 */
 	public double[] open(JFrame f) {
 
 		f.setContentPane(new Paint().getGui(semaphore));
@@ -215,6 +254,11 @@ public class Paint {
 		System.out.println("size: " + x.length);
 	}
 
+	
+	/**
+	 * draw into canvas
+	 * @param point
+	 */
 	public void draw(Point point) {
 		Graphics2D g = this.canvasImage.createGraphics();
 		g.setRenderingHints(renderingHints);
@@ -230,6 +274,14 @@ public class Paint {
 		}
 	}
 
+	/**
+	 *
+	 * gets mouse coordinates 
+	 * @author Carolina Arenas Okawa
+	 * @author Eric
+	 * @author Fernando Akio
+	 * @author Vinícius
+	 */
 	class ImageMouseMotionListener implements MouseMotionListener {
 
 		@Override

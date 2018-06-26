@@ -1,5 +1,13 @@
 package genius;
 
+/**
+ * triplets to handle list
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinícius
+ */
 public class Triple<F, S, T> {
 
 	private F first;

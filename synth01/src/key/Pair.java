@@ -1,7 +1,7 @@
 package key;
 
 /**
- * duplas para lista
+ * pairs to handle list
  * 
  * @author Carolina Arenas Okawa
  * @author Eric

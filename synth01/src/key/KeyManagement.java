@@ -1,7 +1,5 @@
 package key;
 
-import gui.GUI;
-
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,10 +10,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 
+import gui.GUI;
 import record.Record;
 import synth.AudioSynth;
 import tecla.Tecla;
@@ -195,7 +195,8 @@ public class KeyManagement {
 		tecla[getNote(code)].setGeniusClicked(false);
 
 	}
-	 */
+
+	
 	private static void createKeys() {
 		tecla[0] = new Tecla(KeyEvent.VK_Z, synth);
 		tecla[1] = new Tecla(KeyEvent.VK_S, synth);
