@@ -64,13 +64,11 @@ public class Genius {
 			while (changes.size() > 0) {
 
 				KeyManagement.playForMilliseconds(changes.get(0).getThird(), changes.get(0).getSecond());
-				System.out.println("Wait start");
-
 				KeyManagement.waitClick(changes.get(0).getThird());
-				System.out.println("Wait end");
 				changes.remove(0);
 			}
-
+			//TODO mensagem de parabéns vc terminou
+			System.out.println("fim!");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

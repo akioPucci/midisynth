@@ -5,6 +5,8 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ButtonModel;
 import javax.swing.JButton;
@@ -26,6 +28,7 @@ public class Tecla implements KeyListener {
 	private List<Long> end;
 	private boolean waitingClick;
 	private boolean geniusClicked;
+	private Semaphore semaphore;
 
 	public Tecla(int code, AudioSynth synth) {
 		this.code = code;
@@ -102,6 +105,7 @@ public class Tecla implements KeyListener {
 		button.setVisible(true);
 		recordOff();
 		if (waitingClick) {
+			semaphore.release();
 			geniusClicked = true;
 			waitingClick = false;
 		}
@@ -149,6 +153,13 @@ public class Tecla implements KeyListener {
 
 	public void setGeniusClicked(boolean geniusClicked) {
 		this.geniusClicked = geniusClicked;
+	}
+
+	public void setSemaphore(Semaphore semaphore) {
+		System.out.println("semaforo sendo setado");
+		if (semaphore == null)
+			System.out.println("is null");
+		this.semaphore = semaphore;
 	}
 	
 	
