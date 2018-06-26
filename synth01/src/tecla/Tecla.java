@@ -1,5 +1,7 @@
 package tecla;
 
+import gui.Tela_MIDI;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -137,6 +139,8 @@ public class Tecla implements KeyListener {
 			synth.noteOn(note);
 		playing = true;
 		button.setVisible(false);
+		Tela_MIDI.setNotVisible(note);
+		//System.out.println("Deixando falso: " + button.isVisible());
 		recordOn();
 	}
 

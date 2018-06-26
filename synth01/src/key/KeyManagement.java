@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import midi.MidiSynth;
 import record.Record;
@@ -103,14 +104,16 @@ public class KeyManagement {
 			br = new BufferedReader(new FileReader(filename));
 			line = br.readLine();
 			if (!line.startsWith("Wave number:")) {
-				// TODO erro arquivo inválido
+				JOptionPane.showMessageDialog(null, "Arquivo invalido");
+				return;
 			}
 			// System.out.println(line);
 			while ((line = br.readLine()) != null) {
 
 				String[] note = line.split(",");
 				if (note.length != 3) {
-					// TODO erro arquivo inválido
+					JOptionPane.showMessageDialog(null, "Arquivo invalido");
+					return;
 				}
 				changes.add(new Pair<Long, Integer>(Long.parseLong(note[0]),
 						Integer.parseInt(note[2])));
@@ -143,7 +146,8 @@ public class KeyManagement {
 				if ((Calendar.getInstance().getTimeInMillis() - playStart) >= changes
 						.get(0).getFirst()) {
 					if (changes.get(0).getSecond() < 0) {
-						// TODO Erro arquivo inválido
+						JOptionPane.showMessageDialog(null, "Arquivo invalido");
+						return;
 					}
 					tecla[getNote(changes.get(0).getSecond())].changeStatus();
 					changes.remove(0);
@@ -152,10 +156,12 @@ public class KeyManagement {
 			}
 
 		} catch (FileNotFoundException e) {
-			//TODO erro arquivo não encontrado
+			JOptionPane.showMessageDialog(null, "Arquivo invalido");
+			return;
 			//e.printStackTrace();
 		} catch (IOException e) {
-			//TODO erro de entrada/saida
+			JOptionPane.showMessageDialog(null, "Arquivo invalido");
+			return;
 			//e.printStackTrace();
 		} finally {
 			if (br != null) {
@@ -275,7 +281,7 @@ public class KeyManagement {
 	 * @param button
 	 *            array of JButtons
 	 */
-	private static void addButtons(JButton[] button) {
+	public static void addButtons(JButton[] button) {
 		for (int i = 0; i < tecla.length; i++) {
 			if(i < 37)
 				tecla[i].addJButton(button[i]);

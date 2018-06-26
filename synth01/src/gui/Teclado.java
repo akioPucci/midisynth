@@ -211,4 +211,52 @@ public class Teclado{
         Do4.setIcon(icone);
         Do4.setBounds(1650, 602, 75, 350);
     }
+    
+
+	public JButton[] createJButtonArray() {
+		JButton button[] = new JButton[37];
+
+		button[0] = Do1;
+		button[1] = DoSus1;
+		button[2] = Re1;
+		button[3] = ReSus1;
+		button[4] = Mi1;
+		button[5] = Fa1;
+		button[6] = FaSus1;
+		button[7] = Sol1;
+		button[8] = SolSus1;
+		button[9] = La1;
+		button[10] = LaSus1;
+		button[11] = Si1;
+
+		button[12] = Do2;
+		button[13] = DoSus2;
+		button[14] = Re2;
+		button[15] = ReSus2;
+		button[16] = Mi2;
+		button[17] = Fa2;
+		button[18] = FaSus2;
+		button[19] = Sol2;
+		button[20] = SolSus2;
+		button[21] = La2;
+		button[22] = LaSus2;
+		button[23] = Si2;
+
+		button[24] = Do3;
+		button[25] = DoSus3;
+		button[26] = Re3;
+		button[27] = ReSus3;
+		button[28] = Mi3;
+		button[29] = Fa3;
+		button[30] = FaSus3;
+		button[31] = Sol3;
+		button[32] = SolSus3;
+		button[33] = La3;
+		button[34] = LaSus3;
+		button[35] = Si3;
+
+		button[36] = Do4;
+
+		return button;
+	}
 }
