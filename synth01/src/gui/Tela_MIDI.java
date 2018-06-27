@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -180,8 +179,7 @@ public class Tela_MIDI extends JFrame {
 	}
 
 	private void synthActionPerformed(ActionEvent evt) {
-		Tela_Sintetizador obj = new Tela_Sintetizador();
-		obj.setVisible(true);
+		Tela_Inicial.ts.setVisible(true);
 		this.setVisible(false);
 	}
 

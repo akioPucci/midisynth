@@ -18,8 +18,12 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class Tela_Inicial extends JFrame{
+	public static Tela_Sintetizador ts;
+	public static Tela_MIDI tm;
 	
 	public Tela_Inicial() {
+		tm = new Tela_MIDI();
+		ts = new Tela_Sintetizador();
 		initTela();
 		initComponents();
 	}
@@ -106,14 +110,12 @@ public class Tela_Inicial extends JFrame{
 	}
 	
 	private void MIDIActionPerformed(ActionEvent evt) {
-		Tela_MIDI obj = new Tela_MIDI();
-		obj.setVisible(true);
+		tm.setVisible(true);
 		this.setVisible(false);
     }                                    
 
     private void synthActionPerformed(ActionEvent evt) {
-    	Tela_Sintetizador obj = new Tela_Sintetizador();
-    	obj.setVisible(true);
+    	ts.setVisible(true);
     	this.setVisible(false);
     }
 }
