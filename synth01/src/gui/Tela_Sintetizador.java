@@ -556,10 +556,12 @@ public class Tela_Sintetizador extends JFrame{
 	}
 	
 	private void MasterStateChanged(ChangeEvent evt) {
+		synth.setVolumeMaster(((double)Master_Slider.getValue())/100);
 		Master_Value_Text.setText(String.valueOf(Master_Slider.getValue()));
     }
 	
 	private void Ampl1StateChanged(ChangeEvent evt) {
+		synth.setOscAmp(0, ((double)Ampl1.getValue())/100);
 		Ampl_Value_Text1.setText(String.valueOf(Ampl1.getValue()));
     }
 	
@@ -568,6 +570,7 @@ public class Tela_Sintetizador extends JFrame{
     }
 	
 	private void Ampl2StateChanged(ChangeEvent evt) {
+		synth.setOscAmp(1, ((double)Ampl2.getValue())/100);
 		Ampl_Value_Text2.setText(String.valueOf(Ampl2.getValue()));
     }
 	
@@ -576,6 +579,7 @@ public class Tela_Sintetizador extends JFrame{
     }
 	
 	private void Ampl3StateChanged(ChangeEvent evt) {
+		synth.setOscAmp(2, ((double)Ampl3.getValue())/100);
 		Ampl_Value_Text3.setText(String.valueOf(Ampl3.getValue()));
     }
 	
