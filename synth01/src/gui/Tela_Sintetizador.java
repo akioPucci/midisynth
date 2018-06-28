@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.io.File;
 
 import javax.swing.DefaultComboBoxModel;
@@ -50,6 +52,9 @@ public class Tela_Sintetizador extends JFrame{
     public JLabel Ampl_Text1;
     public JLabel Ampl_Text2;
     public JLabel Ampl_Text3;
+    private JLabel Ampl_Value_Text1;
+    private JLabel Ampl_Value_Text2;
+    private JLabel Ampl_Value_Text3;
     public JLabel Des_Ondas1;
     public JLabel Des_Ondas2;
     public JLabel Des_Ondas3;
@@ -59,8 +64,12 @@ public class Tela_Sintetizador extends JFrame{
     public JLabel Freq_Text1;
     public JLabel Freq_Text2;
     public JLabel Freq_Text3;
+    public JLabel Freq_Value_Text1;
+    public JLabel Freq_Value_Text2;
+    public JLabel Freq_Value_Text3;
     public JSlider Master_Slider;
     public JLabel Master_Text;
+    public JLabel Master_Value_Text;
     public JLabel Mixer_Text;
     public JLabel Osc_Text1;
     public JLabel Osc_Text2;
@@ -301,9 +310,21 @@ public class Tela_Sintetizador extends JFrame{
         Separador8 = new JSeparator();
         Separador9 = new JSeparator();
         Separador10 = new JSeparator();
+        Ampl_Value_Text1 = new JLabel();
+        Freq_Value_Text1 = new JLabel();
+        Ampl_Value_Text2 = new JLabel();
+        Freq_Value_Text2 = new JLabel();
+        Ampl_Value_Text3 = new JLabel();
+        Freq_Value_Text3 = new JLabel();
+        Master_Value_Text = new JLabel();
         
         getContentPane().add(Master_Slider);
         Master_Slider.setBounds(440, 550, 200, 20);
+        Master_Slider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                MasterStateChanged(evt);
+            }
+        });
         
         Master_Text.setForeground(new Color(255, 255, 255));
         Master_Text.setText("Master");
@@ -357,28 +378,58 @@ public class Tela_Sintetizador extends JFrame{
 
         Ampl1.setFont(new Font("Tahoma", 0, 24));;
         Ampl1.setOrientation(JSlider.VERTICAL);
+        Ampl1.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Ampl1StateChanged(evt);
+            }
+        });
         getContentPane().add(Ampl1);
         Ampl1.setBounds(195, 230, 35, 200);
 
         Ampl2.setFont(new Font("Tahoma", 0, 24));
         Ampl2.setOrientation(JSlider.VERTICAL);
+        Ampl2.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Ampl2StateChanged(evt);
+            }
+        });
         getContentPane().add(Ampl2);
         Ampl2.setBounds(455, 230, 35, 200);
 
         Ampl3.setFont(new Font("Tahoma", 0, 24));
         Ampl3.setOrientation(JSlider.VERTICAL);
+        Ampl3.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Ampl3StateChanged(evt);
+            }
+        });
         getContentPane().add(Ampl3);
         Ampl3.setBounds(715, 230, 35, 200);
 
         Freq1.setOrientation(JSlider.VERTICAL);
+        Freq1.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Freq1StateChanged(evt);
+            }
+        });
         getContentPane().add(Freq1);
         Freq1.setBounds(315, 230, 35, 200);
 
         Freq2.setOrientation(JSlider.VERTICAL);
+        Freq2.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Freq2StateChanged(evt);
+            }
+        });
         getContentPane().add(Freq2);
         Freq2.setBounds(585, 230, 35, 200);
 
         Freq3.setOrientation(JSlider.VERTICAL);
+        Freq3.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Freq3StateChanged(evt);
+            }
+        });
         getContentPane().add(Freq3);
         Freq3.setBounds(845, 230, 35, 200);
 
@@ -466,7 +517,70 @@ public class Tela_Sintetizador extends JFrame{
         
         getContentPane().add(Separador10);
         Separador10.setBounds(270, 560, 530, 10);
+        
+        Ampl_Value_Text1.setForeground(new Color(255, 255, 255));
+        Ampl_Value_Text1.setText("Value");
+        getContentPane().add(Ampl_Value_Text1);
+        Ampl_Value_Text1.setBounds(230, 240, 41, 16);
+
+        Freq_Value_Text1.setForeground(new Color(255, 255, 255));
+        Freq_Value_Text1.setText("Value");
+        getContentPane().add(Freq_Value_Text1);
+        Freq_Value_Text1.setBounds(360, 240, 41, 16);
+
+        Ampl_Value_Text2.setForeground(new Color(255, 255, 255));
+        Ampl_Value_Text2.setText("Value");
+        getContentPane().add(Ampl_Value_Text2);
+        Ampl_Value_Text2.setBounds(480, 240, 41, 16);
+
+        Freq_Value_Text2.setForeground(new Color(255, 255, 255));
+        Freq_Value_Text2.setText("Value");
+        getContentPane().add(Freq_Value_Text2);
+        Freq_Value_Text2.setBounds(620, 240, 41, 16);
+
+        Ampl_Value_Text3.setForeground(new Color(255, 255, 255));
+        Ampl_Value_Text3.setText("Value");
+        getContentPane().add(Ampl_Value_Text3);
+        Ampl_Value_Text3.setBounds(740, 240, 41, 16);
+
+        Freq_Value_Text3.setForeground(new Color(255, 255, 255));
+        Freq_Value_Text3.setText("Value");
+        getContentPane().add(Freq_Value_Text3);
+        Freq_Value_Text3.setBounds(880, 240, 41, 16);
+
+        Master_Value_Text.setForeground(new Color(255, 255, 255));
+        Master_Value_Text.setText("Value");
+        getContentPane().add(Master_Value_Text);
+        Master_Value_Text.setBounds(590, 560, 41, 16);
 	}
+	
+	private void MasterStateChanged(ChangeEvent evt) {
+		Master_Value_Text.setText(String.valueOf(Master_Slider.getValue()));
+    }
+	
+	private void Ampl1StateChanged(ChangeEvent evt) {
+		Ampl_Value_Text1.setText(String.valueOf(Ampl1.getValue()));
+    }
+	
+	private void Freq1StateChanged(ChangeEvent evt) {
+		Freq_Value_Text1.setText(String.valueOf(Freq1.getValue()));
+    }
+	
+	private void Ampl2StateChanged(ChangeEvent evt) {
+		Ampl_Value_Text2.setText(String.valueOf(Ampl2.getValue()));
+    }
+	
+	private void Freq2StateChanged(ChangeEvent evt) {
+		Freq_Value_Text2.setText(String.valueOf(Freq2.getValue()));
+    }
+	
+	private void Ampl3StateChanged(ChangeEvent evt) {
+		Ampl_Value_Text3.setText(String.valueOf(Ampl3.getValue()));
+    }
+	
+	private void Freq3StateChanged(ChangeEvent evt) {
+		Freq_Value_Text3.setText(String.valueOf(Freq3.getValue()));
+    }
 	
 	private void Sel_Ondas1ActionPerformed(java.awt.event.ActionEvent evt) {
 		String s = (String) Sel_Ondas1.getSelectedItem();
@@ -613,36 +727,5 @@ public class Tela_Sintetizador extends JFrame{
         Sel_Ondas1.setFocusable(false);
         Sel_Ondas2.setFocusable(false);
         Sel_Ondas3.setFocusable(false);
-        
-    	/*
-        Ampl_Text1.setFocusable(false);
-        Ampl_Text2.setFocusable(false);
-        Ampl_Text3.setFocusable(false);
-        Des_Ondas1.setFocusable(false);
-        Des_Ondas2.setFocusable(false);
-        Des_Ondas3.setFocusable(false);
-        
-        Freq_Text1.setFocusable(false);
-        Freq_Text2.setFocusable(false);
-        Freq_Text3.setFocusable(false);
-        
-        Master_Text.setFocusable(false);
-        Mixer_Text.setFocusable(false);
-        Osc_Text1.setFocusable(false);
-        Osc_Text2.setFocusable(false);
-        Osc_Text3.setFocusable(false);
-        
-        Separador1.setFocusable(false);
-        Separador2.setFocusable(false);
-        Separador3.setFocusable(false);
-        Separador4.setFocusable(false);
-        Separador5.setFocusable(false);
-        Separador6.setFocusable(false);
-        Separador7.setFocusable(false);
-        Separador8.setFocusable(false);
-        Separador9.setFocusable(false);
-        Separador10.setFocusable(false);
-        Vol_Master_Button.setFocusable(false);
-        */
     }
 }
