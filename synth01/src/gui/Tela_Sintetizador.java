@@ -81,12 +81,12 @@ public class Tela_Sintetizador extends JFrame{
     public JSeparator Separador10;
 	
 	public Tela_Sintetizador() {
+		initTela();
 		t = new Teclado();
 		initTeclado();
-		initTela();
 		initMenu();
-		initGravador();
 		initMixer();
+		initGravador();
 		setAllNotFocusable();
 		KeyManagement.create(this, button, 1);
 	}
@@ -316,19 +316,20 @@ public class Tela_Sintetizador extends JFrame{
         getContentPane().add(Mixer_Text);
         Mixer_Text.setBounds(490, 20, 180, 90);
 
-        Des_Ondas1.setIcon(new ImageIcon("images/senoidal.png"));
+        Des_Ondas1.setIcon(new ImageIcon("images/triangular.png"));
         getContentPane().add(Des_Ondas1);
         Des_Ondas1.setBounds(190, 173, 50, 50);
 
-        Des_Ondas2.setIcon(new ImageIcon("images/senoidal.png"));
+        Des_Ondas2.setIcon(new ImageIcon("images/quadrada.png"));
         getContentPane().add(Des_Ondas2);
         Des_Ondas2.setBounds(450, 173, 50, 50);
 
-        Des_Ondas3.setIcon(new ImageIcon("images/senoidal.png"));
+        Des_Ondas3.setIcon(new ImageIcon("images/dente_serra.png"));
         getContentPane().add(Des_Ondas3);
         Des_Ondas3.setBounds(710, 173, 50, 50);
 
         Sel_Ondas1.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
+        Sel_Ondas1.getModel().setSelectedItem("Triangular");
         Sel_Ondas1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Sel_Ondas1ActionPerformed(evt);
@@ -338,6 +339,7 @@ public class Tela_Sintetizador extends JFrame{
         Sel_Ondas1.setBounds(250, 180, 130, 30);
 
         Sel_Ondas2.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
+        Sel_Ondas2.getModel().setSelectedItem("Quadrada");
         Sel_Ondas2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Sel_Ondas2ActionPerformed(evt);
@@ -347,6 +349,7 @@ public class Tela_Sintetizador extends JFrame{
         Sel_Ondas2.setBounds(510, 180, 130, 30);
 
         Sel_Ondas3.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
+        Sel_Ondas3.getModel().setSelectedItem("Dente de Serra");
         Sel_Ondas3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Sel_Ondas3ActionPerformed(evt);
