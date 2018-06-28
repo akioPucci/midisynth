@@ -407,7 +407,9 @@ public class Tela_Sintetizador extends JFrame{
         getContentPane().add(Ampl3);
         Ampl3.setBounds(715, 230, 35, 200);
 
+        Freq1.setMaximum(5);
         Freq1.setOrientation(JSlider.VERTICAL);
+        Freq1.setValue(2);
         Freq1.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 Freq1StateChanged(evt);
@@ -416,7 +418,9 @@ public class Tela_Sintetizador extends JFrame{
         getContentPane().add(Freq1);
         Freq1.setBounds(315, 230, 35, 200);
 
+        Freq2.setMaximum(5);
         Freq2.setOrientation(JSlider.VERTICAL);
+        Freq2.setValue(2);
         Freq2.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 Freq2StateChanged(evt);
@@ -425,7 +429,9 @@ public class Tela_Sintetizador extends JFrame{
         getContentPane().add(Freq2);
         Freq2.setBounds(585, 230, 35, 200);
 
+        Freq3.setMaximum(5);
         Freq3.setOrientation(JSlider.VERTICAL);
+        Freq3.setValue(2);
         Freq3.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 Freq3StateChanged(evt);
@@ -520,37 +526,37 @@ public class Tela_Sintetizador extends JFrame{
         Separador10.setBounds(270, 560, 530, 10);
         
         Ampl_Value_Text1.setForeground(new Color(255, 255, 255));
-        Ampl_Value_Text1.setText("Value");
+        Ampl_Value_Text1.setText("50");
         getContentPane().add(Ampl_Value_Text1);
         Ampl_Value_Text1.setBounds(230, 240, 41, 16);
 
         Freq_Value_Text1.setForeground(new Color(255, 255, 255));
-        Freq_Value_Text1.setText("Value");
+        Freq_Value_Text1.setText("2");
         getContentPane().add(Freq_Value_Text1);
         Freq_Value_Text1.setBounds(360, 240, 41, 16);
 
         Ampl_Value_Text2.setForeground(new Color(255, 255, 255));
-        Ampl_Value_Text2.setText("Value");
+        Ampl_Value_Text2.setText("50");
         getContentPane().add(Ampl_Value_Text2);
         Ampl_Value_Text2.setBounds(480, 240, 41, 16);
 
         Freq_Value_Text2.setForeground(new Color(255, 255, 255));
-        Freq_Value_Text2.setText("Value");
+        Freq_Value_Text2.setText("2");
         getContentPane().add(Freq_Value_Text2);
         Freq_Value_Text2.setBounds(620, 240, 41, 16);
 
         Ampl_Value_Text3.setForeground(new Color(255, 255, 255));
-        Ampl_Value_Text3.setText("Value");
+        Ampl_Value_Text3.setText("50");
         getContentPane().add(Ampl_Value_Text3);
         Ampl_Value_Text3.setBounds(740, 240, 41, 16);
 
         Freq_Value_Text3.setForeground(new Color(255, 255, 255));
-        Freq_Value_Text3.setText("Value");
+        Freq_Value_Text3.setText("2");
         getContentPane().add(Freq_Value_Text3);
         Freq_Value_Text3.setBounds(880, 240, 41, 16);
 
         Master_Value_Text.setForeground(new Color(255, 255, 255));
-        Master_Value_Text.setText("Value");
+        Master_Value_Text.setText("50");
         getContentPane().add(Master_Value_Text);
         Master_Value_Text.setBounds(590, 560, 41, 16);
 	}
