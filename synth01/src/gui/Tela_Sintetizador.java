@@ -81,9 +81,9 @@ public class Tela_Sintetizador extends JFrame{
 	
 	public Tela_Sintetizador() {
 		synth = AudioSynth.getAudioSynth();
+		initTela();
 		t = new Teclado();
 		initTeclado();
-		initTela();
 		initMenu();
 		initGravador();
 		initMixer();

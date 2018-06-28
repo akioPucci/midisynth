@@ -35,11 +35,11 @@ public class Tela_MIDI extends JFrame {
 	private JButton genius;
 
 	public Tela_MIDI() {
-		t = new Teclado();
 		initTela();
+		t = new Teclado();
+		initTeclado();
 		initMenu();
 		initGravador();
-		initTeclado();
 		setAllNotFocusable();
 		KeyManagement.create(this, button, 0);
 	}
