@@ -25,6 +25,7 @@ import javax.swing.WindowConstants;
 
 import genius.Genius;
 import key.KeyManagement;
+import paint.Paint;
 import synth.AudioSynth;
 
 @SuppressWarnings("serial")
@@ -483,11 +484,8 @@ public class Tela_Sintetizador extends JFrame{
 			synth.setOscType(0, "saw");
 			Des_Ondas1.setIcon(new ImageIcon("images/dente_serra.png"));
 		} else if (s == "Desenhar") {
-			//setOscType(0, "draw");
-			//JFrame f = new JFrame();
-			//f.setBounds(10, 10, 1200, 1200);
-			//Paint p = new Paint();
-			//p.open();
+			PaintThread pt = new PaintThread(0);
+			new Thread(pt).start();
 		}
 	}                                          
 
@@ -506,11 +504,8 @@ public class Tela_Sintetizador extends JFrame{
 			synth.setOscType(1, "saw");
 			Des_Ondas2.setIcon(new ImageIcon("images/dente_serra.png"));
 		} else if (s == "Desenhar") {
-			//setOscType(1, "draw");
-			//JFrame f = new JFrame();
-			//f.setBounds(10, 10, 1200, 1200);
-			//Paint p = new Paint();
-			//p.open();
+			PaintThread pt = new PaintThread(1);
+			new Thread(pt).start();
 		}
 	}
 	
@@ -529,11 +524,24 @@ public class Tela_Sintetizador extends JFrame{
 			synth.setOscType(2, "saw");
 			Des_Ondas3.setIcon(new ImageIcon("images/dente_serra.png"));
 		} else if (s == "Desenhar") {
-			//setOscType(2, "draw");
-			//JFrame f = new JFrame();
-			//f.setBounds(10, 10, 1200, 1200);
-			//Paint p = new Paint();
-			//p.open();
+			PaintThread pt = new PaintThread(2);
+			new Thread(pt).start();
+		}
+	}
+	
+	class PaintThread extends Thread {
+		int oscTarget;
+		
+		public PaintThread(int oscTarget){
+			this.oscTarget = oscTarget;
+		}
+		public void run() {
+			synth.setOscType(oscTarget, "drawn");
+			JFrame f = new JFrame();
+			f.setBounds(10, 10, 1200, 1200);
+			Paint p = new Paint();
+			synth.setOscDrawnSample(oscTarget, p.open(f));
+			
 		}
 	}
 	
