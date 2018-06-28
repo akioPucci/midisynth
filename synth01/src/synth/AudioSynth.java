@@ -105,7 +105,7 @@ public class AudioSynth extends JFrame {
 		osc[0] = new Oscillator("sine",   2, sampleRate);
 		osc[1] = new Oscillator("sine",   3, sampleRate);
 		osc[2] = new Oscillator("sine",   4, sampleRate);
-
+		
 		
 		outputChannel = new AudioChannel[3];
 		outputChannel[0] = new AudioChannel(numOfKeys);

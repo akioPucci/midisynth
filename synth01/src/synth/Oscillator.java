@@ -147,6 +147,7 @@ public class Oscillator {
 	}
 	
 	public void setAmp(double value) {
+		System.out.println("amplificacao: " + value);
 		this.amp = value;
 	}
 
@@ -197,7 +198,7 @@ public class Oscillator {
 		case "sine":
 			for(int i = 0; i < 38; i++) {
 				if(keyEnable[i]) {
-					synthData[i] = (Math.sin(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
+					synthData[i] = getAmp()*(Math.sin(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
 				}
 				
 			}
@@ -206,7 +207,7 @@ public class Oscillator {
 		case "square":
 			for(int i = 0; i < 38; i++) {
 				if(keyEnable[i]) {
-					synthData[i] = (squareWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
+					synthData[i] = getAmp()*(squareWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
 				}
 				
 			}
@@ -215,7 +216,7 @@ public class Oscillator {
 		case "triangle":
 			for(int i = 0; i < 38; i++) {
 				if(keyEnable[i]) {
-					synthData[i] = (triangleWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
+					synthData[i] = getAmp()*(triangleWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
 				}
 				
 			}
@@ -224,7 +225,7 @@ public class Oscillator {
 		case "saw":
 			for(int i = 0; i < 38; i++) {
 				if(keyEnable[i]) {
-					synthData[i] = (sawWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
+					synthData[i] = getAmp()*(sawWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
 				}
 				
 			}
@@ -233,7 +234,7 @@ public class Oscillator {
 		case "drawn":
 			for(int i = 0; i < 38; i++) {
 				if(keyEnable[i]) {
-					synthData[i] = (drawnWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
+					synthData[i] = getAmp()*(drawnWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
 				}
 				
 			}
@@ -303,9 +304,6 @@ public class Oscillator {
 	 * @return
 	 */
 	double drawnWave(double rad) {
-		System.out.println((int)((rad % 2*Math.PI) * (1000/(2*Math.PI)))-1);
-		//return drawnWaveSample[(int)((rad % 2*Math.PI) * (1000/2*Math.PI))-1];
-		return 0;
-		
+		return drawnWaveSample[(int)((rad % 2*Math.PI) * (1000/(2*Math.PI)))];
 	}
 }
