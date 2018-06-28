@@ -147,21 +147,40 @@ public class AudioSynth extends JFrame {
 		}
 
 	}
+	
+	private int getKeysEnabled() {
+		return keysEnabled;
+	}
+	
+	private void popKey() {
+		keysEnabled--;
+	}
+	
+	private void pushKey() {
+		keysEnabled++;
+	}
+	
+	private void activateKey(int note) {
+		keyEnable[note] = true;
+	}
+	
+	private void desactivateKey(int note) {
+		keyEnable[note] = false;
+	}
 
 	/**
 	 * play a note
 	 * @param note
 	 */
 	public void noteOn(int note) {
-		keysEnabled++;
-		keyEnable[note] = true;
-		inputBlockCounter = 0;
+		pushKey();
+		activateKey(note);
 		if (sourceDataLine.isRunning() == false) {
 			sourceDataLine.start();
 		}
 		sourceDataLine.flush();
 		
-		if(keysEnabled == 1)
+		if(getKeysEnabled() == 1)
 			input_sem.release();
 	}
 
@@ -171,13 +190,12 @@ public class AudioSynth extends JFrame {
 	 */
 	public void noteOff(int note) {
 		try {
-			if (keysEnabled == 1) {
+			if (getKeysEnabled() == 1) {
 				sourceDataLine.stop();
 				input_sem.acquire();				
 			}
-			keysEnabled--;
-			keyEnable[note] = false;
-			inputBlockCounter = 0;
+			popKey();
+			desactivateKey(note);
 			sourceDataLine.flush();
 
 		} catch (InterruptedException ie) {

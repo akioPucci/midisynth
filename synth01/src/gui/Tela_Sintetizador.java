@@ -1,13 +1,11 @@
 package gui;
 
 import java.awt.Color;
-
-import javax.swing.WindowConstants;
-
-import genius.Genius;
-
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -23,15 +21,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.awt.event.ActionEvent;
-
+import genius.Genius;
 import key.KeyManagement;
+import synth.AudioSynth;
 
 @SuppressWarnings("serial")
 public class Tela_Sintetizador extends JFrame{
+	private AudioSynth synth;
+	
 	public Teclado t;
 	public JButton button[];
 	
@@ -81,6 +80,7 @@ public class Tela_Sintetizador extends JFrame{
     public JSeparator Separador10;
 	
 	public Tela_Sintetizador() {
+		synth = AudioSynth.getAudioSynth();
 		t = new Teclado();
 		initTeclado();
 		initTela();
@@ -471,16 +471,16 @@ public class Tela_Sintetizador extends JFrame{
 	private void Sel_Ondas1ActionPerformed(java.awt.event.ActionEvent evt) {
 		String s = (String) Sel_Ondas1.getSelectedItem();
 		if(s == "Senoidal") {
-			//setOscType(0, "sine");
+			synth.setOscType(0, "sine");
 			Des_Ondas1.setIcon(new ImageIcon("images/senoidal.png"));
 		} else if (s == "Quadrada") {
-			//setOscType(0, "square");
+			synth.setOscType(0, "square");
 			Des_Ondas1.setIcon(new ImageIcon("images/quadrada.png"));
 		} else if (s == "Triangular") {
-			//setOscType(0, "triangle");
+			synth.setOscType(0, "triangle");
 			Des_Ondas1.setIcon(new ImageIcon("images/triangular.png"));
 		} else if (s == "Dente de Serra") {
-			//setOscType(0, "saw");
+			synth.setOscType(0, "saw");
 			Des_Ondas1.setIcon(new ImageIcon("images/dente_serra.png"));
 		} else if (s == "Desenhar") {
 			//setOscType(0, "draw");
@@ -494,16 +494,16 @@ public class Tela_Sintetizador extends JFrame{
 	private void Sel_Ondas2ActionPerformed(java.awt.event.ActionEvent evt) {
 		String s = (String) Sel_Ondas2.getSelectedItem();
 		if(s == "Senoidal") {
-			//setOscType(1, "sine");
+			synth.setOscType(1, "sine");
 			Des_Ondas2.setIcon(new ImageIcon("images/senoidal.png"));
 		} else if (s == "Quadrada") {
-			//setOscType(1, "square");
+			synth.setOscType(1, "square");
 			Des_Ondas2.setIcon(new ImageIcon("images/quadrada.png"));
 		} else if (s == "Triangular") {
-			//setOscType(1, "triangle");
+			synth.setOscType(1, "triangle");
 			Des_Ondas2.setIcon(new ImageIcon("images/triangular.png"));
 		} else if (s == "Dente de Serra") {
-			//setOscType(1, "saw");
+			synth.setOscType(1, "saw");
 			Des_Ondas2.setIcon(new ImageIcon("images/dente_serra.png"));
 		} else if (s == "Desenhar") {
 			//setOscType(1, "draw");
@@ -517,16 +517,16 @@ public class Tela_Sintetizador extends JFrame{
 	private void Sel_Ondas3ActionPerformed(java.awt.event.ActionEvent evt) {
 		String s = (String) Sel_Ondas3.getSelectedItem();
 		if(s == "Senoidal") {
-			//setOscType(2, "sine");
+			synth.setOscType(2, "sine");
 			Des_Ondas3.setIcon(new ImageIcon("images/senoidal.png"));
 		} else if (s == "Quadrada") {
-			//setOscType(2, "square");
+			synth.setOscType(2, "square");
 			Des_Ondas3.setIcon(new ImageIcon("images/quadrada.png"));
 		} else if (s == "Triangular") {
-			//setOscType(2, "triangle");
+			synth.setOscType(2, "triangle");
 			Des_Ondas3.setIcon(new ImageIcon("images/triangular.png"));
 		} else if (s == "Dente de Serra") {
-			//setOscType(2, "saw");
+			synth.setOscType(2, "saw");
 			Des_Ondas3.setIcon(new ImageIcon("images/dente_serra.png"));
 		} else if (s == "Desenhar") {
 			//setOscType(2, "draw");
