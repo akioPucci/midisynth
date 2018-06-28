@@ -33,6 +33,8 @@ import key.KeyManagement;
 @SuppressWarnings("serial")
 public class Tela_Sintetizador extends JFrame{
 	public Teclado t;
+	public JButton button[];
+	
 	public JMenuBar Bar;
     public JMenu menu;
     public JMenuItem exit;
@@ -43,7 +45,6 @@ public class Tela_Sintetizador extends JFrame{
 	private JButton pausar;
 	private JButton genius;
 	
-	/*
 	public JSlider Ampl1;
     public JSlider Ampl2;
     public JSlider Ampl3;
@@ -78,17 +79,16 @@ public class Tela_Sintetizador extends JFrame{
     public JSeparator Separador8;
     public JSeparator Separador9;
     public JSeparator Separador10;
-    public JButton Vol_Master_Button;
-    */
 	
 	public Tela_Sintetizador() {
 		t = new Teclado();
 		initTeclado();
 		initTela();
 		initMenu();
-		//initMixer();
+		initGravador();
+		initMixer();
 		setAllNotFocusable();
-		KeyManagement.create(this, this.createJButtonArray(), 1);
+		KeyManagement.create(this, button, 1);
 	}
 	
 	public void initTela() {
@@ -98,10 +98,74 @@ public class Tela_Sintetizador extends JFrame{
         setResizable(false); // Impede de alterar tamanho da tela
         setLocationRelativeTo(null); // Centro da tela
         getContentPane().setLayout(null);
+        verifyIfNimbusIsInstalled();
+	}
+	
+	/**
+	 * Verifiy if the LookAndFeel Nimbus is installed
+	 */
+	private void verifyIfNimbusIsInstalled() {
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+					.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException ex) {
+			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (InstantiationException ex) {
+			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		}
 	}
 	
 	public void initMenu() {
-		
+		Bar = new JMenuBar();
+        menu = new JMenu();
+        MIDI = new JMenuItem();
+        exit = new JMenuItem();
+        
+        menu.setText("Menu");
+
+        MIDI.setText("MIDI");
+        menu.add(MIDI);
+        MIDI.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                MIDIActionPerformed(evt);
+            }
+        });
+
+        exit.setText("Sair");
+        menu.add(exit);
+        exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+
+        Bar.add(menu);
+        setJMenuBar(Bar);
+	}
+	
+	private void MIDIActionPerformed(ActionEvent evt) {
+		Tela_Inicial.tm.setVisible(true);
+		this.setVisible(false);
+    }
+	
+	private void exitActionPerformed(ActionEvent evt) {
+		System.exit(0);
+    }
+	
+	private void initGravador() {
 		gravar = new JButton();
 		gravar.setBounds(1100, 100, 100, 50);
 		gravar.setText("Gravar");
@@ -200,44 +264,8 @@ public class Tela_Sintetizador extends JFrame{
 
 			}
 		});
-
-		Bar = new JMenuBar();
-        menu = new JMenu();
-        MIDI = new JMenuItem();
-        exit = new JMenuItem();
-        
-        menu.setText("Menu");
-
-        MIDI.setText("MIDI");
-        menu.add(MIDI);
-        MIDI.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                MIDIActionPerformed(evt);
-            }
-        });
-
-        exit.setText("Sair");
-        menu.add(exit);
-        exit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                exitActionPerformed(evt);
-            }
-        });
-
-        Bar.add(menu);
-        setJMenuBar(Bar);
 	}
 	
-	private void MIDIActionPerformed(ActionEvent evt) {
-		Tela_Inicial.tm.setVisible(true);
-		this.setVisible(false);
-    }
-	
-	private void exitActionPerformed(ActionEvent evt) {
-		System.exit(0);
-    }
-	
-	/*
 	private void initMixer() {
 		Master_Slider = new JSlider();
         Master_Text = new JLabel();
@@ -288,15 +316,15 @@ public class Tela_Sintetizador extends JFrame{
         getContentPane().add(Mixer_Text);
         Mixer_Text.setBounds(490, 20, 180, 90);
 
-        Des_Ondas1.setIcon(new ImageIcon("src/senoidal.png"));
+        Des_Ondas1.setIcon(new ImageIcon("images/senoidal.png"));
         getContentPane().add(Des_Ondas1);
         Des_Ondas1.setBounds(190, 173, 50, 50);
 
-        Des_Ondas2.setIcon(new ImageIcon("src/senoidal.png"));
+        Des_Ondas2.setIcon(new ImageIcon("images/senoidal.png"));
         getContentPane().add(Des_Ondas2);
         Des_Ondas2.setBounds(450, 173, 50, 50);
 
-        Des_Ondas3.setIcon(new ImageIcon("src/senoidal.png"));
+        Des_Ondas3.setIcon(new ImageIcon("images/senoidal.png"));
         getContentPane().add(Des_Ondas3);
         Des_Ondas3.setBounds(710, 173, 50, 50);
 
@@ -438,8 +466,6 @@ public class Tela_Sintetizador extends JFrame{
         
         getContentPane().add(Separador10);
         Separador10.setBounds(270, 560, 530, 10);
-
-        pack();
 	}
 	
 	private void Sel_Ondas1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -510,7 +536,6 @@ public class Tela_Sintetizador extends JFrame{
 			//p.open();
 		}
 	}
-	*/
 	
 	public void initTeclado() {
 		getContentPane().add(t.DoSus1);
@@ -550,49 +575,63 @@ public class Tela_Sintetizador extends JFrame{
         getContentPane().add(t.La3);
         getContentPane().add(t.Si3);
         getContentPane().add(t.Do4);
+        
+        button = t.createJButtonArray();
 	}
 	
-	private void setAllNotFocusable() {
-    	JButton button[] = createJButtonArray();
-    	
+	private void setAllNotFocusable() {    	
     	for (int i = 0; i < button.length; i++) {
 			button[i].setFocusable(false);
 		}
+		
 		gravar.setFocusable(false);
 		pausar.setFocusable(false);
 		reproduzir.setFocusable(false);
 		genius.setFocusable(false);
+    	
+    	/* Barra Menu */
     	
 		Bar.setFocusable(false);
     	menu.setFocusable(false);
     	exit.setFocusable(false);
     	MIDI.setFocusable(false);
     	
-    	/*
+    	/* JSlider's */
+    	
     	Ampl1.setFocusable(false);
         Ampl2.setFocusable(false);
         Ampl3.setFocusable(false);
+        
+        Freq1.setFocusable(false);
+        Freq2.setFocusable(false);
+        Freq3.setFocusable(false);
+        
+        Master_Slider.setFocusable(false);
+        
+        /* JComboBox */
+        
+        Sel_Ondas1.setFocusable(false);
+        Sel_Ondas2.setFocusable(false);
+        Sel_Ondas3.setFocusable(false);
+        
+    	/*
         Ampl_Text1.setFocusable(false);
         Ampl_Text2.setFocusable(false);
         Ampl_Text3.setFocusable(false);
         Des_Ondas1.setFocusable(false);
         Des_Ondas2.setFocusable(false);
         Des_Ondas3.setFocusable(false);
-        Freq1.setFocusable(false);
-        Freq2.setFocusable(false);
-        Freq3.setFocusable(false);
+        
         Freq_Text1.setFocusable(false);
         Freq_Text2.setFocusable(false);
         Freq_Text3.setFocusable(false);
-        Master_Slider.setFocusable(false);
+        
         Master_Text.setFocusable(false);
         Mixer_Text.setFocusable(false);
         Osc_Text1.setFocusable(false);
         Osc_Text2.setFocusable(false);
         Osc_Text3.setFocusable(false);
-        Sel_Ondas1.setFocusable(false);
-        Sel_Ondas2.setFocusable(false);
-        Sel_Ondas3.setFocusable(false);
+        
         Separador1.setFocusable(false);
         Separador2.setFocusable(false);
         Separador3.setFocusable(false);
@@ -606,51 +645,4 @@ public class Tela_Sintetizador extends JFrame{
         Vol_Master_Button.setFocusable(false);
         */
     }
-	
-	public JButton[] createJButtonArray() {
-		JButton button[] = new JButton[37];
-	    	
-        button[0] = t.Do1;
-        button[1] = t.DoSus1;
-        button[2] = t.Re1;
-        button[3] = t.ReSus1;
-        button[4] = t.Mi1;
-        button[5] = t.Fa1;
-        button[6] = t.FaSus1;
-        button[7] = t.Sol1;
-        button[8] = t.SolSus1;
-        button[9] = t.La1;
-        button[10] = t.LaSus1;
-        button[11] = t.Si1;
-            
-        button[12] = t.Do2;
-        button[13] = t.DoSus2;
-        button[14] = t.Re2;
-        button[15] = t.ReSus2;
-        button[16] = t.Mi2;
-        button[17] = t.Fa2;
-        button[18] = t.FaSus2;
-        button[19] = t.Sol2;
-        button[20] = t.SolSus2;
-        button[21] = t.La2;
-        button[22] = t.LaSus2;
-        button[23] = t.Si2;
-            
-        button[24] = t.Do3;
-        button[25] = t.DoSus3;
-        button[26] = t.Re3;
-        button[27] = t.ReSus3;
-        button[28] = t.Mi3;
-        button[29] = t.Fa3;
-        button[30] = t.FaSus3;
-        button[31] = t.Sol3;
-        button[32] = t.SolSus3;
-        button[33] = t.La3;
-        button[34] = t.LaSus3;
-        button[35] = t.Si3;
-            
-        button[36] = t.Do4;
-	    	
-	    return button;
-	}
 }

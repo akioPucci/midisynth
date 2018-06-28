@@ -216,46 +216,46 @@ public class Teclado{
 	public JButton[] createJButtonArray() {
 		JButton button[] = new JButton[37];
 
-		button[0] = Do1;
-		button[1] = DoSus1;
-		button[2] = Re1;
-		button[3] = ReSus1;
-		button[4] = Mi1;
-		button[5] = Fa1;
-		button[6] = FaSus1;
-		button[7] = Sol1;
-		button[8] = SolSus1;
-		button[9] = La1;
-		button[10] = LaSus1;
-		button[11] = Si1;
+		button[0] = this.Do1;
+		button[1] = this.DoSus1;
+		button[2] = this.Re1;
+		button[3] = this.ReSus1;
+		button[4] = this.Mi1;
+		button[5] = this.Fa1;
+		button[6] = this.FaSus1;
+		button[7] = this.Sol1;
+		button[8] = this.SolSus1;
+		button[9] = this.La1;
+		button[10] = this.LaSus1;
+		button[11] = this.Si1;
 
-		button[12] = Do2;
-		button[13] = DoSus2;
-		button[14] = Re2;
-		button[15] = ReSus2;
-		button[16] = Mi2;
-		button[17] = Fa2;
-		button[18] = FaSus2;
-		button[19] = Sol2;
-		button[20] = SolSus2;
-		button[21] = La2;
-		button[22] = LaSus2;
-		button[23] = Si2;
+		button[12] = this.Do2;
+		button[13] = this.DoSus2;
+		button[14] = this.Re2;
+		button[15] = this.ReSus2;
+		button[16] = this.Mi2;
+		button[17] = this.Fa2;
+		button[18] = this.FaSus2;
+		button[19] = this.Sol2;
+		button[20] = this.SolSus2;
+		button[21] = this.La2;
+		button[22] = this.LaSus2;
+		button[23] = this.Si2;
 
-		button[24] = Do3;
-		button[25] = DoSus3;
-		button[26] = Re3;
-		button[27] = ReSus3;
-		button[28] = Mi3;
-		button[29] = Fa3;
-		button[30] = FaSus3;
-		button[31] = Sol3;
-		button[32] = SolSus3;
-		button[33] = La3;
-		button[34] = LaSus3;
-		button[35] = Si3;
+		button[24] = this.Do3;
+		button[25] = this.DoSus3;
+		button[26] = this.Re3;
+		button[27] = this.ReSus3;
+		button[28] = this.Mi3;
+		button[29] = this.Fa3;
+		button[30] = this.FaSus3;
+		button[31] = this.Sol3;
+		button[32] = this.SolSus3;
+		button[33] = this.La3;
+		button[34] = this.LaSus3;
+		button[35] = this.Si3;
 
-		button[36] = Do4;
+		button[36] = this.Do4;
 
 		return button;
 	}

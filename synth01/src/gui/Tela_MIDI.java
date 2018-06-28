@@ -22,6 +22,8 @@ import key.KeyManagement;
 @SuppressWarnings("serial")
 public class Tela_MIDI extends JFrame {
 	public static Teclado t;
+	public JButton button[];
+	
 	public JMenuBar Bar;
 	public JMenu menu;
 	public JMenuItem exit;
@@ -36,9 +38,10 @@ public class Tela_MIDI extends JFrame {
 		t = new Teclado();
 		initTela();
 		initMenu();
+		initGravador();
 		initTeclado();
 		setAllNotFocusable();
-		KeyManagement.create(this, t.createJButtonArray(), 0);
+		KeyManagement.create(this, button, 0);
 	}
 
 	public void initTela() {
@@ -48,10 +51,74 @@ public class Tela_MIDI extends JFrame {
 		setResizable(false); // Impede de alterar tamanho da tela
 		setLocationRelativeTo(null); // Centro da tela
 		getContentPane().setLayout(null);
+		verifyIfNimbusIsInstalled();
+	}
+	
+	/**
+	 * Verifiy if the LookAndFeel Nimbus is installed
+	 */
+	private void verifyIfNimbusIsInstalled() {
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+					.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException ex) {
+			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (InstantiationException ex) {
+			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		}
 	}
 
 	public void initMenu() {
+		Bar = new JMenuBar();
+		menu = new JMenu();
+		synth = new JMenuItem();
+		exit = new JMenuItem();
 
+		menu.setText("Menu");
+
+		synth.setText("Sintetizador");
+		menu.add(synth);
+		synth.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				synthActionPerformed(evt);
+			}
+		});
+
+		exit.setText("Sair");
+		menu.add(exit);
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				exitActionPerformed(evt);
+			}
+		});
+
+		Bar.add(menu);
+		setJMenuBar(Bar);
+	}
+
+	private void synthActionPerformed(ActionEvent evt) {
+		Tela_Inicial.ts.setVisible(true);
+		this.setVisible(false);
+	}
+
+	private void exitActionPerformed(ActionEvent evt) {
+		System.exit(0);
+	}
+	
+	public void initGravador() {
 		gravar = new JButton();
 		gravar.setBounds(1100, 100, 100, 50);
 		gravar.setText("Gravar");
@@ -150,46 +217,15 @@ public class Tela_MIDI extends JFrame {
 
 			}
 		});
-
-		Bar = new JMenuBar();
-		menu = new JMenu();
-		synth = new JMenuItem();
-		exit = new JMenuItem();
-
-		menu.setText("Menu");
-
-		synth.setText("Sintetizador");
-		menu.add(synth);
-		synth.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				synthActionPerformed(evt);
-			}
-		});
-
-		exit.setText("Sair");
-		menu.add(exit);
-		exit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				exitActionPerformed(evt);
-			}
-		});
-
-		Bar.add(menu);
-		setJMenuBar(Bar);
 	}
-
-	private void synthActionPerformed(ActionEvent evt) {
-		Tela_Inicial.ts.setVisible(true);
-		this.setVisible(false);
-	}
-
-	private void exitActionPerformed(ActionEvent evt) {
-		System.exit(0);
-	}
+	
+	/*
 
 	public static void setNotVisible(int i) {
 		t.createJButtonArray()[i].setVisible(false);
 	}
+	
+	*/
 
 	public void initTeclado() {
 		getContentPane().add(t.DoSus1);
@@ -229,11 +265,11 @@ public class Tela_MIDI extends JFrame {
 		getContentPane().add(t.La3);
 		getContentPane().add(t.Si3);
 		getContentPane().add(t.Do4);
+		
+		button = t.createJButtonArray();
 	}
 
 	private void setAllNotFocusable() {
-		JButton button[] = t.createJButtonArray();
-
 		for (int i = 0; i < button.length; i++) {
 			button[i].setFocusable(false);
 		}
