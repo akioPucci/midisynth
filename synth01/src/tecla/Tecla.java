@@ -164,10 +164,7 @@ public class Tecla implements KeyListener {
 	}
 	
 	public void changeInstrument(int keyCode) {
-		if(midiOrSynth == 0)
 			midi.changeInstrument(keyCode);
-		else
-			synth.changeOscillator(keyCode);
 	}
 	
 	public void changeStatus() {

@@ -1,11 +1,11 @@
 package synth;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
+import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
 import javax.sound.sampled.AudioFormat;
@@ -43,7 +43,8 @@ public class AudioSynth extends JFrame {
 	private boolean bigEndian; // pode ser true,false
 	
 	//componentes
-	private int oscSelector;
+	//TODO implementar hash de notas
+	private HashMap<Integer, Note> notesPlaying = new HashMap<Integer, Note>();
 	private Oscillator[] osc;
 	private AudioChannel[] outputChannel;
 	private Mixer mixer;
@@ -99,12 +100,10 @@ public class AudioSynth extends JFrame {
 		numOfKeys = 38;
 		keyEnable = new boolean[numOfKeys];
 		
-		//componentes
-		oscSelector = 0;
 		osc = new Oscillator[3];
 		osc[0] = new Oscillator("sine",   2, sampleRate);
-		osc[1] = new Oscillator("sine",   3, sampleRate);
-		osc[2] = new Oscillator("sine",   4, sampleRate);
+		osc[1] = new Oscillator("square",   2, sampleRate);
+		osc[2] = new Oscillator("triangle",   2, sampleRate);
 		
 		
 		outputChannel = new AudioChannel[3];
@@ -152,11 +151,21 @@ public class AudioSynth extends JFrame {
 		return keysEnabled;
 	}
 	
-	private void popKey() {
+	private void popKey(int note) {
 		keysEnabled--;
+		Note n = notesPlaying.remove(note);
+		n.setFin();
+		
+		int shiftMap = 50;
+		note = note + shiftMap;
+		while(notesPlaying.containsKey(note))
+			note = note + shiftMap;
+		
+		notesPlaying.put(note, n);
 	}
 	
-	private void pushKey() {
+	private void pushKey(int note) {
+		notesPlaying.put(note, new Note(note));
 		keysEnabled++;
 	}
 	
@@ -173,7 +182,7 @@ public class AudioSynth extends JFrame {
 	 * @param note
 	 */
 	public void noteOn(int note) {
-		pushKey();
+		pushKey(note);
 		activateKey(note);
 		if (sourceDataLine.isRunning() == false) {
 			sourceDataLine.start();
@@ -194,7 +203,7 @@ public class AudioSynth extends JFrame {
 				sourceDataLine.stop();
 				input_sem.acquire();				
 			}
-			popKey();
+			popKey(note);
 			desactivateKey(note);
 			sourceDataLine.flush();
 
@@ -221,45 +230,6 @@ public class AudioSynth extends JFrame {
 		osc[oscNum].setType(type);
 	}
 	
-	public void changeOscillator(int key) {
-		int keyboardDirection;
-    	if(key == 37)
-    		keyboardDirection = -1;
-    	else
-    		keyboardDirection = 1;
-    	
-    	if(oscSelector + keyboardDirection == -1)
-    		oscSelector = 3;
-    	else
-    		oscSelector = (oscSelector + keyboardDirection) % 4;
-    	
-    	switch(oscSelector) {
-    	case 0://sine
-    		System.out.println("sine set");
-    		setOscType(0, "sine");
-    		setOscType(1, "sine");
-    		setOscType(2, "sine");
-    		break;
-    	case 1://square
-    		System.out.println("square set");
-    		setOscType(0, "square");
-    		setOscType(1, "square");
-    		setOscType(2, "square");
-    		break;
-    	case 2://triangle
-    		System.out.println("triangle set");
-    		setOscType(0, "triangle");
-    		setOscType(1, "triangle");
-    		setOscType(2, "triangle");
-    		break;
-    	case 3://saw
-    		System.out.println(" set");
-    		setOscType(0, "saw");
-    		setOscType(1, "saw");
-    		setOscType(2, "saw");
-    		break;
-    	}
-	}
 	/**
 	 * sets the oscillator amplitude
 	 * @param oscNum

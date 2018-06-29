@@ -572,6 +572,7 @@ public class Tela_Sintetizador extends JFrame{
     }
 	
 	private void Freq1StateChanged(ChangeEvent evt) {
+		synth.setOscOctave(0, Freq1.getValue());
 		Freq_Value_Text1.setText(String.valueOf(Freq1.getValue()));
     }
 	
@@ -581,6 +582,7 @@ public class Tela_Sintetizador extends JFrame{
     }
 	
 	private void Freq2StateChanged(ChangeEvent evt) {
+		synth.setOscOctave(1, Freq2.getValue());
 		Freq_Value_Text2.setText(String.valueOf(Freq2.getValue()));
     }
 	
@@ -590,6 +592,7 @@ public class Tela_Sintetizador extends JFrame{
     }
 	
 	private void Freq3StateChanged(ChangeEvent evt) {
+		synth.setOscOctave(2, Freq3.getValue());
 		Freq_Value_Text3.setText(String.valueOf(Freq3.getValue()));
     }
 	

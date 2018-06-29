@@ -16,7 +16,7 @@ public class Mixer {
 	private boolean[] channelOn;
 	
 	public Mixer(int numOfChannels) {
-		this.volumeMaster = 1;
+		this.volumeMaster = 0.5;
 		
 		this.numOfChannels = numOfChannels;
 		this.volumeChannel = new double[numOfChannels];

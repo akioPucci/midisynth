@@ -88,7 +88,7 @@ public class Oscillator {
 		noteFrequency[36] = 2093.00f;
 		noteFrequency[37] = 2217.50f;
 		
-		amp = 1;
+		amp = 0.5;
 		
 		time = 0;
 		this.sampleCounter = 0;
@@ -173,6 +173,7 @@ public class Oscillator {
 	public void countTime() {
 		time = (sampleCounter / sampleRate);
 		sampleCounter++;
+		if(sampleCounter == 30000);
 	}
 	
 	/**

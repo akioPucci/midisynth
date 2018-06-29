@@ -18,6 +18,7 @@ public class MidiSynth {
 	private static MidiSynth midisynth;
 
     private Synthesizer synthesizer;
+  
     private final MidiChannel[] midiChannels;
     private final Instrument[] instruments;
     private int instrumentIndex = 0;

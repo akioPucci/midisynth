@@ -255,11 +255,11 @@ public class KeyManagement {
 		tecla[30] = new Tecla(KeyEvent.VK_EQUALS, synth, midi, midiOrSynth);
 		tecla[31] = new Tecla(KeyEvent.VK_CLOSE_BRACKET, synth, midi, midiOrSynth);
 		// TODO verificar teclas com -1
-		tecla[32] = new Tecla(-1, synth, midi, midiOrSynth);
-		tecla[33] = new Tecla(-1, synth, midi, midiOrSynth);
-		tecla[34] = new Tecla(-1, synth, midi, midiOrSynth);
-		tecla[35] = new Tecla(-1, synth, midi, midiOrSynth);
-		tecla[36] = new Tecla(-1, synth, midi, midiOrSynth);
+		tecla[32] = new Tecla(1, synth, midi, midiOrSynth);
+		tecla[33] = new Tecla(2, synth, midi, midiOrSynth);
+		tecla[34] = new Tecla(3, synth, midi, midiOrSynth);
+		tecla[35] = new Tecla(4, synth, midi, midiOrSynth);
+		tecla[36] = new Tecla(5, synth, midi, midiOrSynth);
 		tecla[37] = new Tecla(KeyEvent.VK_LEFT, synth, midi, midiOrSynth);
 		tecla[38] = new Tecla(KeyEvent.VK_RIGHT, synth, midi, midiOrSynth);
 	
@@ -376,6 +376,16 @@ public class KeyManagement {
 			return 30;
 		case 93:
 			return 31;
+		case 1:
+			return 32;
+		case 2:
+			return 33;
+		case 3:
+			return 34;
+		case 4:
+			return 35;
+		case 5:
+			return 36;
 		}
 		return -1;
 	}
