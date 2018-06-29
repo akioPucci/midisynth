@@ -12,8 +12,7 @@ public class AudioChannel {
 
 	double[] keyOutput;
 	
-	AudioChannel(int numOfKeys){
-		keyOutput = new double[numOfKeys];
+	AudioChannel(){
 	}
 
 	/**

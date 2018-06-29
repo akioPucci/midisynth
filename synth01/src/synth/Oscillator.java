@@ -1,5 +1,9 @@
 package synth;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 /**
  * Oscillator, contains 5 types of oscillator,
  *  sine, square, triangle, saw, and drawn
@@ -11,6 +15,7 @@ package synth;
  */
 public class Oscillator {
 	
+	private String name;
 	private String type;
 	private int octave;
 	private double frequencyMult;
@@ -23,7 +28,8 @@ public class Oscillator {
 	
 	private double[] drawnWaveSample;
 	
-	public Oscillator(String type, int octave, float sampleRate) {
+	public Oscillator(String name, String type, int octave, float sampleRate) {
+		this.name = name;
 		this.type = type;
 		
 		this.octave = octave;
@@ -96,6 +102,10 @@ public class Oscillator {
 		
 		//drawn wave
 		drawnWaveSample = new double[1000];
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 	public String getType() {
@@ -243,8 +253,37 @@ public class Oscillator {
 		
 		countTime();
 		
-		
 		return synthData;
+	}
+	
+	void oscillate(HashMap<Integer, Note> notesPlaying) {
+		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
+		    Note note = entry.getValue();
+		    
+		    switch(type) {
+			case "sine":
+				note.setChannelSample(getName(), getAmp()*(Math.sin(2 * Math.PI * (noteFrequency[note.getNote()]*frequencyMult) * time))); 
+				break;
+				
+			case "square":
+				note.setChannelSample(getName(), getAmp()*(squareWave(2 * Math.PI * (noteFrequency[note.getNote()]*frequencyMult) * time))); 
+				break;
+				
+			case "triangle":
+				note.setChannelSample(getName(), getAmp()*(triangleWave(2 * Math.PI * (noteFrequency[note.getNote()]*frequencyMult) * time))); 
+				break;
+				
+			case "saw":
+				note.setChannelSample(getName(), getAmp()*(sawWave(2 * Math.PI * (noteFrequency[note.getNote()]*frequencyMult) * time))); 
+				break;
+				
+			case "drawn":
+				note.setChannelSample(getName(), getAmp()*(drawnWave(2 * Math.PI * (noteFrequency[note.getNote()]*frequencyMult) * time))); 
+			}
+
+		}
+		countTime();
+		return;
 	}
 	
 	/**

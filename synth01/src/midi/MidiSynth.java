@@ -87,40 +87,7 @@ public class MidiSynth {
     	switchNoteStatus(note);
     }
     
-    public void changeInstrument(int key) {
-    	int keyboardDirection;
-    	if(key == 37)
-    		keyboardDirection = -1;
-    	else
-    		keyboardDirection = 1;
-    	
-    	switch(keyboardDirection) {
-    	case -1: {
-    		if (instrumentIndex == 0) {
-    			instrumentIndex = instruments.length - 1;
-    		} else {
-    			instrumentIndex--;
-    		}
-    		
-    		synthesizer.getChannels()[0].programChange(instrumentIndex);
-    		System.out.println("Switched to " + 
-    				instruments[instrumentIndex].getName());
-    		break;
-    	}
-    	
-    	case 1: {
-    		if (instrumentIndex == instruments.length - 1) {
-    			instrumentIndex = 0;
-    		} else {
-    			instrumentIndex++;
-    		}
-    		
-    		synthesizer.getChannels()[0].programChange(instrumentIndex);
-    		System.out.println("Switched to " + 
-    				instruments[instrumentIndex].getName());
-    		break;
-    	
-    	}
-    	}
+    public void changeInstrument(int instrumentNumber) {
+    	instrumentIndex = instrumentNumber;
     }
 }

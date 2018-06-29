@@ -44,7 +44,7 @@ public class AudioSynth extends JFrame {
 	
 	//componentes
 	//TODO implementar hash de notas
-	private HashMap<Integer, Note> notesPlaying = new HashMap<Integer, Note>();
+	private HashMap<Integer, Note> notesPlaying;
 	private Oscillator[] osc;
 	private AudioChannel[] outputChannel;
 	private Mixer mixer;
@@ -67,6 +67,7 @@ public class AudioSynth extends JFrame {
 
 	//semaforos
 	private Semaphore input_sem;
+	private Semaphore notePressed_sem;
 	private Semaphore output_sem;
 	
 	
@@ -96,20 +97,21 @@ public class AudioSynth extends JFrame {
 		
 		
 		//Informações Teclado
+		notesPlaying = new HashMap<Integer, Note>();
 		keysEnabled = 0;
 		numOfKeys = 38;
 		keyEnable = new boolean[numOfKeys];
 		
 		osc = new Oscillator[3];
-		osc[0] = new Oscillator("sine",   2, sampleRate);
-		osc[1] = new Oscillator("square",   2, sampleRate);
-		osc[2] = new Oscillator("triangle",   2, sampleRate);
+		osc[0] = new Oscillator("osc1", "sine",   2, sampleRate);
+		osc[1] = new Oscillator("osc2", "square",   2, sampleRate);
+		osc[2] = new Oscillator("osc3", "triangle",   2, sampleRate);
 		
 		
 		outputChannel = new AudioChannel[3];
-		outputChannel[0] = new AudioChannel(numOfKeys);
-		outputChannel[1] = new AudioChannel(numOfKeys);
-		outputChannel[2] = new AudioChannel(numOfKeys);
+		outputChannel[0] = new AudioChannel();
+		outputChannel[1] = new AudioChannel();
+		outputChannel[2] = new AudioChannel();
 		mixer = new Mixer(outputChannel.length);
 		
 		//block communications
@@ -125,6 +127,7 @@ public class AudioSynth extends JFrame {
 		//semaforos
 		input_sem = new Semaphore(0);
 		output_sem = new Semaphore(0);
+		notePressed_sem = new Semaphore(0);
 		
 		// Configurando formato de audio
 		audioFormat = new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
@@ -153,6 +156,9 @@ public class AudioSynth extends JFrame {
 	
 	private void popKey(int note) {
 		keysEnabled--;
+		notesPlaying.remove(note);
+		
+		/*
 		Note n = notesPlaying.remove(note);
 		n.setFin();
 		
@@ -162,6 +168,7 @@ public class AudioSynth extends JFrame {
 			note = note + shiftMap;
 		
 		notesPlaying.put(note, n);
+		*/
 	}
 	
 	private void pushKey(int note) {
@@ -182,6 +189,7 @@ public class AudioSynth extends JFrame {
 	 * @param note
 	 */
 	public void noteOn(int note) {
+		//TODO concurrent access FUCK
 		pushKey(note);
 		activateKey(note);
 		if (sourceDataLine.isRunning() == false) {
@@ -290,15 +298,15 @@ public class AudioSynth extends JFrame {
 						input_sem.acquire();
 						
 						//Oscillator
-						outputChannel[0].setKeysOutput(osc[0].oscillate(keyEnable));
-						outputChannel[1].setKeysOutput(osc[1].oscillate(keyEnable));
-						outputChannel[2].setKeysOutput(osc[2].oscillate(keyEnable));
+						osc[0].oscillate(notesPlaying);
+						osc[1].oscillate(notesPlaying);
+						osc[2].oscillate(notesPlaying);
+						
+						//mix channels
+						mixer.mixSynthChannels(notesPlaying);
 						
 						//mix to output
-						mixedSampleBuffer = mixer.mixOutputSample(
-								outputChannel[0].getKeysOutput(),
-								outputChannel[1].getKeysOutput(),
-								outputChannel[2].getKeysOutput());
+						mixedSampleBuffer = mixer.mixOutputSample(notesPlaying);
 						outShortBuffer.put(inputBlockCounter, (short) (mixedSampleBuffer));
 						
 						input_sem.release();

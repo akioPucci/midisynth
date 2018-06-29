@@ -1,5 +1,8 @@
 package synth;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Mixer, mix sample channels, each channel has his own control parameters 
  * 
@@ -93,18 +96,17 @@ public class Mixer {
 	 * @param channel3SynthData
 	 * @return
 	 */
-	public double[] mixSynthChannels(double[] channel1SynthData, double[] channel2SynthData, double[] channel3SynthData) {
-		double[] mixedSynthChannel = new double[38];
-		for(int i = 0; i < 38; i++) {
-				mixedSynthChannel[i] = (volumeChannel[0]*channel1SynthData[i] 
-										+ volumeChannel[1]*channel2SynthData[i] 
-										+ volumeChannel[2]*channel3SynthData[i]);
-			
+	public void mixSynthChannels(HashMap<Integer, Note> notesPlaying) {
+		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
+		    Note note = entry.getValue();
+		    note.setSample(0);
+		    
+		    for(Map.Entry<String, Double> channel : note.getAllChannelSample().entrySet()) {
+			    double value = channel.getValue();
+			    note.setSample(note.getSample() + value);
+			}
 		}
-		
-		return mixedSynthChannel;
 	}
-	
 	
 	/**
 	 * returns a mix ready to be processed (audio processed)
@@ -113,12 +115,12 @@ public class Mixer {
 	 * @param channel3SynthData
 	 * @return
 	 */
-	public double mixOutputSample(double[] channel1SynthData, double[] channel2SynthData, double[] channel3SynthData) {
-		double[] noteToMix = mixSynthChannels(channel1SynthData, channel2SynthData, channel3SynthData);
+	public double mixOutputSample(HashMap<Integer, Note> notesPlaying) {
 		double mixedSample = 0;
 		
-		for(int i = 0; i < 38; i++ ) {
-			mixedSample = mixedSample + noteToMix[i];
+		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
+		    Note note = entry.getValue();
+		    mixedSample = mixedSample + note.getSample();
 		}
 		
 		mixedSample = mixedSample * ((8000/numOfChannels)*volumeMaster);
