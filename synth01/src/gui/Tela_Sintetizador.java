@@ -124,21 +124,21 @@ public class Tela_Sintetizador extends JFrame{
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+			java.util.logging.Logger.getLogger(Tela_Sintetizador.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+			java.util.logging.Logger.getLogger(Tela_Sintetizador.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+			java.util.logging.Logger.getLogger(Tela_Sintetizador.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+			java.util.logging.Logger.getLogger(Tela_Sintetizador.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		}
 	}
 	
-	public void initMenu() {
+	public void initMenu() {		
 		Bar = new JMenuBar();
         menu = new JMenu();
         MIDI = new JMenuItem();
@@ -177,7 +177,7 @@ public class Tela_Sintetizador extends JFrame{
 	
 	private void initGravador() {
 		gravar = new JButton();
-		gravar.setBounds(1100, 100, 100, 50);
+		gravar.setBounds(1100, 500, 100, 50);
 		gravar.setText("Gravar");
 		gravar.setVisible(true);
 		getContentPane().add(gravar);
@@ -192,7 +192,7 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		pausar = new JButton();
-		pausar.setBounds(1200, 100, 100, 50);
+		pausar.setBounds(1200, 500, 100, 50);
 		pausar.setText("Parar");
 		pausar.setVisible(true);
 		getContentPane().add(pausar);
@@ -208,7 +208,7 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		reproduzir = new JButton();
-		reproduzir.setBounds(1300, 100, 100, 50);
+		reproduzir.setBounds(1300, 500, 100, 50);
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -241,7 +241,7 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		genius = new JButton();
-		genius.setBounds(1400, 100, 100, 50);
+		genius.setBounds(1400, 500, 100, 50);
 		genius.setText("Genius");
 		genius.setVisible(true);
 		getContentPane().add(genius);
@@ -383,8 +383,13 @@ public class Tela_Sintetizador extends JFrame{
         getContentPane().add(Sel_Ondas3);
         Sel_Ondas3.setBounds(770, 180, 130, 30);
 
-        Ampl1.setFont(new Font("Tahoma", 0, 24));;
+        Ampl1.setFont(new Font("Tahoma", 0, 10));
         Ampl1.setOrientation(JSlider.VERTICAL);
+        Ampl1.setMinorTickSpacing(1);
+        Ampl1.setMajorTickSpacing(10);
+        Ampl1.setPaintTicks(true);
+        Ampl1.setPaintLabels(true);
+        Ampl1.setSnapToTicks(true); // Para somente sobre os ticks 
         Ampl1.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 Ampl1StateChanged(evt);
