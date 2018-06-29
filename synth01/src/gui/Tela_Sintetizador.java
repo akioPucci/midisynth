@@ -338,30 +338,34 @@ public class Tela_Sintetizador extends JFrame{
         getContentPane().add(Mixer_Text);
         Mixer_Text.setBounds(490, 20, 180, 90);
 
-        Des_Ondas1.setIcon(new ImageIcon("images/senoidal.png"));
+        Des_Ondas1.setIcon(new ImageIcon("images/triangular.png"));
         getContentPane().add(Des_Ondas1);
         Des_Ondas1.setBounds(190, 173, 50, 50);
 
-        Des_Ondas2.setIcon(new ImageIcon("images/senoidal.png"));
+        Des_Ondas2.setIcon(new ImageIcon("images/quadrada.png"));
         getContentPane().add(Des_Ondas2);
         Des_Ondas2.setBounds(450, 173, 50, 50);
 
-        Des_Ondas3.setIcon(new ImageIcon("images/senoidal.png"));
+        Des_Ondas3.setIcon(new ImageIcon("images/dente_serra.png"));
         getContentPane().add(Des_Ondas3);
         Des_Ondas3.setBounds(710, 173, 50, 50);
 
         Sel_Ondas1.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
-        Sel_Ondas1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Sel_Ondas1.setSelectedItem("Triangular");
+        synth.setOscType(0, "triangle");
+        Sel_Ondas1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 Sel_Ondas1ActionPerformed(evt);
             }
         });
         getContentPane().add(Sel_Ondas1);
         Sel_Ondas1.setBounds(250, 180, 130, 30);
-
+        
         Sel_Ondas2.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
-        Sel_Ondas2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Sel_Ondas2.setSelectedItem("Quadrada");
+        synth.setOscType(1, "square");
+        Sel_Ondas2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 Sel_Ondas2ActionPerformed(evt);
             }
         });
@@ -369,8 +373,10 @@ public class Tela_Sintetizador extends JFrame{
         Sel_Ondas2.setBounds(510, 180, 130, 30);
 
         Sel_Ondas3.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
-        Sel_Ondas3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        Sel_Ondas3.setSelectedItem("Dente de Serra");
+        synth.setOscType(1, "saw");
+        Sel_Ondas3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 Sel_Ondas3ActionPerformed(evt);
             }
         });
@@ -562,34 +568,41 @@ public class Tela_Sintetizador extends JFrame{
 	}
 	
 	private void MasterStateChanged(ChangeEvent evt) {
+		synth.setVolumeMaster(((double)Master_Slider.getValue())/100);
 		Master_Value_Text.setText(String.valueOf(Master_Slider.getValue()));
     }
 	
 	private void Ampl1StateChanged(ChangeEvent evt) {
+		synth.setOscAmp(0, ((double)Ampl1.getValue())/100);
 		Ampl_Value_Text1.setText(String.valueOf(Ampl1.getValue()));
     }
 	
 	private void Freq1StateChanged(ChangeEvent evt) {
+		synth.setOscOctave(0, Freq1.getValue());
 		Freq_Value_Text1.setText(String.valueOf(Freq1.getValue()));
     }
 	
 	private void Ampl2StateChanged(ChangeEvent evt) {
+		synth.setOscAmp(1, ((double)Ampl2.getValue())/100);
 		Ampl_Value_Text2.setText(String.valueOf(Ampl2.getValue()));
     }
 	
 	private void Freq2StateChanged(ChangeEvent evt) {
+		synth.setOscOctave(1, Freq2.getValue());
 		Freq_Value_Text2.setText(String.valueOf(Freq2.getValue()));
     }
 	
 	private void Ampl3StateChanged(ChangeEvent evt) {
+		synth.setOscAmp(2, ((double)Ampl3.getValue())/100);
 		Ampl_Value_Text3.setText(String.valueOf(Ampl3.getValue()));
     }
 	
 	private void Freq3StateChanged(ChangeEvent evt) {
+		synth.setOscOctave(2, Freq3.getValue());
 		Freq_Value_Text3.setText(String.valueOf(Freq3.getValue()));
     }
 	
-	private void Sel_Ondas1ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void Sel_Ondas1ActionPerformed(ActionEvent evt) {
 		String s = (String) Sel_Ondas1.getSelectedItem();
 		if(s == "Senoidal") {
 			synth.setOscType(0, "sine");
@@ -609,7 +622,7 @@ public class Tela_Sintetizador extends JFrame{
 		}
 	}                                          
 
-	private void Sel_Ondas2ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void Sel_Ondas2ActionPerformed(ActionEvent evt) {
 		String s = (String) Sel_Ondas2.getSelectedItem();
 		if(s == "Senoidal") {
 			synth.setOscType(1, "sine");
@@ -629,7 +642,7 @@ public class Tela_Sintetizador extends JFrame{
 		}
 	}
 	
-	private void Sel_Ondas3ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void Sel_Ondas3ActionPerformed(ActionEvent evt) {
 		String s = (String) Sel_Ondas3.getSelectedItem();
 		if(s == "Senoidal") {
 			synth.setOscType(2, "sine");
