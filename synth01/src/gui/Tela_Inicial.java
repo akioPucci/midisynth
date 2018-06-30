@@ -1,73 +1,40 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
+import javax.swing.WindowConstants;
+
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.WindowConstants;
+
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class Tela_Inicial extends JFrame{
 	public static Tela_Sintetizador ts;
 	public static Tela_MIDI tm;
 	private static Redimensionamento p;
-	private JButton MIDI;
-	private JButton synth;
-	private JLabel planoFundo;
 	
 	public Tela_Inicial(){
-		p = new Redimensionamento(1200, 799);
+		p = new Redimensionamento();
 		tm = new Tela_MIDI();
 		ts = new Tela_Sintetizador();
 		initTela();
 		initComponents();
-		setAllNotFocusable();
-		pack();
-		
-		this.addComponentListener(new ComponentAdapter() {
-			public void componentResized(ComponentEvent evt) {
-				p.w_Resizable = getContentPane().getWidth();
-				p.h_Resizable = getContentPane().getHeight();
-				Atualizar_Tela();
-			}
-		});
-	}
-	
-	public void Atualizar_Tela() {		
-		MIDI.setFont(new Font("Segoe Script", 0, p.ProporcaoW(48)));
-		MIDI.setBounds(p.ProporcaoW(175), p.ProporcaoH(300), p.ProporcaoW(350),
-        		p.ProporcaoH(200));
-		
-		synth.setFont(new Font("Segoe Script", 0, p.ProporcaoW(48)));
-		synth.setBounds(p.ProporcaoW(650), p.ProporcaoH(300), p.ProporcaoW(350),
-        		p.ProporcaoH(200));
-		
-		try {
-			Imagem img = new Imagem("images\\music.jpg");
-			planoFundo.setIcon(p.redimensionarImg(img.imagem, p.ProporcaoW(img.wmax),
-					p.ProporcaoH(img.hmax)));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		planoFundo.setBounds(0, 0, p.ProporcaoW(1200), p.ProporcaoH(799));
-		this.repaint();
 	}
 	
 	public void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(p.ProporcaoW(1200), p.ProporcaoH(799)));
-		setLocationRelativeTo(null); // Centro da tela
+        setResizable(false); // Impede de alterar tamanho da tela
+        setLocationRelativeTo(null); // Centro da tela
         setVisible(true);
         getContentPane().setLayout(null);
         verifyIfNimbusIsInstalled();
@@ -102,9 +69,9 @@ public class Tela_Inicial extends JFrame{
 	}
 	
 	public void initComponents(){
-		MIDI = new JButton();
-		synth = new JButton();
-		planoFundo = new JLabel();
+		JButton MIDI = new JButton();
+		JButton synth = new JButton();
+		JLabel planoFundo = new JLabel();
 		
 		MIDI.setFont(new Font("Segoe Script", 0, p.ProporcaoW(48)));
         MIDI.setForeground(new Color(255, 0, 255));
@@ -120,8 +87,7 @@ public class Tela_Inicial extends JFrame{
             }
         });
         getContentPane().add(MIDI);
-        MIDI.setBounds(p.ProporcaoW(175), p.ProporcaoH(300), p.ProporcaoW(350),
-        		p.ProporcaoH(200));
+        MIDI.setBounds(p.ProporcaoW(175), p.ProporcaoH(300), p.ProporcaoW(350), p.ProporcaoH(200));
 
         synth.setFont(new Font("Segoe Script", 0, p.ProporcaoW(48)));
         synth.setForeground(new Color(255, 0, 255));
@@ -137,8 +103,7 @@ public class Tela_Inicial extends JFrame{
             }
         });
         getContentPane().add(synth);
-        synth.setBounds(p.ProporcaoW(650), p.ProporcaoH(300), p.ProporcaoW(350),
-        		p.ProporcaoH(200));
+        synth.setBounds(p.ProporcaoW(650), p.ProporcaoH(300), p.ProporcaoW(350), p.ProporcaoH(200));
         
         try {
 			Imagem img = new Imagem("images\\music.jpg");
@@ -150,6 +115,8 @@ public class Tela_Inicial extends JFrame{
 		}
         getContentPane().add(planoFundo);
         planoFundo.setBounds(0, 0, p.ProporcaoW(1200), p.ProporcaoH(799));
+
+        pack();
 	}
 	
 	private void MIDIActionPerformed(ActionEvent evt) {
@@ -161,9 +128,4 @@ public class Tela_Inicial extends JFrame{
     	ts.setVisible(true);
     	this.setVisible(false);
     }
-    
-    private void setAllNotFocusable() {
-		MIDI.setFocusable(false);
-		synth.setFocusable(false);
-	}
 }
