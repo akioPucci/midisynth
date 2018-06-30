@@ -110,7 +110,7 @@ public class AudioSynth extends JFrame {
 		osc[1] = new Oscillator("osc2", "square",   2, sampleRate);
 		osc[2] = new Oscillator("osc3", "triangle",   2, sampleRate);
 		
-		env = new Envelope(sampleRate, 0.3, 0.2, 0.9, 3);
+		env = new Envelope(sampleRate, 0.05, 0.1, 1, 0.1);
 		
 		outputChannel = new AudioChannel[3];
 		outputChannel[0] = new AudioChannel();
@@ -280,6 +280,21 @@ public class AudioSynth extends JFrame {
 		osc[oscNum].setDrawnWaveSample(sample);
 	}
 	
+	public void setAttackEnvTime(double attackTime) {
+		env.setAttackTime(attackTime);
+	}
+	
+	public void setDecayEnvTime(double decayTime) {
+		env.setDecayTime(decayTime);
+	}
+	
+	public void setSustainEnvAmp(double sustainAmp) {
+		env.setSustainAmp(sustainAmp);
+	}
+	
+	public void setReleaseEnvTime(double releaseTime) {
+		env.setReleaseTime(releaseTime);
+	}
 
 	/**
 	 * runs all the input processes, communicates with the output thread
