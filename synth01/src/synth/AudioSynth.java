@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
@@ -48,6 +49,7 @@ public class AudioSynth extends JFrame {
 	private ConcurrentHashMap<Integer, Note> notesPlaying;
 	private Oscillator[] osc;
 	private AudioChannel[] outputChannel;
+	private Envelope env;
 	private Mixer mixer;
 	
 	//Informações Teclado
@@ -108,6 +110,7 @@ public class AudioSynth extends JFrame {
 		osc[1] = new Oscillator("osc2", "square",   2, sampleRate);
 		osc[2] = new Oscillator("osc3", "triangle",   2, sampleRate);
 		
+		env = new Envelope(sampleRate, 0.3, 0.2, 0.9, 3);
 		
 		outputChannel = new AudioChannel[3];
 		outputChannel[0] = new AudioChannel();
@@ -116,14 +119,13 @@ public class AudioSynth extends JFrame {
 		mixer = new Mixer(outputChannel.length);
 		
 		//block communications
-		blockSize = 1000;
+		blockSize = 2;
 
 		//buffer entrada
 		inBuffer = new byte[blockSize];
 		
 		//buffers saida
 	    outBuffer = new byte[blockSize];
-		inputBlockCounter = 0;
 
 		//semaforos
 		input_sem = new Semaphore(0);
@@ -155,13 +157,13 @@ public class AudioSynth extends JFrame {
 		return keysEnabled;
 	}
 	
+	private void setKeysEnabled(int n) {
+		this.keysEnabled = n;
+	}
+	
 	private void popKey(int note) {
-		keysEnabled--;
-		notesPlaying.remove(note);
-		
-		/*
 		Note n = notesPlaying.remove(note);
-		n.setFin();
+		n.setEnvState(3);
 		
 		int shiftMap = 50;
 		note = note + shiftMap;
@@ -169,41 +171,34 @@ public class AudioSynth extends JFrame {
 			note = note + shiftMap;
 		
 		notesPlaying.put(note, n);
-		*/
+
 	}
 	
 	private void pushKey(int note) {
 		notesPlaying.put(note, new Note(note));
-		keysEnabled++;
+		setKeysEnabled(getKeysEnabled()+1);;
 	}
 	
-	private void activateKey(int note) {
-		keyEnable[note] = true;
-	}
-	
-	private void desactivateKey(int note) {
-		keyEnable[note] = false;
-	}
-
 	/**
 	 * play a note
 	 * @param note
 	 */
 	public void noteOn(int note) {
-		//TODO concurrent access FUCK
 		try {
-			System.out.println(keyPressed_sem.availablePermits());
 			keyPressed_sem.acquire();
-			
 			pushKey(note);
-			activateKey(note);
-			if (sourceDataLine.isRunning() == false) {
-				sourceDataLine.start();
-			}
+			
+			//TODO AAAAAAA, QUERO TIRAR ESSA BOSTA
 			sourceDataLine.flush();
 			
-			if(getKeysEnabled() == 1)
+			if (sourceDataLine.isRunning() == false) {
+				System.out.println("ouvindo...");
+				sourceDataLine.start();
+			}
+			
+			if(getKeysEnabled() == 1) {
 				input_sem.release();
+			}
 			
 		}catch(InterruptedException ie) {ie.printStackTrace();}
 	}
@@ -215,19 +210,29 @@ public class AudioSynth extends JFrame {
 	public void noteOff(int note) {
 		try {
 			keyPressed_sem.acquire();
-
-			if (getKeysEnabled() == 1) {
-				sourceDataLine.stop();
-				input_sem.drainPermits();				
-			}
+			
 			popKey(note);
-			desactivateKey(note);
-			sourceDataLine.flush();
+		}catch(InterruptedException ie) {ie.printStackTrace();}
 
-		} catch (InterruptedException ie) {
-			ie.printStackTrace();
+	}
+	
+	public void killDeadNotes(ConcurrentHashMap<Integer, Note> notesPlaying) {
+		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
+			int key = entry.getKey();
+		    Note note = entry.getValue();
+		    
+		    if(note.isFin()) {
+		    	notesPlaying.remove(key);
+		    	setKeysEnabled(getKeysEnabled()-1);
+		    }
+		    
 		}
-
+		if (getKeysEnabled() == 0) {
+			System.out.println("nenhuma nota tocando");
+			sourceDataLine.stop();
+			input_sem.drainPermits();				
+		}
+		
 	}
 	
 	/**
@@ -291,7 +296,6 @@ public class AudioSynth extends JFrame {
 		//buffers to send to output
 		private ByteBuffer outByteBuffer = ByteBuffer.wrap(inBuffer);
 		private ShortBuffer outShortBuffer = outByteBuffer.asShortBuffer();
-		private int shortBufferSize = blockSize/2;
 		
 		//audio input stream
 		private InputStream byteArrayInputStream;
@@ -303,26 +307,31 @@ public class AudioSynth extends JFrame {
 			
 			while (true) {
 				try {
-					for (inputBlockCounter = 0; inputBlockCounter < shortBufferSize; inputBlockCounter++) {
-						input_sem.acquire();
-						keyPressed_sem.drainPermits();
-						
-						//Oscillator
-						osc[0].oscillate(notesPlaying);
-						osc[1].oscillate(notesPlaying);
-						osc[2].oscillate(notesPlaying);
-						
-						//mix channels
-						mixer.mixSynthChannels(notesPlaying);
-						
-						//mix to output
-						mixedSampleBuffer = mixer.mixOutputSample(notesPlaying);
-						outShortBuffer.put(inputBlockCounter, (short) (mixedSampleBuffer));
-						
-						keyPressed_sem.release(Integer.MAX_VALUE);
-						input_sem.release();
-					}
+					input_sem.acquire();
+					
+					/*REGIAO CRITICA*/
+					keyPressed_sem.drainPermits();
+					
+					//Oscillator
+					osc[0].oscillate(notesPlaying);
+					osc[1].oscillate(notesPlaying);
+					osc[2].oscillate(notesPlaying);
+					
+					//mix channels
+					mixer.mixSynthChannels(notesPlaying);
+					
+					//envelope
+					env.apply(notesPlaying);
+					
+					//mix to output
+					mixedSampleBuffer = mixer.mixOutputSample(notesPlaying);
+					outShortBuffer.put(0,(short) (mixedSampleBuffer));
+					
 
+					
+					
+					keyPressed_sem.release(Integer.MAX_VALUE);
+				
 					
 					//processing audio
 					byteArrayInputStream = new ByteArrayInputStream(inBuffer);
@@ -330,7 +339,6 @@ public class AudioSynth extends JFrame {
 							inBuffer.length / audioFormat.getFrameSize());
 					try {
 						audioInputStream.read(outBuffer, 0, outBuffer.length);
-
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
 					}
@@ -338,7 +346,9 @@ public class AudioSynth extends JFrame {
 					
 					//I/O communication
 					output_sem.release();
-					input_sem.acquire();
+					
+					//get rid of dead notes
+					killDeadNotes(notesPlaying);
 				} catch (InterruptedException ie) {
 					ie.printStackTrace();
 				}
@@ -364,6 +374,7 @@ public class AudioSynth extends JFrame {
 					output_sem.acquire();
 
 					sourceDataLine.write(outBuffer, 0, outBuffer.length);
+					
 					output_sem.drainPermits();
 					input_sem.release();
 					//TODO ouvir constantemente 
