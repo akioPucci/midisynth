@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -88,11 +90,17 @@ public class Tela_Sintetizador extends JFrame{
     public JSeparator Separador8;
     public JSeparator Separador9;
     public JSeparator Separador10;
+    
+    private Redimensionamento p;
+    private Icon Onda_Triangular;
+    private Icon Onda_Quadrada;
+    private Icon Onda_Senoidal;
+    private Icon Onda_Dente_Serra;
 	
 	public Tela_Sintetizador() {
-		synth = AudioSynth.getAudioSynth();
+		p = new Redimensionamento();
+		redimensionarIcones();
 		initTela();
-		t = new Teclado();
 		initTeclado();
 		initMenu();
 		initGravador();
@@ -101,10 +109,57 @@ public class Tela_Sintetizador extends JFrame{
 		KeyManagement.create(this, button, 1);
 	}
 	
+	public void redimensionarIcones() {
+		Onda_Triangular = new ImageIcon();
+		Onda_Quadrada = new ImageIcon();
+		Onda_Senoidal = new ImageIcon();
+		Onda_Dente_Serra = new ImageIcon();
+		
+		try {
+			Imagem img = new Imagem("images\\triangular.png");
+			Onda_Triangular = p.redimensionarImg(img.imagem, 
+					p.ProporcaoW(img.wmax), 
+					p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Imagem img = new Imagem("images\\quadrada.png");
+			Onda_Quadrada = p.redimensionarImg(img.imagem, 
+					p.ProporcaoW(img.wmax), 
+					p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Imagem img = new Imagem("images\\senoidal.png");
+			Onda_Senoidal = p.redimensionarImg(img.imagem, 
+					p.ProporcaoW(img.wmax), 
+					p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Imagem img = new Imagem("images\\dente_serra.png");
+			Onda_Dente_Serra = p.redimensionarImg(img.imagem, 
+					p.ProporcaoW(img.wmax), 
+					p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(22, 24, 32));
-        setMinimumSize(new Dimension(1807, 1036));
+        setMinimumSize(new Dimension(p.ProporcaoW(1807), p.ProporcaoH(1036)));
         setResizable(false); // Impede de alterar tamanho da tela
         setLocationRelativeTo(null); // Centro da tela
         getContentPane().setLayout(null);
@@ -114,6 +169,7 @@ public class Tela_Sintetizador extends JFrame{
 	/**
 	 * Verifiy if the LookAndFeel Nimbus is installed
 	 */
+	
 	private void verifyIfNimbusIsInstalled() {
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
@@ -175,9 +231,10 @@ public class Tela_Sintetizador extends JFrame{
 		System.exit(0);
     }
 	
-	private void initGravador() {
+	public void initGravador() {
 		gravar = new JButton();
-		gravar.setBounds(1100, 500, 100, 50);
+		gravar.setBounds(p.ProporcaoW(1100), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
 		gravar.setText("Gravar");
 		gravar.setVisible(true);
 		getContentPane().add(gravar);
@@ -192,7 +249,8 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		pausar = new JButton();
-		pausar.setBounds(1200, 500, 100, 50);
+		pausar.setBounds(p.ProporcaoW(1200), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
 		pausar.setText("Parar");
 		pausar.setVisible(true);
 		getContentPane().add(pausar);
@@ -208,7 +266,8 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		reproduzir = new JButton();
-		reproduzir.setBounds(1300, 500, 100, 50);
+		reproduzir.setBounds(p.ProporcaoW(1300), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -241,7 +300,8 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		genius = new JButton();
-		genius.setBounds(1400, 500, 100, 50);
+		genius.setBounds(p.ProporcaoW(1400), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
 		genius.setText("Genius");
 		genius.setVisible(true);
 		getContentPane().add(genius);
@@ -267,7 +327,8 @@ public class Tela_Sintetizador extends JFrame{
 						// KeyManagement.playRecord(path);
 					} catch (Exception e1) {
 						// TODO arquivo invalido
-						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", 
+								JOptionPane.ERROR_MESSAGE);
 						// e1.printStackTrace();
 					}
 				}
@@ -277,6 +338,8 @@ public class Tela_Sintetizador extends JFrame{
 	}
 	
 	private void initMixer() {
+		synth = AudioSynth.getAudioSynth();
+		
 		Master_Slider = new JSlider();
         Master_Text = new JLabel();
         Mixer_Text = new JLabel();
@@ -320,7 +383,8 @@ public class Tela_Sintetizador extends JFrame{
         Master_Value_Text = new JLabel();
         
         getContentPane().add(Master_Slider);
-        Master_Slider.setBounds(440, 550, 200, 20);
+        Master_Slider.setBounds(p.ProporcaoW(440), p.ProporcaoH(550), p.ProporcaoW(200),
+        		p.ProporcaoH(20));
         Master_Slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 MasterStateChanged(evt);
@@ -330,27 +394,33 @@ public class Tela_Sintetizador extends JFrame{
         Master_Text.setForeground(new Color(255, 255, 255));
         Master_Text.setText("Master");
         getContentPane().add(Master_Text);
-        Master_Text.setBounds(525, 574, 50, 16);
+        Master_Text.setBounds(p.ProporcaoW(525), p.ProporcaoH(574), p.ProporcaoW(50),
+        		p.ProporcaoH(16));
 
-        Mixer_Text.setFont(new Font("Times New Roman", 0, 48));
+        Mixer_Text.setFont(new Font("Times New Roman", 0, p.ProporcaoW(48)));
         Mixer_Text.setForeground(new Color(255, 255, 255));
         Mixer_Text.setText("Mixer");
         getContentPane().add(Mixer_Text);
-        Mixer_Text.setBounds(490, 20, 180, 90);
-
-        Des_Ondas1.setIcon(new ImageIcon("images/triangular.png"));
+        Mixer_Text.setBounds(p.ProporcaoW(490), p.ProporcaoH(20), p.ProporcaoW(180),
+        		p.ProporcaoH(90));
+        
+        Des_Ondas1.setIcon(Onda_Triangular);
         getContentPane().add(Des_Ondas1);
-        Des_Ondas1.setBounds(190, 173, 50, 50);
+        Des_Ondas1.setBounds(p.ProporcaoW(190), p.ProporcaoH(173), p.ProporcaoW(50),
+        		p.ProporcaoH(50));
 
-        Des_Ondas2.setIcon(new ImageIcon("images/quadrada.png"));
+        Des_Ondas2.setIcon(Onda_Quadrada);
         getContentPane().add(Des_Ondas2);
-        Des_Ondas2.setBounds(450, 173, 50, 50);
+        Des_Ondas2.setBounds(p.ProporcaoW(450), p.ProporcaoH(173), p.ProporcaoW(50),
+        		p.ProporcaoH(50));
 
-        Des_Ondas3.setIcon(new ImageIcon("images/dente_serra.png"));
+        Des_Ondas3.setIcon(Onda_Dente_Serra);
         getContentPane().add(Des_Ondas3);
-        Des_Ondas3.setBounds(710, 173, 50, 50);
+        Des_Ondas3.setBounds(p.ProporcaoW(710), p.ProporcaoH(173), p.ProporcaoW(50),
+        		p.ProporcaoH(50));
 
-        Sel_Ondas1.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
+        Sel_Ondas1.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
+        		"Triangular", "Dente de Serra", "Desenhar" }));
         Sel_Ondas1.setSelectedItem("Triangular");
         synth.setOscType(0, "triangle");
         Sel_Ondas1.addActionListener(new ActionListener() {
@@ -359,9 +429,11 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas1);
-        Sel_Ondas1.setBounds(250, 180, 130, 30);
+        Sel_Ondas1.setBounds(p.ProporcaoW(250), p.ProporcaoH(180), p.ProporcaoW(130),
+        		p.ProporcaoH(30));
         
-        Sel_Ondas2.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
+        Sel_Ondas2.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
+        		"Triangular", "Dente de Serra", "Desenhar" }));
         Sel_Ondas2.setSelectedItem("Quadrada");
         synth.setOscType(1, "square");
         Sel_Ondas2.addActionListener(new ActionListener() {
@@ -370,9 +442,11 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas2);
-        Sel_Ondas2.setBounds(510, 180, 130, 30);
+        Sel_Ondas2.setBounds(p.ProporcaoW(510), p.ProporcaoH(180), p.ProporcaoW(130),
+        		p.ProporcaoH(30));
 
-        Sel_Ondas3.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", "Triangular", "Dente de Serra", "Desenhar" }));
+        Sel_Ondas3.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
+        		"Triangular", "Dente de Serra", "Desenhar" }));
         Sel_Ondas3.setSelectedItem("Dente de Serra");
         synth.setOscType(1, "saw");
         Sel_Ondas3.addActionListener(new ActionListener() {
@@ -381,9 +455,10 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas3);
-        Sel_Ondas3.setBounds(770, 180, 130, 30);
+        Sel_Ondas3.setBounds(p.ProporcaoW(770), p.ProporcaoH(180), p.ProporcaoW(130),
+        		p.ProporcaoH(30));
 
-        Ampl1.setFont(new Font("Tahoma", 0, 10));
+        Ampl1.setFont(new Font("Tahoma", 0, p.ProporcaoW(10)));
         Ampl1.setOrientation(JSlider.VERTICAL);
         Ampl1.setMinorTickSpacing(1);
         Ampl1.setMajorTickSpacing(10);
@@ -396,9 +471,10 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Ampl1);
-        Ampl1.setBounds(195, 230, 35, 200);
+        Ampl1.setBounds(p.ProporcaoW(195), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
 
-        Ampl2.setFont(new Font("Tahoma", 0, 24));
+        Ampl2.setFont(new Font("Tahoma", 0, p.ProporcaoW(24)));
         Ampl2.setOrientation(JSlider.VERTICAL);
         Ampl2.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
@@ -406,9 +482,10 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Ampl2);
-        Ampl2.setBounds(455, 230, 35, 200);
+        Ampl2.setBounds(p.ProporcaoW(455), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
 
-        Ampl3.setFont(new Font("Tahoma", 0, 24));
+        Ampl3.setFont(new Font("Tahoma", 0, p.ProporcaoW(24)));
         Ampl3.setOrientation(JSlider.VERTICAL);
         Ampl3.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
@@ -416,7 +493,8 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Ampl3);
-        Ampl3.setBounds(715, 230, 35, 200);
+        Ampl3.setBounds(p.ProporcaoW(715), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
 
         Freq1.setMaximum(5);
         Freq1.setOrientation(JSlider.VERTICAL);
@@ -427,7 +505,8 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq1);
-        Freq1.setBounds(315, 230, 35, 200);
+        Freq1.setBounds(p.ProporcaoW(315), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
 
         Freq2.setMaximum(5);
         Freq2.setOrientation(JSlider.VERTICAL);
@@ -438,7 +517,8 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq2);
-        Freq2.setBounds(585, 230, 35, 200);
+        Freq2.setBounds(p.ProporcaoW(585), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
 
         Freq3.setMaximum(5);
         Freq3.setOrientation(JSlider.VERTICAL);
@@ -449,127 +529,154 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq3);
-        Freq3.setBounds(845, 230, 35, 200);
+        Freq3.setBounds(p.ProporcaoW(845), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
 
-        Osc_Text1.setFont(new Font("Times New Roman", 0, 24));
+        Osc_Text1.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
         Osc_Text1.setForeground(new Color(255, 255, 255));
         Osc_Text1.setText("Oscilador 1");
         getContentPane().add(Osc_Text1);
-        Osc_Text1.setBounds(210, 140, 130, 28);
+        Osc_Text1.setBounds(p.ProporcaoW(210), p.ProporcaoH(140), p.ProporcaoW(130),
+        		p.ProporcaoH(28));
 
-        Osc_Text2.setFont(new Font("Times New Roman", 0, 24));
+        Osc_Text2.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
         Osc_Text2.setForeground(new Color(255, 255, 255));
         Osc_Text2.setText("Oscilador 2");
         getContentPane().add(Osc_Text2);
-        Osc_Text2.setBounds(490, 140, 130, 28);
+        Osc_Text2.setBounds(p.ProporcaoW(490), p.ProporcaoH(140), p.ProporcaoW(130),
+        		p.ProporcaoH(28));
 
-        Osc_Text3.setFont(new Font("Times New Roman", 0, 24));
+        Osc_Text3.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
         Osc_Text3.setForeground(new Color(255, 255, 255));
         Osc_Text3.setText("Oscilador 3");
         getContentPane().add(Osc_Text3);
-        Osc_Text3.setBounds(740, 140, 130, 28);
+        Osc_Text3.setBounds(p.ProporcaoW(740), p.ProporcaoH(140), p.ProporcaoW(130),
+        		p.ProporcaoH(28));
 
         Ampl_Text1.setForeground(new Color(255, 255, 255));
         Ampl_Text1.setText("Amplitude");
         getContentPane().add(Ampl_Text1);
-        Ampl_Text1.setBounds(184, 440, 57, 16);
+        Ampl_Text1.setBounds(p.ProporcaoW(184), p.ProporcaoH(440), p.ProporcaoW(57),
+        		p.ProporcaoH(16));
 
         Ampl_Text2.setForeground(new Color(255, 255, 255));
         Ampl_Text2.setText("Amplitude");
         getContentPane().add(Ampl_Text2);
-        Ampl_Text2.setBounds(444, 440, 57, 16);
+        Ampl_Text2.setBounds(p.ProporcaoW(444), p.ProporcaoH(440), p.ProporcaoW(57),
+        		p.ProporcaoH(16));
 
         Ampl_Text3.setForeground(new Color(255, 255, 255));
         Ampl_Text3.setText("Amplitude");
         getContentPane().add(Ampl_Text3);
-        Ampl_Text3.setBounds(703, 440, 57, 16);
+        Ampl_Text3.setBounds(p.ProporcaoW(703), p.ProporcaoH(440), p.ProporcaoW(57),
+        		p.ProporcaoH(16));
 
         Freq_Text1.setForeground(new Color(255, 255, 255));
         Freq_Text1.setText("Frequência");
         getContentPane().add(Freq_Text1);
-        Freq_Text1.setBounds(302, 440, 70, 16);
+        Freq_Text1.setBounds(p.ProporcaoW(302), p.ProporcaoH(440), p.ProporcaoW(70),
+        		p.ProporcaoH(16));
 
         Freq_Text2.setForeground(new Color(255, 255, 255));
         Freq_Text2.setText("Frequência");
         getContentPane().add(Freq_Text2);
-        Freq_Text2.setBounds(572, 440, 70, 16);
+        Freq_Text2.setBounds(p.ProporcaoW(572), p.ProporcaoH(440), p.ProporcaoW(70),
+        		p.ProporcaoH(16));
 
         Freq_Text3.setForeground(new Color(255, 255, 255));
         Freq_Text3.setText("Frequência");
         getContentPane().add(Freq_Text3);
-        Freq_Text3.setBounds(835, 440, 70, 16);
+        Freq_Text3.setBounds(p.ProporcaoW(835), p.ProporcaoH(440), p.ProporcaoW(70),
+        		p.ProporcaoH(16));
         
         getContentPane().add(Separador1);
-        Separador1.setBounds(150, 120, 780, 10);
+        Separador1.setBounds(p.ProporcaoW(150), p.ProporcaoH(120), p.ProporcaoW(780),
+        		p.ProporcaoH(10));
         
         getContentPane().add(Separador2);
-        Separador2.setBounds(150, 480, 780, 10);
+        Separador2.setBounds(p.ProporcaoW(150), p.ProporcaoH(480), p.ProporcaoW(780),
+        		p.ProporcaoH(10));
 
         Separador3.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador3);
-        Separador3.setBounds(150, 120, 10, 360);
+        Separador3.setBounds(p.ProporcaoW(150), p.ProporcaoH(120), p.ProporcaoW(10),
+        		p.ProporcaoH(360));
 
         Separador4.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador4);
-        Separador4.setBounds(410, 120, 30, 360);
+        Separador4.setBounds(p.ProporcaoW(410), p.ProporcaoH(120), p.ProporcaoW(30),
+        		p.ProporcaoH(360));
 
         Separador5.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador5);
-        Separador5.setBounds(670, 120, 30, 360);
+        Separador5.setBounds(p.ProporcaoW(670), p.ProporcaoH(120), p.ProporcaoW(30),
+        		p.ProporcaoH(360));
 
         Separador6.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador6);
-        Separador6.setBounds(930, 120, 30, 360);
+        Separador6.setBounds(p.ProporcaoW(930), p.ProporcaoH(120), p.ProporcaoW(30),
+        		p.ProporcaoH(360));
 
         Separador7.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador7);
-        Separador7.setBounds(270, 480, 20, 80);
+        Separador7.setBounds(p.ProporcaoW(270), p.ProporcaoH(480), p.ProporcaoW(20),
+        		p.ProporcaoH(80));
 
         Separador8.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador8);
-        Separador8.setBounds(540, 480, 20, 70);
+        Separador8.setBounds(p.ProporcaoW(540), p.ProporcaoH(480), p.ProporcaoW(20),
+        		p.ProporcaoH(70));
 
         Separador9.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador9);
-        Separador9.setBounds(800, 480, 20, 80);
+        Separador9.setBounds(p.ProporcaoW(800), p.ProporcaoH(480), p.ProporcaoW(20),
+        		p.ProporcaoH(80));
         
         getContentPane().add(Separador10);
-        Separador10.setBounds(270, 560, 530, 10);
+        Separador10.setBounds(p.ProporcaoW(270), p.ProporcaoH(560), p.ProporcaoW(530),
+        		p.ProporcaoH(10));
         
         Ampl_Value_Text1.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text1.setText("50");
         getContentPane().add(Ampl_Value_Text1);
-        Ampl_Value_Text1.setBounds(230, 240, 41, 16);
+        Ampl_Value_Text1.setBounds(p.ProporcaoW(230), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
 
         Freq_Value_Text1.setForeground(new Color(255, 255, 255));
         Freq_Value_Text1.setText("2");
         getContentPane().add(Freq_Value_Text1);
-        Freq_Value_Text1.setBounds(360, 240, 41, 16);
+        Freq_Value_Text1.setBounds(p.ProporcaoW(360), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
 
         Ampl_Value_Text2.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text2.setText("50");
         getContentPane().add(Ampl_Value_Text2);
-        Ampl_Value_Text2.setBounds(480, 240, 41, 16);
+        Ampl_Value_Text2.setBounds(p.ProporcaoW(480), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
 
         Freq_Value_Text2.setForeground(new Color(255, 255, 255));
         Freq_Value_Text2.setText("2");
         getContentPane().add(Freq_Value_Text2);
-        Freq_Value_Text2.setBounds(620, 240, 41, 16);
+        Freq_Value_Text2.setBounds(p.ProporcaoW(620), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
 
         Ampl_Value_Text3.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text3.setText("50");
         getContentPane().add(Ampl_Value_Text3);
-        Ampl_Value_Text3.setBounds(740, 240, 41, 16);
+        Ampl_Value_Text3.setBounds(p.ProporcaoW(740), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
 
         Freq_Value_Text3.setForeground(new Color(255, 255, 255));
         Freq_Value_Text3.setText("2");
         getContentPane().add(Freq_Value_Text3);
-        Freq_Value_Text3.setBounds(880, 240, 41, 16);
+        Freq_Value_Text3.setBounds(p.ProporcaoW(880), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
 
         Master_Value_Text.setForeground(new Color(255, 255, 255));
         Master_Value_Text.setText("50");
         getContentPane().add(Master_Value_Text);
-        Master_Value_Text.setBounds(590, 560, 41, 16);
+        Master_Value_Text.setBounds(p.ProporcaoW(590), p.ProporcaoH(560), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
 	}
 	
 	private void MasterStateChanged(ChangeEvent evt) {
@@ -611,16 +718,16 @@ public class Tela_Sintetizador extends JFrame{
 		String s = (String) Sel_Ondas1.getSelectedItem();
 		if(s == "Senoidal") {
 			synth.setOscType(0, "sine");
-			Des_Ondas1.setIcon(new ImageIcon("images/senoidal.png"));
+			Des_Ondas1.setIcon(Onda_Senoidal);
 		} else if (s == "Quadrada") {
 			synth.setOscType(0, "square");
-			Des_Ondas1.setIcon(new ImageIcon("images/quadrada.png"));
+			Des_Ondas1.setIcon(Onda_Quadrada);
 		} else if (s == "Triangular") {
 			synth.setOscType(0, "triangle");
-			Des_Ondas1.setIcon(new ImageIcon("images/triangular.png"));
+			Des_Ondas1.setIcon(Onda_Triangular);
 		} else if (s == "Dente de Serra") {
 			synth.setOscType(0, "saw");
-			Des_Ondas1.setIcon(new ImageIcon("images/dente_serra.png"));
+			Des_Ondas1.setIcon(Onda_Dente_Serra);
 		} else if (s == "Desenhar") {
 			PaintThread pt = new PaintThread(0);
 			new Thread(pt).start();
@@ -631,16 +738,16 @@ public class Tela_Sintetizador extends JFrame{
 		String s = (String) Sel_Ondas2.getSelectedItem();
 		if(s == "Senoidal") {
 			synth.setOscType(1, "sine");
-			Des_Ondas2.setIcon(new ImageIcon("images/senoidal.png"));
+			Des_Ondas2.setIcon(Onda_Senoidal);
 		} else if (s == "Quadrada") {
 			synth.setOscType(1, "square");
-			Des_Ondas2.setIcon(new ImageIcon("images/quadrada.png"));
+			Des_Ondas2.setIcon(Onda_Quadrada);
 		} else if (s == "Triangular") {
 			synth.setOscType(1, "triangle");
-			Des_Ondas2.setIcon(new ImageIcon("images/triangular.png"));
+			Des_Ondas2.setIcon(Onda_Triangular);
 		} else if (s == "Dente de Serra") {
 			synth.setOscType(1, "saw");
-			Des_Ondas2.setIcon(new ImageIcon("images/dente_serra.png"));
+			Des_Ondas2.setIcon(Onda_Dente_Serra);
 		} else if (s == "Desenhar") {
 			PaintThread pt = new PaintThread(1);
 			new Thread(pt).start();
@@ -651,16 +758,16 @@ public class Tela_Sintetizador extends JFrame{
 		String s = (String) Sel_Ondas3.getSelectedItem();
 		if(s == "Senoidal") {
 			synth.setOscType(2, "sine");
-			Des_Ondas3.setIcon(new ImageIcon("images/senoidal.png"));
+			Des_Ondas3.setIcon(Onda_Senoidal);
 		} else if (s == "Quadrada") {
 			synth.setOscType(2, "square");
-			Des_Ondas3.setIcon(new ImageIcon("images/quadrada.png"));
+			Des_Ondas3.setIcon(Onda_Quadrada);
 		} else if (s == "Triangular") {
 			synth.setOscType(2, "triangle");
-			Des_Ondas3.setIcon(new ImageIcon("images/triangular.png"));
+			Des_Ondas3.setIcon(Onda_Triangular);
 		} else if (s == "Dente de Serra") {
 			synth.setOscType(2, "saw");
-			Des_Ondas3.setIcon(new ImageIcon("images/dente_serra.png"));
+			Des_Ondas3.setIcon(Onda_Dente_Serra);
 		} else if (s == "Desenhar") {
 			PaintThread pt = new PaintThread(2);
 			new Thread(pt).start();
@@ -676,7 +783,8 @@ public class Tela_Sintetizador extends JFrame{
 		public void run() {
 			synth.setOscType(oscTarget, "drawn");
 			JFrame f = new JFrame();
-			f.setBounds(10, 10, 1200, 1200);
+			f.setBounds(p.ProporcaoW(10), p.ProporcaoH(10), p.ProporcaoW(1200), 
+					p.ProporcaoH(1200));
 			Paint p = new Paint();
 			synth.setOscDrawnSample(oscTarget, p.open(f));
 			
@@ -684,6 +792,8 @@ public class Tela_Sintetizador extends JFrame{
 	}
 	
 	public void initTeclado() {
+		t = new Teclado();
+		
 		getContentPane().add(t.DoSus1);
         getContentPane().add(t.ReSus1);
         getContentPane().add(t.FaSus1);
@@ -725,7 +835,7 @@ public class Tela_Sintetizador extends JFrame{
         button = t.createJButtonArray();
 	}
 	
-	private void setAllNotFocusable() {    	
+	private void setAllNotFocusable() {
     	for (int i = 0; i < button.length; i++) {
 			button[i].setFocusable(false);
 		}

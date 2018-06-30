@@ -34,6 +34,7 @@ public class MidiInputReceiver implements Receiver {
 		//System.out.println("Message = " + message + " code = " + code);
 		
 				
+		
 		if (message == 144) 
 			KeyManagement.playNote(getNote(code));
 		else if (message == 128)

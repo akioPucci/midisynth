@@ -88,6 +88,6 @@ public class MidiSynth {
     }
     
     public void changeInstrument(int instrumentNumber) {
-        synthesizer.getChannels()[0].programChange(108);
+        synthesizer.getChannels()[0].programChange(instrumentNumber);
     }
 }

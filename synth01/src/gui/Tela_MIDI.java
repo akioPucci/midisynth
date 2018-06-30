@@ -17,7 +17,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
 import key.KeyManagement;
+import midi.MidiSynth;
 
 @SuppressWarnings("serial")
 public class Tela_MIDI extends JFrame {
@@ -33,12 +37,21 @@ public class Tela_MIDI extends JFrame {
 	private JButton reproduzir;
 	private JButton pausar;
 	private JButton genius;
+	
+	private static MidiSynth midi;
+	
+	private JComboBox<String> Instrumentos;
+    private JComboBox<String> Tipo;
+    private String[][] Ins;
+    
+    private Redimensionamento p;
 
 	public Tela_MIDI() {
+		p = new Redimensionamento();
 		initTela();
-		t = new Teclado();
 		initTeclado();
 		initMenu();
+		initInstrumentos();
 		initGravador();
 		setAllNotFocusable();
 		KeyManagement.create(this, button, 0);
@@ -47,7 +60,7 @@ public class Tela_MIDI extends JFrame {
 	public void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(22, 24, 32));
-		setMinimumSize(new Dimension(1807, 1036));
+		setMinimumSize(new Dimension(p.ProporcaoW(1807), p.ProporcaoH(1036)));
 		setResizable(false); // Impede de alterar tamanho da tela
 		setLocationRelativeTo(null); // Centro da tela
 		getContentPane().setLayout(null);
@@ -57,6 +70,7 @@ public class Tela_MIDI extends JFrame {
 	/**
 	 * Verifiy if the LookAndFeel Nimbus is installed
 	 */
+	
 	private void verifyIfNimbusIsInstalled() {
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
@@ -118,9 +132,119 @@ public class Tela_MIDI extends JFrame {
 		System.exit(0);
 	}
 	
+	public void initInstrumentos() {
+		midi = MidiSynth.getMidiSynth();
+		
+		Instrumentos = new JComboBox<>();
+        Tipo = new JComboBox<>();
+        
+        Ins = new String[15][];
+        
+        Ins[0] = new String[] {"Acoustic Grand Piano", "Bright Acoustic Piano", 
+        		"Electric Grand Piano", "Honky-tonk Piano", "Electric Piano 1", 
+        		"Electric Piano 2", "Harpsichord", "Clavinet"};
+        
+        Ins[1] = new String[] {"Celesta", "Glockenspiel", "Music Box", 
+        		"Vibraphone", "Marimba", "Xylophone", "Tubular Bells", "Dulcimer"};
+        
+        Ins[2] = new String[] {"Drawbar Organ", "Percussive Organ", "Rock Organ", "Church Organ",
+        		"Reed Organ", "Accordion", "Harmonica", "Tango Accordion"};
+        
+        Ins[3] = new String[] {"Acoustic Guitar (nylon)", "Acoustic Guitar (steel)", 
+        		"Electric Guitar (jazz)", "Electric Guitar (clean)", "Electric Guitar (muted)",
+        		"Overdriven Guitar", "Distortion Guitar", "Guitar harmonics"};
+        
+        Ins[4] = new String[] {"Acoustic Bass", "Electric Bass (finger)", "Electric Bass (pick)", 
+        		"Fretless Bass", "Slap Bass 1", "Slap Bass 2", "Synth Bass 1", "Synth Bass 2"};
+        
+        Ins[5] = new String[] {"Violin", "Viola", "Cello", "Contrabass", "Tremolo Strings",
+        		"Pizzicato Strings", "Orchestral Harp", "Timpani", "String Ensemble 1", 
+        		"String Ensemble 2", "Synth Strings 1", "Synth Strings 2", "Choir Aahs",
+        		"Voice Oohs", "Synth Voice", "Orchestra Hit"};
+        
+        Ins[6] = new String[] {"Trumpet", "Trombone", "Tuba", "Muted Trumpet", "French Horn",
+        		"Brass Section", "Synth Brass 1", "Synth Brass 2"};
+        
+        Ins[7] = new String[] {"Soprano Sax", "Alto Sax", "Tenor Sax", "Baritone Sax", "Oboe",
+        		"English Horn", "Bassoon", "Clarinet"};
+        
+        Ins[8] = new String[] {"Piccolo", "Flute", "Recorder", "Pan Flute", "Blown Bottle",
+        		"Shakuhachi", "Whistle", "Ocarina"};
+        
+        Ins[9] = new String[] {"Lead 1 (square)", "Lead 2 (sawtooth)", "Lead 3 (calliope)",
+        		"Lead 4 (chiff)", "Lead 5 (charang)", "Lead 6 (voice)", "Lead 7 (fifths)", 
+        		"Lead 8 (bass + lead)"};
+        
+        Ins[10] = new String[] {"Pad 1 (new age)", "Pad 2 (warm)", "Pad 3 (polysynth)", 
+        		"Pad 4 (choir)", "Pad 5 (bowed)", "Pad 6 (metallic)", "Pad 7 (halo)", 
+        		"Pad 8 (sweep)"};
+        
+        Ins[11] = new String[] {"FX 1 (rain)", "FX 2 (soundtrack)", "FX 3 (crystal)", 
+        		"FX 4 (atmosphere)", "FX 5 (brightness)", "FX 6 (goblins)", "FX 7 (echoes)",
+        		"FX 8 (sci-fi)"};
+        
+        Ins[12] = new String[] {"Sitar", "Banjo", "Shamisen", "Koto", "Kalimba", "Bag pipe",
+        		"Fiddle", "Shanai"};
+        
+        Ins[13] = new String[] {"Tinkle Bell", "Agogo", "Steel Drums", "Woodblock", 
+        		"Taiko Drum", "Melodic Tom", "Synth Drum"};
+        
+        Ins[14] = new String[] {"Reverse Cymbal", "Guitar Fret Noise", "Breath Noise",
+        		"Seashore", "Bird Tweet", "Telephone Ring", "Helicopter", "Applause", "Gunshot"};
+        
+        Instrumentos.setModel(new DefaultComboBoxModel<>((String[]) Ins[0]));
+        Instrumentos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                InstrumentosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Instrumentos);
+        Instrumentos.setBounds(p.ProporcaoW(74), p.ProporcaoH(62), p.ProporcaoW(175), 
+        		p.ProporcaoH(25));
+
+        Tipo.setModel(new DefaultComboBoxModel<>(new String[] { "Piano", "Chromatic Percussion",
+        		"Organ", "Guitar", "Bass", "Strings", "Brass", "Reed", "Pipe", "Synth Lead",
+        		"Synth Pad", "Synth Effects", "Ethnic", "Percussive", "Sound effects"}));
+        Tipo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                TipoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Tipo);
+        Tipo.setBounds(p.ProporcaoW(257), p.ProporcaoH(62), p.ProporcaoW(175), p.ProporcaoH(25));
+	}
+	
+	private void InstrumentosActionPerformed(ActionEvent evt) {
+		int s1 = (int) Tipo.getSelectedIndex();
+		int s2 = (int) Instrumentos.getSelectedIndex();
+		
+		if (s1 < 6) {
+			midi.changeInstrument((s1 * 8 + s2));
+		} else if (s1 != 14) {
+			midi.changeInstrument((((s1 + 1) * 8) + s2));
+		} else {
+			midi.changeInstrument(119 + s2);
+		}
+	}
+	
+	private void TipoActionPerformed(ActionEvent evt) {
+		int i = (int) Tipo.getSelectedIndex();
+		
+		Instrumentos.setModel(new DefaultComboBoxModel<>((String []) Ins[i]));
+		
+		if (i < 6) {
+			midi.changeInstrument((i * 8));
+		} else if (i != 14) {
+			midi.changeInstrument(((i + 1) * 8));
+		} else {
+			midi.changeInstrument(119);
+		}
+	}
+	
 	public void initGravador() {
 		gravar = new JButton();
-		gravar.setBounds(1100, 100, 100, 50);
+		gravar.setBounds(p.ProporcaoW(1100), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
 		gravar.setText("Gravar");
 		gravar.setVisible(true);
 		getContentPane().add(gravar);
@@ -135,7 +259,8 @@ public class Tela_MIDI extends JFrame {
 		});
 
 		pausar = new JButton();
-		pausar.setBounds(1200, 100, 100, 50);
+		pausar.setBounds(p.ProporcaoW(1200), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
 		pausar.setText("Parar");
 		pausar.setVisible(true);
 		getContentPane().add(pausar);
@@ -151,7 +276,8 @@ public class Tela_MIDI extends JFrame {
 		});
 
 		reproduzir = new JButton();
-		reproduzir.setBounds(1300, 100, 100, 50);
+		reproduzir.setBounds(p.ProporcaoW(1300), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -184,7 +310,8 @@ public class Tela_MIDI extends JFrame {
 		});
 
 		genius = new JButton();
-		genius.setBounds(1400, 100, 100, 50);
+		genius.setBounds(p.ProporcaoW(1400), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
 		genius.setText("Genius");
 		genius.setVisible(true);
 		getContentPane().add(genius);
@@ -210,7 +337,8 @@ public class Tela_MIDI extends JFrame {
 						// KeyManagement.playRecord(path);
 					} catch (Exception e1) {
 						// TODO arquivo invalido
-						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", 
+								JOptionPane.ERROR_MESSAGE);
 						// e1.printStackTrace();
 					}
 				}
@@ -218,16 +346,10 @@ public class Tela_MIDI extends JFrame {
 			}
 		});
 	}
-	
-	/*
-
-	public static void setNotVisible(int i) {
-		t.createJButtonArray()[i].setVisible(false);
-	}
-	
-	*/
 
 	public void initTeclado() {
+		t = new Teclado();
+		
 		getContentPane().add(t.DoSus1);
 		getContentPane().add(t.ReSus1);
 		getContentPane().add(t.FaSus1);
@@ -283,5 +405,8 @@ public class Tela_MIDI extends JFrame {
 		menu.setFocusable(false);
 		exit.setFocusable(false);
 		synth.setFocusable(false);
+		
+		Instrumentos.setFocusable(false);
+		Tipo.setFocusable(false);
 	}
 }

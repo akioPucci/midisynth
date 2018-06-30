@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.WindowConstants;
 
 import java.awt.Dimension;
@@ -14,14 +13,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class Tela_Inicial extends JFrame{
 	public static Tela_Sintetizador ts;
 	public static Tela_MIDI tm;
+	private static Redimensionamento p;
 	
-	public Tela_Inicial() {
+	public Tela_Inicial(){
+		p = new Redimensionamento();
 		tm = new Tela_MIDI();
 		ts = new Tela_Sintetizador();
 		initTela();
@@ -30,7 +32,7 @@ public class Tela_Inicial extends JFrame{
 	
 	public void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(1200, 799));
+        setMinimumSize(new Dimension(p.ProporcaoW(1200), p.ProporcaoH(799)));
         setResizable(false); // Impede de alterar tamanho da tela
         setLocationRelativeTo(null); // Centro da tela
         setVisible(true);
@@ -41,6 +43,7 @@ public class Tela_Inicial extends JFrame{
 	/**
 	 * Verifiy if the LookAndFeel Nimbus is installed
 	 */
+	
 	private void verifyIfNimbusIsInstalled() {
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
@@ -65,12 +68,12 @@ public class Tela_Inicial extends JFrame{
 		}
 	}
 	
-	public void initComponents() {
+	public void initComponents(){
 		JButton MIDI = new JButton();
 		JButton synth = new JButton();
 		JLabel planoFundo = new JLabel();
 		
-		MIDI.setFont(new Font("Segoe Script", 0, 48));
+		MIDI.setFont(new Font("Segoe ", 0, p.ProporcaoW(48)));
         MIDI.setForeground(new Color(255, 0, 255));
         MIDI.setText("MIDI");
         MIDI.setBorder(BorderFactory.createBevelBorder
@@ -84,9 +87,9 @@ public class Tela_Inicial extends JFrame{
             }
         });
         getContentPane().add(MIDI);
-        MIDI.setBounds(175, 300, 350, 200);
+        MIDI.setBounds(p.ProporcaoW(175), p.ProporcaoH(300), p.ProporcaoW(350), p.ProporcaoH(200));
 
-        synth.setFont(new Font("Segoe Script", 0, 48));
+        synth.setFont(new Font("Segoe ", 0, p.ProporcaoW(48)));
         synth.setForeground(new Color(255, 0, 255));
         synth.setText("Sintetizador");
         synth.setBorder(BorderFactory.createBevelBorder
@@ -100,11 +103,18 @@ public class Tela_Inicial extends JFrame{
             }
         });
         getContentPane().add(synth);
-        synth.setBounds(650, 300, 350, 200);
-
-        planoFundo.setIcon(new ImageIcon("images/music.jpg"));
+        synth.setBounds(p.ProporcaoW(650), p.ProporcaoH(300), p.ProporcaoW(350), p.ProporcaoH(200));
+        
+        try {
+			Imagem img = new Imagem("images\\music.jpg");
+			planoFundo.setIcon(p.redimensionarImg(img.imagem, p.ProporcaoW(img.wmax),
+					p.ProporcaoH(img.hmax)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         getContentPane().add(planoFundo);
-        planoFundo.setBounds(0, 0, 1200, 799);
+        planoFundo.setBounds(0, 0, p.ProporcaoW(1200), p.ProporcaoH(799));
 
         pack();
 	}
