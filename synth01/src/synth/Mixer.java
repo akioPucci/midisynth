@@ -2,6 +2,7 @@ package synth;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Mixer, mix sample channels, each channel has his own control parameters 
@@ -96,7 +97,7 @@ public class Mixer {
 	 * @param channel3SynthData
 	 * @return
 	 */
-	public void mixSynthChannels(HashMap<Integer, Note> notesPlaying) {
+	public void mixSynthChannels(ConcurrentHashMap<Integer, Note> notesPlaying) {
 		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
 		    Note note = entry.getValue();
 		    note.setSample(0);
@@ -115,7 +116,7 @@ public class Mixer {
 	 * @param channel3SynthData
 	 * @return
 	 */
-	public double mixOutputSample(HashMap<Integer, Note> notesPlaying) {
+	public double mixOutputSample(ConcurrentHashMap<Integer, Note> notesPlaying) {
 		double mixedSample = 0;
 		
 		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {

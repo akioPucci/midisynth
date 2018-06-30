@@ -1,7 +1,7 @@
 package synth;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -183,7 +183,8 @@ public class Oscillator {
 	public void countTime() {
 		time = (sampleCounter / sampleRate);
 		sampleCounter++;
-		if(sampleCounter == 30000);
+		if(time == 20)
+			sampleCounter = 0;
 	}
 	
 	/**
@@ -203,6 +204,8 @@ public class Oscillator {
 	 */
 	double [] oscillate(boolean[] keyEnable) {
 		double[] synthData = new double[38];
+		
+		
 		
 		
 		switch(type) {
@@ -256,9 +259,12 @@ public class Oscillator {
 		return synthData;
 	}
 	
-	void oscillate(HashMap<Integer, Note> notesPlaying) {
+	void oscillate(ConcurrentHashMap<Integer, Note> notesPlaying) {
+		
 		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
 		    Note note = entry.getValue();
+		    
+		    
 		    
 		    switch(type) {
 			case "sine":

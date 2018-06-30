@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
 import javax.sound.sampled.AudioFormat;
@@ -44,7 +45,7 @@ public class AudioSynth extends JFrame {
 	
 	//componentes
 	//TODO implementar hash de notas
-	private HashMap<Integer, Note> notesPlaying;
+	private ConcurrentHashMap<Integer, Note> notesPlaying;
 	private Oscillator[] osc;
 	private AudioChannel[] outputChannel;
 	private Mixer mixer;
@@ -67,7 +68,7 @@ public class AudioSynth extends JFrame {
 
 	//semaforos
 	private Semaphore input_sem;
-	private Semaphore notePressed_sem;
+	private Semaphore keyPressed_sem;
 	private Semaphore output_sem;
 	
 	
@@ -97,7 +98,7 @@ public class AudioSynth extends JFrame {
 		
 		
 		//Informações Teclado
-		notesPlaying = new HashMap<Integer, Note>();
+		notesPlaying = new ConcurrentHashMap<Integer, Note>();
 		keysEnabled = 0;
 		numOfKeys = 38;
 		keyEnable = new boolean[numOfKeys];
@@ -127,7 +128,7 @@ public class AudioSynth extends JFrame {
 		//semaforos
 		input_sem = new Semaphore(0);
 		output_sem = new Semaphore(0);
-		notePressed_sem = new Semaphore(0);
+		keyPressed_sem = new Semaphore(Integer.MAX_VALUE);
 		
 		// Configurando formato de audio
 		audioFormat = new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
@@ -190,15 +191,21 @@ public class AudioSynth extends JFrame {
 	 */
 	public void noteOn(int note) {
 		//TODO concurrent access FUCK
-		pushKey(note);
-		activateKey(note);
-		if (sourceDataLine.isRunning() == false) {
-			sourceDataLine.start();
-		}
-		sourceDataLine.flush();
-		
-		if(getKeysEnabled() == 1)
-			input_sem.release();
+		try {
+			System.out.println(keyPressed_sem.availablePermits());
+			keyPressed_sem.acquire();
+			
+			pushKey(note);
+			activateKey(note);
+			if (sourceDataLine.isRunning() == false) {
+				sourceDataLine.start();
+			}
+			sourceDataLine.flush();
+			
+			if(getKeysEnabled() == 1)
+				input_sem.release();
+			
+		}catch(InterruptedException ie) {ie.printStackTrace();}
 	}
 
 	/**
@@ -207,9 +214,11 @@ public class AudioSynth extends JFrame {
 	 */
 	public void noteOff(int note) {
 		try {
+			keyPressed_sem.acquire();
+
 			if (getKeysEnabled() == 1) {
 				sourceDataLine.stop();
-				input_sem.acquire();				
+				input_sem.drainPermits();				
 			}
 			popKey(note);
 			desactivateKey(note);
@@ -296,6 +305,7 @@ public class AudioSynth extends JFrame {
 				try {
 					for (inputBlockCounter = 0; inputBlockCounter < shortBufferSize; inputBlockCounter++) {
 						input_sem.acquire();
+						keyPressed_sem.drainPermits();
 						
 						//Oscillator
 						osc[0].oscillate(notesPlaying);
@@ -309,6 +319,7 @@ public class AudioSynth extends JFrame {
 						mixedSampleBuffer = mixer.mixOutputSample(notesPlaying);
 						outShortBuffer.put(inputBlockCounter, (short) (mixedSampleBuffer));
 						
+						keyPressed_sem.release(Integer.MAX_VALUE);
 						input_sem.release();
 					}
 
