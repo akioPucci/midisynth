@@ -783,8 +783,7 @@ public class Tela_Sintetizador extends JFrame{
 		public void run() {
 			synth.setOscType(oscTarget, "drawn");
 			JFrame f = new JFrame();
-			f.setBounds(p.ProporcaoW(10), p.ProporcaoH(10), p.ProporcaoW(1200), 
-					p.ProporcaoH(1200));
+			f.setBounds(10, 10, 1200, 1200);
 			Paint p = new Paint();
 			synth.setOscDrawnSample(oscTarget, p.open(f));
 			
