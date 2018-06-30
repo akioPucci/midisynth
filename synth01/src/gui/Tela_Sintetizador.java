@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.io.File;
@@ -98,23 +101,180 @@ public class Tela_Sintetizador extends JFrame{
     private Icon Onda_Dente_Serra;
 	
 	public Tela_Sintetizador() {
-		p = new Redimensionamento();
-		redimensionarIcones();
+		p = new Redimensionamento(1807, 1036);
 		initTela();
 		initTeclado();
 		initMenu();
 		initGravador();
 		initMixer();
 		setAllNotFocusable();
+		pack();
 		KeyManagement.create(this, button, 1);
+		
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent evt) {
+				p.w_Resizable = getContentPane().getWidth();
+				p.h_Resizable = getContentPane().getHeight();
+				Atualizar_Tela();
+			}
+		});
+	}
+	
+	public void Atualizar_Tela() {
+		redimensionarIcones();
+		
+		/* Gravador */
+		
+		gravar.setBounds(p.ProporcaoW(1100), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
+		
+		pausar.setBounds(p.ProporcaoW(1200), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
+		
+		reproduzir.setBounds(p.ProporcaoW(1300), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
+		
+		genius.setBounds(p.ProporcaoW(1400), p.ProporcaoH(100), p.ProporcaoW(100), 
+				p.ProporcaoH(50));
+		
+		/* Mixer */
+		
+		Master_Slider.setBounds(p.ProporcaoW(440), p.ProporcaoH(550), p.ProporcaoW(200),
+        		p.ProporcaoH(20));
+		
+		Master_Text.setBounds(p.ProporcaoW(525), p.ProporcaoH(574), p.ProporcaoW(50),
+        		p.ProporcaoH(16));
+		
+		Mixer_Text.setFont(new Font("Times New Roman", 0, p.ProporcaoW(48)));
+		
+		Des_Ondas1.setBounds(p.ProporcaoW(190), p.ProporcaoH(173), p.ProporcaoW(50),
+        		p.ProporcaoH(50));
+		
+		Des_Ondas2.setBounds(p.ProporcaoW(450), p.ProporcaoH(173), p.ProporcaoW(50),
+        		p.ProporcaoH(50));
+		
+		Des_Ondas3.setBounds(p.ProporcaoW(710), p.ProporcaoH(173), p.ProporcaoW(50),
+        		p.ProporcaoH(50));
+		
+		Sel_Ondas1.setBounds(p.ProporcaoW(250), p.ProporcaoH(180), p.ProporcaoW(130),
+        		p.ProporcaoH(30));
+		
+		Sel_Ondas2.setBounds(p.ProporcaoW(510), p.ProporcaoH(180), p.ProporcaoW(130),
+        		p.ProporcaoH(30));
+		
+		Sel_Ondas3.setBounds(p.ProporcaoW(770), p.ProporcaoH(180), p.ProporcaoW(130),
+        		p.ProporcaoH(30));
+		
+		Ampl1.setFont(new Font("Tahoma", 0, p.ProporcaoW(10)));
+		Ampl1.setBounds(p.ProporcaoW(195), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
+		
+		Ampl2.setFont(new Font("Tahoma", 0, p.ProporcaoW(24)));
+		Ampl2.setBounds(p.ProporcaoW(455), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
+		
+		Ampl3.setFont(new Font("Tahoma", 0, p.ProporcaoW(24)));
+		Ampl3.setBounds(p.ProporcaoW(715), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
+		
+		Freq1.setBounds(p.ProporcaoW(315), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
+		
+		Freq2.setBounds(p.ProporcaoW(585), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
+		
+		Freq3.setBounds(p.ProporcaoW(845), p.ProporcaoH(230), p.ProporcaoW(35),
+        		p.ProporcaoH(200));
+		
+		Osc_Text1.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
+		Osc_Text1.setBounds(p.ProporcaoW(210), p.ProporcaoH(140), p.ProporcaoW(130),
+        		p.ProporcaoH(28));
+		
+		Osc_Text2.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
+		Osc_Text2.setBounds(p.ProporcaoW(490), p.ProporcaoH(140), p.ProporcaoW(130),
+        		p.ProporcaoH(28));
+		
+		Osc_Text3.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
+		Osc_Text3.setBounds(p.ProporcaoW(740), p.ProporcaoH(140), p.ProporcaoW(130),
+        		p.ProporcaoH(28));
+		
+		Ampl_Text1.setBounds(p.ProporcaoW(184), p.ProporcaoH(440), p.ProporcaoW(57),
+        		p.ProporcaoH(16));
+		
+		Ampl_Text2.setBounds(p.ProporcaoW(444), p.ProporcaoH(440), p.ProporcaoW(57),
+        		p.ProporcaoH(16));
+		
+		Ampl_Text3.setBounds(p.ProporcaoW(703), p.ProporcaoH(440), p.ProporcaoW(57),
+        		p.ProporcaoH(16));
+		
+		Freq_Text1.setBounds(p.ProporcaoW(302), p.ProporcaoH(440), p.ProporcaoW(70),
+        		p.ProporcaoH(16));
+		
+		Freq_Text2.setBounds(p.ProporcaoW(572), p.ProporcaoH(440), p.ProporcaoW(70),
+        		p.ProporcaoH(16));
+		
+		Freq_Text3.setBounds(p.ProporcaoW(835), p.ProporcaoH(440), p.ProporcaoW(70),
+        		p.ProporcaoH(16));
+		
+		Separador1.setBounds(p.ProporcaoW(150), p.ProporcaoH(120), p.ProporcaoW(780),
+        		p.ProporcaoH(10));
+		
+		Separador2.setBounds(p.ProporcaoW(150), p.ProporcaoH(480), p.ProporcaoW(780),
+        		p.ProporcaoH(10));
+		
+		Separador3.setBounds(p.ProporcaoW(150), p.ProporcaoH(120), p.ProporcaoW(10),
+        		p.ProporcaoH(360));
+		
+		Separador4.setBounds(p.ProporcaoW(410), p.ProporcaoH(120), p.ProporcaoW(30),
+        		p.ProporcaoH(360));
+		
+		Separador5.setBounds(p.ProporcaoW(670), p.ProporcaoH(120), p.ProporcaoW(30),
+        		p.ProporcaoH(360));
+		
+		Separador6.setBounds(p.ProporcaoW(930), p.ProporcaoH(120), p.ProporcaoW(30),
+        		p.ProporcaoH(360));
+		
+		Separador7.setBounds(p.ProporcaoW(270), p.ProporcaoH(480), p.ProporcaoW(20),
+        		p.ProporcaoH(80));
+		
+		Separador8.setBounds(p.ProporcaoW(540), p.ProporcaoH(480), p.ProporcaoW(20),
+        		p.ProporcaoH(70));
+		
+		Separador9.setBounds(p.ProporcaoW(800), p.ProporcaoH(480), p.ProporcaoW(20),
+        		p.ProporcaoH(80));
+		
+		Separador10.setBounds(p.ProporcaoW(270), p.ProporcaoH(560), p.ProporcaoW(530),
+        		p.ProporcaoH(10));
+		
+		Ampl_Value_Text1.setBounds(p.ProporcaoW(230), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
+		
+		Freq_Value_Text1.setBounds(p.ProporcaoW(360), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
+		
+		Ampl_Value_Text2.setBounds(p.ProporcaoW(480), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
+		
+		Freq_Value_Text2.setBounds(p.ProporcaoW(620), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
+		
+		Ampl_Value_Text3.setBounds(p.ProporcaoW(740), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
+		
+		Freq_Value_Text3.setBounds(p.ProporcaoW(880), p.ProporcaoH(240), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
+		
+		Master_Value_Text.setBounds(p.ProporcaoW(590), p.ProporcaoH(560), p.ProporcaoW(41),
+        		p.ProporcaoH(16));
+		
+		/* Teclado */
+		
+		t.AtualizarTeclado(p.w_Resizable, p.h_Resizable);
+		
+		this.repaint();
 	}
 	
 	public void redimensionarIcones() {
-		Onda_Triangular = new ImageIcon();
-		Onda_Quadrada = new ImageIcon();
-		Onda_Senoidal = new ImageIcon();
-		Onda_Dente_Serra = new ImageIcon();
-		
 		try {
 			Imagem img = new Imagem("images\\triangular.png");
 			Onda_Triangular = p.redimensionarImg(img.imagem, 
@@ -160,7 +320,6 @@ public class Tela_Sintetizador extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(22, 24, 32));
         setMinimumSize(new Dimension(p.ProporcaoW(1807), p.ProporcaoH(1036)));
-        setResizable(false); // Impede de alterar tamanho da tela
         setLocationRelativeTo(null); // Centro da tela
         getContentPane().setLayout(null);
         verifyIfNimbusIsInstalled();
@@ -381,6 +540,13 @@ public class Tela_Sintetizador extends JFrame{
         Ampl_Value_Text3 = new JLabel();
         Freq_Value_Text3 = new JLabel();
         Master_Value_Text = new JLabel();
+        
+        Onda_Triangular = new ImageIcon();
+		Onda_Quadrada = new ImageIcon();
+		Onda_Senoidal = new ImageIcon();
+		Onda_Dente_Serra = new ImageIcon();
+		
+		redimensionarIcones();
         
         getContentPane().add(Master_Slider);
         Master_Slider.setBounds(p.ProporcaoW(440), p.ProporcaoH(550), p.ProporcaoW(200),
