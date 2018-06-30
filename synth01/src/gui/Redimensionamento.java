@@ -11,33 +11,25 @@ import javax.swing.ImageIcon;
 public class Redimensionamento {
 	private Toolkit tk;
 	private Dimension d;
-	private int w_projetado; // Largura da tela em que foi projetado
-	private int h_projetado; // Altura da tela em que foi projetado
-	public int w_Resizable; // Largura da tela alterada
-	public int h_Resizable; // Altura da tela alterada
 	
-	public Redimensionamento(int w, int h) {
+	public Redimensionamento() {
 		tk = Toolkit.getDefaultToolkit();
 	    d = tk.getScreenSize();
-	    w_projetado = w;
-	    h_projetado = h;
-	    w_Resizable = w;
-	    h_Resizable = h;
 	}
 	
 	public int ProporcaoW(int x) {
-		double pw;
+		double pw, w = 1920.0;
 		
-		pw = (w_Resizable / (double) w_projetado) * (d.width / 1920.0);
+		pw = d.width / w;
 		
 		return (int)(pw*x);
 	}
 	
 	public int ProporcaoH(int y) {
-	    double ph;
+	    double ph, h = 1080.0;
 	    
-	    ph = (h_Resizable / (double) h_projetado) * (d.height / 1080.0); 
-	    
+	    ph = d.height / h; 
+	    		
 		return (int)(ph*y);
 	}
 	

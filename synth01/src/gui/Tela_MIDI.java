@@ -6,8 +6,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -49,59 +47,21 @@ public class Tela_MIDI extends JFrame {
     private Redimensionamento p;
 
 	public Tela_MIDI() {
-		p = new Redimensionamento(1807, 1036);
+		p = new Redimensionamento();
 		initTela();
 		initTeclado();
 		initMenu();
 		initInstrumentos();
 		initGravador();
 		setAllNotFocusable();
-		pack();
 		KeyManagement.create(this, button, 0);
-		
-		this.addComponentListener(new ComponentAdapter() {
-			public void componentResized(ComponentEvent evt) {
-				p.w_Resizable = getContentPane().getWidth();
-				p.h_Resizable = getContentPane().getHeight();
-				Atualizar_Tela();
-			}
-		});
 	}
 
-	public void Atualizar_Tela() {
-		
-		/* Instrumentos */
-		
-		Instrumentos.setBounds(p.ProporcaoW(74), p.ProporcaoH(62), p.ProporcaoW(175), 
-        		p.ProporcaoH(25));
-		
-		Tipo.setBounds(p.ProporcaoW(257), p.ProporcaoH(62), p.ProporcaoW(175), p.ProporcaoH(25));
-		
-		/* Gravador */
-		
-		gravar.setBounds(p.ProporcaoW(1100), p.ProporcaoH(100), p.ProporcaoW(100), 
-				p.ProporcaoH(50));
-		
-		pausar.setBounds(p.ProporcaoW(1200), p.ProporcaoH(100), p.ProporcaoW(100), 
-				p.ProporcaoH(50));
-		
-		reproduzir.setBounds(p.ProporcaoW(1300), p.ProporcaoH(100), p.ProporcaoW(100), 
-				p.ProporcaoH(50));
-		
-		genius.setBounds(p.ProporcaoW(1400), p.ProporcaoH(100), p.ProporcaoW(100), 
-				p.ProporcaoH(50));
-		
-		/* Teclado */
-		
-		t.AtualizarTeclado(p.w_Resizable, p.h_Resizable);
-		
-		this.repaint();
-	}
-	
 	public void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(22, 24, 32));
 		setMinimumSize(new Dimension(p.ProporcaoW(1807), p.ProporcaoH(1036)));
+		setResizable(false); // Impede de alterar tamanho da tela
 		setLocationRelativeTo(null); // Centro da tela
 		getContentPane().setLayout(null);
 		verifyIfNimbusIsInstalled();
