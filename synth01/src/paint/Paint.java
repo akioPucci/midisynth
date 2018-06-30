@@ -39,7 +39,7 @@ import key.Pair;
  * @author Carolina Arenas Okawa
  * @author Eric
  * @author Fernando Akio
- * @author Vinícius
+ * @author Vinicius
  */
 public class Paint {
 
@@ -48,12 +48,10 @@ public class Paint {
 	private JPanel gui;
 	private Color color = Color.WHITE;
 
-	private BufferedImage colorSample = new BufferedImage(16, 16,
-			BufferedImage.TYPE_INT_RGB);
+	private BufferedImage colorSample = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
 	private JLabel imageLabel;
 
-	private Stroke stroke = new BasicStroke(3, BasicStroke.CAP_ROUND,
-			BasicStroke.JOIN_ROUND, 1.7f);
+	private Stroke stroke = new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1.7f);
 	private RenderingHints renderingHints;
 
 	private static List<Pair<Integer, Integer>> pontos = null;
@@ -65,27 +63,24 @@ public class Paint {
 
 	/**
 	 * gets the canvas and the hud
+	 * 
 	 * @param semaphore
-	 * 					for communication thread
-	 * @return
-	 * 			canvas window
+	 *            for communication thread
+	 * @return canvas window
 	 */
-	public JComponent getGui(Semaphore semaphore) {
+	public JComponent getGui(final Semaphore semaphore) {
 
 		pontos = new ArrayList<Pair<Integer, Integer>>();
 
 		for (int i = 0; i < Xsize; i++) {
-			pontos.add(new Pair<Integer, Integer>(i, 0));
+			pontos.add(new Pair<Integer, Integer>(i, -300));
 		}
 
 		if (gui == null) {
 			Map<Key, Object> hintsMap = new HashMap<RenderingHints.Key, Object>();
-			hintsMap.put(RenderingHints.KEY_RENDERING,
-					RenderingHints.VALUE_RENDER_QUALITY);
-			hintsMap.put(RenderingHints.KEY_DITHERING,
-					RenderingHints.VALUE_DITHER_ENABLE);
-			hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING,
-					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+			hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+			hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			renderingHints = new RenderingHints(hintsMap);
 
 			setImage(new BufferedImage(Xsize, Ysize, BufferedImage.TYPE_INT_RGB));
@@ -140,8 +135,8 @@ public class Paint {
 
 	/**
 	 * generates the list of samples made from the draw
-	 * @return
-	 * 			the list with the samples
+	 * 
+	 * @return the list with the samples
 	 */
 	public List<Pair<Integer, Double>> generatePointsList() {
 
@@ -149,18 +144,18 @@ public class Paint {
 
 		for (int i = 0; i < 1000; i++) {
 
-			points.add(new Pair<Integer, Double>(i, ((double) pontos.get(i)
-					.getSecond() * (-1) + (Ysize / 2))
-					/ (double) (Ysize / 2)));
+			points.add(new Pair<Integer, Double>(i,
+					((double) pontos.get(i).getSecond() * (-1) + (Ysize / 2)) / (double) (Ysize / 2)));
 		}
 
 		System.out.println("Size: " + points.size());
 
 		return points;
 	}
-	
+
 	/**
 	 * clear canvas
+	 * 
 	 * @param bi
 	 */
 	public void clear(BufferedImage bi) {
@@ -176,6 +171,7 @@ public class Paint {
 
 	/**
 	 * sets the canvas parameters
+	 * 
 	 * @param image
 	 */
 	public void setImage(BufferedImage image) {
@@ -199,6 +195,7 @@ public class Paint {
 
 	/**
 	 * sets the brush color
+	 * 
 	 * @param color
 	 */
 	public void setColor(Color color) {
@@ -208,10 +205,10 @@ public class Paint {
 
 	/**
 	 * open de canvas window
+	 * 
 	 * @param f
-	 * 			canvas object
-	 * @return
-	 * 			null
+	 *            canvas object
+	 * @return null
 	 */
 	public double[] open(JFrame f) {
 
@@ -227,6 +224,18 @@ public class Paint {
 			double x[] = new double[l.size()];
 			for (Pair<Integer, Double> pair : l) {
 				x[pair.getFirst()] = pair.getSecond();
+			}
+
+			for (int i = 1; i < l.size(); i++) {
+				if (x[i] == 3.0) {
+					x[i] = x[(i - 1)];
+				}
+			}
+			for (int i = l.size() - 1; i >= 0; i--) {
+				if (x[i] == 3.0) {
+					x[i] = x[(i + 1)];
+				}
+				//System.out.println("x[" + i  +"] = " + x[i]);
 			}
 			System.out.println("Liberando semaforo");
 			return x;
@@ -254,9 +263,9 @@ public class Paint {
 		System.out.println("size: " + x.length);
 	}
 
-	
 	/**
 	 * draw into canvas
+	 * 
 	 * @param point
 	 */
 	public void draw(Point point) {
@@ -276,11 +285,12 @@ public class Paint {
 
 	/**
 	 *
-	 * gets mouse coordinates 
+	 * gets mouse coordinates
+	 * 
 	 * @author Carolina Arenas Okawa
 	 * @author Eric
 	 * @author Fernando Akio
-	 * @author Vinícius
+	 * @author Vinï¿½cius
 	 */
 	class ImageMouseMotionListener implements MouseMotionListener {
 
