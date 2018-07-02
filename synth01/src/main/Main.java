@@ -14,7 +14,7 @@ import key.KeyManagement;
  * @author Carolina Arenas Okawa
  * @author Eric
  * @author Fernando Akio
- * @author Vinícius
+ * @author Vinï¿½cius
  */
 public class Main {
 
