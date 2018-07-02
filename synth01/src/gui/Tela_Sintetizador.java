@@ -9,7 +9,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -26,7 +25,6 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-
 import genius.Genius;
 import key.KeyManagement;
 import paint.Paint;
@@ -90,7 +88,6 @@ public class Tela_Sintetizador extends JFrame{
     private JSeparator Separador9;
     private JSeparator Separador10;
     
-    private Redimensionamento p;
     private Icon Onda_Triangular;
     private Icon Onda_Quadrada;
     private Icon Onda_Senoidal;
@@ -118,8 +115,6 @@ public class Tela_Sintetizador extends JFrame{
     private JLabel sintetizador_Text;
 	
 	public Tela_Sintetizador() {
-		p = new Redimensionamento();
-		redimensionarIcones();
 		initTela();
 		initMenu();
 		initMixer();
@@ -132,57 +127,11 @@ public class Tela_Sintetizador extends JFrame{
 		KeyManagement.create(this, button, 1);
 	}
 	
-	private void redimensionarIcones() {
-		Onda_Triangular = new ImageIcon();
-		Onda_Quadrada = new ImageIcon();
-		Onda_Senoidal = new ImageIcon();
-		Onda_Dente_Serra = new ImageIcon();
-		
-		try {
-			Imagem img = new Imagem("images\\triangular.png");
-			Onda_Triangular = p.redimensionarImg(img.imagem, 
-					p.ProporcaoW(img.wmax), 
-					p.ProporcaoH(img.hmax));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			Imagem img = new Imagem("images\\quadrada.png");
-			Onda_Quadrada = p.redimensionarImg(img.imagem, 
-					p.ProporcaoW(img.wmax), 
-					p.ProporcaoH(img.hmax));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			Imagem img = new Imagem("images\\senoidal.png");
-			Onda_Senoidal = p.redimensionarImg(img.imagem, 
-					p.ProporcaoW(img.wmax), 
-					p.ProporcaoH(img.hmax));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			Imagem img = new Imagem("images\\dente_serra.png");
-			Onda_Dente_Serra = p.redimensionarImg(img.imagem, 
-					p.ProporcaoW(img.wmax), 
-					p.ProporcaoH(img.hmax));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	private void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(22, 24, 32));
-        setMinimumSize(new Dimension(p.ProporcaoW(1920), p.ProporcaoH(1080)));
+        setMinimumSize(new Dimension(Tela_Inicial.p.ProporcaoW(1920), 
+        		Tela_Inicial.p.ProporcaoH(1080)));
         setResizable(false);
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
@@ -293,10 +242,17 @@ public class Tela_Sintetizador extends JFrame{
         Ampl_Value_Text3 = new JLabel();
         Freq_Value_Text3 = new JLabel();
         Master_Value_Text = new JLabel();
+        
+        Onda_Triangular = new ImageIcon();
+		Onda_Quadrada = new ImageIcon();
+		Onda_Senoidal = new ImageIcon();
+		Onda_Dente_Serra = new ImageIcon();
+		
+		redimensionarIcones();
 		        
         getContentPane().add(Master_Slider);
-        Master_Slider.setBounds(p.ProporcaoW(425), p.ProporcaoH(550), p.ProporcaoW(200),
-        		p.ProporcaoH(20));
+        Master_Slider.setBounds(Tela_Inicial.p.ProporcaoW(425), Tela_Inicial.p.ProporcaoH(550), 
+        		Tela_Inicial.p.ProporcaoW(200), Tela_Inicial.p.ProporcaoH(20));
         Master_Slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 MasterStateChanged(evt);
@@ -306,23 +262,23 @@ public class Tela_Sintetizador extends JFrame{
         Master_Text.setForeground(new Color(255, 255, 255));
         Master_Text.setText("Master");
         getContentPane().add(Master_Text);
-        Master_Text.setBounds(p.ProporcaoW(510), p.ProporcaoH(574), p.ProporcaoW(50),
-        		p.ProporcaoH(16));
+        Master_Text.setBounds(Tela_Inicial.p.ProporcaoW(510), Tela_Inicial.p.ProporcaoH(574), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(16));
         
         Des_Ondas1.setIcon(Onda_Triangular);
         getContentPane().add(Des_Ondas1);
-        Des_Ondas1.setBounds(p.ProporcaoW(161), p.ProporcaoH(173), p.ProporcaoW(50),
-        		p.ProporcaoH(50));
+        Des_Ondas1.setBounds(Tela_Inicial.p.ProporcaoW(161), Tela_Inicial.p.ProporcaoH(173), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(50));
 
         Des_Ondas2.setIcon(Onda_Quadrada);
         getContentPane().add(Des_Ondas2);
-        Des_Ondas2.setBounds(p.ProporcaoW(421), p.ProporcaoH(173), p.ProporcaoW(50),
-        		p.ProporcaoH(50));
+        Des_Ondas2.setBounds(Tela_Inicial.p.ProporcaoW(421), Tela_Inicial.p.ProporcaoH(173), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(50));
 
         Des_Ondas3.setIcon(Onda_Dente_Serra);
         getContentPane().add(Des_Ondas3);
-        Des_Ondas3.setBounds(p.ProporcaoW(681), p.ProporcaoH(173), p.ProporcaoW(50),
-        		p.ProporcaoH(50));
+        Des_Ondas3.setBounds(Tela_Inicial.p.ProporcaoW(681), Tela_Inicial.p.ProporcaoH(173), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(50));
 
         Sel_Ondas1.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
         		"Triangular", "Dente de Serra", "Desenhar" }));
@@ -334,8 +290,8 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas1);
-        Sel_Ondas1.setBounds(p.ProporcaoW(237), p.ProporcaoH(180), p.ProporcaoW(130),
-        		p.ProporcaoH(30));
+        Sel_Ondas1.setBounds(Tela_Inicial.p.ProporcaoW(237), Tela_Inicial.p.ProporcaoH(180), 
+        		Tela_Inicial.p.ProporcaoW(130), Tela_Inicial.p.ProporcaoH(30));
         
         Sel_Ondas2.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
         		"Triangular", "Dente de Serra", "Desenhar" }));
@@ -347,8 +303,8 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas2);
-        Sel_Ondas2.setBounds(p.ProporcaoW(497), p.ProporcaoH(180), p.ProporcaoW(130),
-        		p.ProporcaoH(30));
+        Sel_Ondas2.setBounds(Tela_Inicial.p.ProporcaoW(497), Tela_Inicial.p.ProporcaoH(180), 
+        		Tela_Inicial.p.ProporcaoW(130), Tela_Inicial.p.ProporcaoH(30));
 
         Sel_Ondas3.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
         		"Triangular", "Dente de Serra", "Desenhar" }));
@@ -360,10 +316,10 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas3);
-        Sel_Ondas3.setBounds(p.ProporcaoW(757), p.ProporcaoH(180), p.ProporcaoW(130),
-        		p.ProporcaoH(30));
+        Sel_Ondas3.setBounds(Tela_Inicial.p.ProporcaoW(757), Tela_Inicial.p.ProporcaoH(180), 
+        		Tela_Inicial.p.ProporcaoW(130), Tela_Inicial.p.ProporcaoH(30));
 
-        Ampl1.setFont(new Font("Tahoma", 0, p.ProporcaoW(10)));
+        Ampl1.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(10)));
         Ampl1.setOrientation(JSlider.VERTICAL);
         //Ampl1.setMinorTickSpacing(1);
         //Ampl1.setMajorTickSpacing(10);
@@ -376,10 +332,10 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Ampl1);
-        Ampl1.setBounds(p.ProporcaoW(161), p.ProporcaoH(230), p.ProporcaoW(50),
-        		p.ProporcaoH(200));
+        Ampl1.setBounds(Tela_Inicial.p.ProporcaoW(161), Tela_Inicial.p.ProporcaoH(230), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(200));
 
-        Ampl2.setFont(new Font("Tahoma", 0, p.ProporcaoW(24)));
+        Ampl2.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(24)));
         Ampl2.setOrientation(JSlider.VERTICAL);
         Ampl2.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
@@ -387,10 +343,10 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Ampl2);
-        Ampl2.setBounds(p.ProporcaoW(421), p.ProporcaoH(230), p.ProporcaoW(50),
-        		p.ProporcaoH(200));
+        Ampl2.setBounds(Tela_Inicial.p.ProporcaoW(421), Tela_Inicial.p.ProporcaoH(230), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(200));
 
-        Ampl3.setFont(new Font("Tahoma", 0, p.ProporcaoW(24)));
+        Ampl3.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(24)));
         Ampl3.setOrientation(JSlider.VERTICAL);
         Ampl3.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
@@ -398,8 +354,8 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Ampl3);
-        Ampl3.setBounds(p.ProporcaoW(681), p.ProporcaoH(230), p.ProporcaoW(50),
-        		p.ProporcaoH(200));
+        Ampl3.setBounds(Tela_Inicial.p.ProporcaoW(681), Tela_Inicial.p.ProporcaoH(230), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(200));
 
         Freq1.setMaximum(5);
         Freq1.setOrientation(JSlider.VERTICAL);
@@ -410,8 +366,8 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq1);
-        Freq1.setBounds(p.ProporcaoW(237), p.ProporcaoH(230), p.ProporcaoW(130),
-        		p.ProporcaoH(200));
+        Freq1.setBounds(Tela_Inicial.p.ProporcaoW(237), Tela_Inicial.p.ProporcaoH(230), 
+        		Tela_Inicial.p.ProporcaoW(130), Tela_Inicial.p.ProporcaoH(200));
 
         Freq2.setMaximum(5);
         Freq2.setOrientation(JSlider.VERTICAL);
@@ -422,8 +378,8 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq2);
-        Freq2.setBounds(p.ProporcaoW(497), p.ProporcaoH(230), p.ProporcaoW(130),
-        		p.ProporcaoH(200));
+        Freq2.setBounds(Tela_Inicial.p.ProporcaoW(497), Tela_Inicial.p.ProporcaoH(230), 
+        		Tela_Inicial.p.ProporcaoW(130), Tela_Inicial.p.ProporcaoH(200));
 
         Freq3.setMaximum(5);
         Freq3.setOrientation(JSlider.VERTICAL);
@@ -434,154 +390,203 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq3);
-        Freq3.setBounds(p.ProporcaoW(757), p.ProporcaoH(230), p.ProporcaoW(130),
-        		p.ProporcaoH(200));
+        Freq3.setBounds(Tela_Inicial.p.ProporcaoW(757), Tela_Inicial.p.ProporcaoH(230), 
+        		Tela_Inicial.p.ProporcaoW(130), Tela_Inicial.p.ProporcaoH(200));
 
-        Osc_Text1.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
+        Osc_Text1.setFont(new Font("Times New Roman", 0, Tela_Inicial.p.ProporcaoW(24)));
         Osc_Text1.setForeground(new Color(255, 255, 255));
         Osc_Text1.setText("Oscilador 1");
         getContentPane().add(Osc_Text1);
-        Osc_Text1.setBounds(p.ProporcaoW(209), p.ProporcaoH(125), p.ProporcaoW(110),
-        		p.ProporcaoH(28));
+        Osc_Text1.setBounds(Tela_Inicial.p.ProporcaoW(209), Tela_Inicial.p.ProporcaoH(125), 
+        		Tela_Inicial.p.ProporcaoW(110), Tela_Inicial.p.ProporcaoH(28));
 
-        Osc_Text2.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
+        Osc_Text2.setFont(new Font("Times New Roman", 0, Tela_Inicial.p.ProporcaoW(24)));
         Osc_Text2.setForeground(new Color(255, 255, 255));
         Osc_Text2.setText("Oscilador 2");
         getContentPane().add(Osc_Text2);
-        Osc_Text2.setBounds(p.ProporcaoW(469), p.ProporcaoH(125), p.ProporcaoW(110),
-        		p.ProporcaoH(28));
+        Osc_Text2.setBounds(Tela_Inicial.p.ProporcaoW(469), Tela_Inicial.p.ProporcaoH(125), 
+        		Tela_Inicial.p.ProporcaoW(110), Tela_Inicial.p.ProporcaoH(28));
 
-        Osc_Text3.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
+        Osc_Text3.setFont(new Font("Times New Roman", 0, Tela_Inicial.p.ProporcaoW(24)));
         Osc_Text3.setForeground(new Color(255, 255, 255));
         Osc_Text3.setText("Oscilador 3");
         getContentPane().add(Osc_Text3);
-        Osc_Text3.setBounds(p.ProporcaoW(729), p.ProporcaoH(125), p.ProporcaoW(110),
-        		p.ProporcaoH(28));
+        Osc_Text3.setBounds(Tela_Inicial.p.ProporcaoW(729), Tela_Inicial.p.ProporcaoH(125), 
+        		Tela_Inicial.p.ProporcaoW(110), Tela_Inicial.p.ProporcaoH(28));
 
         Ampl_Text1.setForeground(new Color(255, 255, 255));
         Ampl_Text1.setText("Amplitude");
         getContentPane().add(Ampl_Text1);
-        Ampl_Text1.setBounds(p.ProporcaoW(158), p.ProporcaoH(440), p.ProporcaoW(55),
-        		p.ProporcaoH(16));
+        Ampl_Text1.setBounds(Tela_Inicial.p.ProporcaoW(158), Tela_Inicial.p.ProporcaoH(440), 
+        		Tela_Inicial.p.ProporcaoW(55), Tela_Inicial.p.ProporcaoH(16));
 
         Ampl_Text2.setForeground(new Color(255, 255, 255));
         Ampl_Text2.setText("Amplitude");
         getContentPane().add(Ampl_Text2);
-        Ampl_Text2.setBounds(p.ProporcaoW(418), p.ProporcaoH(440), p.ProporcaoW(55),
-        		p.ProporcaoH(16));
+        Ampl_Text2.setBounds(Tela_Inicial.p.ProporcaoW(418), Tela_Inicial.p.ProporcaoH(440), 
+        		Tela_Inicial.p.ProporcaoW(55), Tela_Inicial.p.ProporcaoH(16));
 
         Ampl_Text3.setForeground(new Color(255, 255, 255));
         Ampl_Text3.setText("Amplitude");
         getContentPane().add(Ampl_Text3);
-        Ampl_Text3.setBounds(p.ProporcaoW(678), p.ProporcaoH(440), p.ProporcaoW(55),
-        		p.ProporcaoH(16));
+        Ampl_Text3.setBounds(Tela_Inicial.p.ProporcaoW(678), Tela_Inicial.p.ProporcaoH(440), 
+        		Tela_Inicial.p.ProporcaoW(55), Tela_Inicial.p.ProporcaoH(16));
 
         Freq_Text1.setForeground(new Color(255, 255, 255));
         Freq_Text1.setText("Frequência");
         getContentPane().add(Freq_Text1);
-        Freq_Text1.setBounds(p.ProporcaoW(271), p.ProporcaoH(440), p.ProporcaoW(62),
-        		p.ProporcaoH(16));
+        Freq_Text1.setBounds(Tela_Inicial.p.ProporcaoW(271), Tela_Inicial.p.ProporcaoH(440), 
+        		Tela_Inicial.p.ProporcaoW(62), Tela_Inicial.p.ProporcaoH(16));
 
         Freq_Text2.setForeground(new Color(255, 255, 255));
         Freq_Text2.setText("Frequência");
         getContentPane().add(Freq_Text2);
-        Freq_Text2.setBounds(p.ProporcaoW(531), p.ProporcaoH(440), p.ProporcaoW(62),
-        		p.ProporcaoH(16));
+        Freq_Text2.setBounds(Tela_Inicial.p.ProporcaoW(531), Tela_Inicial.p.ProporcaoH(440), 
+        		Tela_Inicial.p.ProporcaoW(62), Tela_Inicial.p.ProporcaoH(16));
 
         Freq_Text3.setForeground(new Color(255, 255, 255));
         Freq_Text3.setText("Frequência");
         getContentPane().add(Freq_Text3);
-        Freq_Text3.setBounds(p.ProporcaoW(791), p.ProporcaoH(440), p.ProporcaoW(62),
-        		p.ProporcaoH(16));
+        Freq_Text3.setBounds(Tela_Inicial.p.ProporcaoW(791), Tela_Inicial.p.ProporcaoH(440), 
+        		Tela_Inicial.p.ProporcaoW(62), Tela_Inicial.p.ProporcaoH(16));
         
         getContentPane().add(Separador1);
-        Separador1.setBounds(p.ProporcaoW(135), p.ProporcaoH(100), p.ProporcaoW(780),
-        		p.ProporcaoH(10));
+        Separador1.setBounds(Tela_Inicial.p.ProporcaoW(135), Tela_Inicial.p.ProporcaoH(100), 
+        		Tela_Inicial.p.ProporcaoW(780), Tela_Inicial.p.ProporcaoH(10));
         
         getContentPane().add(Separador2);
-        Separador2.setBounds(p.ProporcaoW(135), p.ProporcaoH(480), p.ProporcaoW(780),
-        		p.ProporcaoH(10));
+        Separador2.setBounds(Tela_Inicial.p.ProporcaoW(135), Tela_Inicial.p.ProporcaoH(480), 
+        		Tela_Inicial.p.ProporcaoW(780), Tela_Inicial.p.ProporcaoH(10));
 
         Separador3.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador3);
-        Separador3.setBounds(p.ProporcaoW(134), p.ProporcaoH(101), p.ProporcaoW(10),
-        		p.ProporcaoH(380));
+        Separador3.setBounds(Tela_Inicial.p.ProporcaoW(134), Tela_Inicial.p.ProporcaoH(101), 
+        		Tela_Inicial.p.ProporcaoW(10), Tela_Inicial.p.ProporcaoH(380));
 
         Separador4.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador4);
-        Separador4.setBounds(p.ProporcaoW(394), p.ProporcaoH(101), p.ProporcaoW(10),
-        		p.ProporcaoH(380));
+        Separador4.setBounds(Tela_Inicial.p.ProporcaoW(394), Tela_Inicial.p.ProporcaoH(101), 
+        		Tela_Inicial.p.ProporcaoW(10), Tela_Inicial.p.ProporcaoH(380));
 
         Separador5.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador5);
-        Separador5.setBounds(p.ProporcaoW(654), p.ProporcaoH(101), p.ProporcaoW(10),
-        		p.ProporcaoH(380));
+        Separador5.setBounds(Tela_Inicial.p.ProporcaoW(654), Tela_Inicial.p.ProporcaoH(101), 
+        		Tela_Inicial.p.ProporcaoW(10), Tela_Inicial.p.ProporcaoH(380));
 
         Separador6.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador6);
-        Separador6.setBounds(p.ProporcaoW(914), p.ProporcaoH(101), p.ProporcaoW(10),
-        		p.ProporcaoH(380));
+        Separador6.setBounds(Tela_Inicial.p.ProporcaoW(914), Tela_Inicial.p.ProporcaoH(101), 
+        		Tela_Inicial.p.ProporcaoW(10), Tela_Inicial.p.ProporcaoH(380));
 
         Separador7.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador7);
-        Separador7.setBounds(p.ProporcaoW(264), p.ProporcaoH(481), p.ProporcaoW(10),
-        		p.ProporcaoH(80));
+        Separador7.setBounds(Tela_Inicial.p.ProporcaoW(264), Tela_Inicial.p.ProporcaoH(481), 
+        		Tela_Inicial.p.ProporcaoW(10), Tela_Inicial.p.ProporcaoH(80));
 
         Separador8.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador8);
-        Separador8.setBounds(p.ProporcaoW(524), p.ProporcaoH(481), p.ProporcaoW(10),
-        		p.ProporcaoH(80));
+        Separador8.setBounds(Tela_Inicial.p.ProporcaoW(524), Tela_Inicial.p.ProporcaoH(481), 
+        		Tela_Inicial.p.ProporcaoW(10), Tela_Inicial.p.ProporcaoH(80));
 
         Separador9.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador9);
-        Separador9.setBounds(p.ProporcaoW(784), p.ProporcaoH(481), p.ProporcaoW(10),
-        		p.ProporcaoH(80));
+        Separador9.setBounds(Tela_Inicial.p.ProporcaoW(784), Tela_Inicial.p.ProporcaoH(481), 
+        		Tela_Inicial.p.ProporcaoW(10), Tela_Inicial.p.ProporcaoH(80));
         
         getContentPane().add(Separador10);
-        Separador10.setBounds(p.ProporcaoW(265), p.ProporcaoH(560), p.ProporcaoW(520),
-        		p.ProporcaoH(10));
+        Separador10.setBounds(Tela_Inicial.p.ProporcaoW(265), Tela_Inicial.p.ProporcaoH(560), 
+        		Tela_Inicial.p.ProporcaoW(520), Tela_Inicial.p.ProporcaoH(10));
         
         Ampl_Value_Text1.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text1.setText("50");
         getContentPane().add(Ampl_Value_Text1);
-        Ampl_Value_Text1.setBounds(p.ProporcaoW(211), p.ProporcaoH(230), p.ProporcaoW(41),
-        		p.ProporcaoH(16));
+        Ampl_Value_Text1.setBounds(Tela_Inicial.p.ProporcaoW(211), 
+        		Tela_Inicial.p.ProporcaoH(230), Tela_Inicial.p.ProporcaoW(41),
+        		Tela_Inicial.p.ProporcaoH(16));
 
         Freq_Value_Text1.setForeground(new Color(255, 255, 255));
         Freq_Value_Text1.setText("2");
         getContentPane().add(Freq_Value_Text1);
-        Freq_Value_Text1.setBounds(p.ProporcaoW(327), p.ProporcaoH(230), p.ProporcaoW(41),
-        		p.ProporcaoH(16));
+        Freq_Value_Text1.setBounds(Tela_Inicial.p.ProporcaoW(327), 
+        		Tela_Inicial.p.ProporcaoH(230), Tela_Inicial.p.ProporcaoW(41),
+        		Tela_Inicial.p.ProporcaoH(16));
 
         Ampl_Value_Text2.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text2.setText("50");
         getContentPane().add(Ampl_Value_Text2);
-        Ampl_Value_Text2.setBounds(p.ProporcaoW(471), p.ProporcaoH(230), p.ProporcaoW(41),
-        		p.ProporcaoH(16));
+        Ampl_Value_Text2.setBounds(Tela_Inicial.p.ProporcaoW(471), 
+        		Tela_Inicial.p.ProporcaoH(230), Tela_Inicial.p.ProporcaoW(41),
+        		Tela_Inicial.p.ProporcaoH(16));
 
         Freq_Value_Text2.setForeground(new Color(255, 255, 255));
         Freq_Value_Text2.setText("2");
         getContentPane().add(Freq_Value_Text2);
-        Freq_Value_Text2.setBounds(p.ProporcaoW(587), p.ProporcaoH(230), p.ProporcaoW(41),
-        		p.ProporcaoH(16));
+        Freq_Value_Text2.setBounds(Tela_Inicial.p.ProporcaoW(587), 
+        		Tela_Inicial.p.ProporcaoH(230), Tela_Inicial.p.ProporcaoW(41),
+        		Tela_Inicial.p.ProporcaoH(16));
 
         Ampl_Value_Text3.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text3.setText("50");
         getContentPane().add(Ampl_Value_Text3);
-        Ampl_Value_Text3.setBounds(p.ProporcaoW(731), p.ProporcaoH(230), p.ProporcaoW(41),
-        		p.ProporcaoH(16));
+        Ampl_Value_Text3.setBounds(Tela_Inicial.p.ProporcaoW(731), 
+        		Tela_Inicial.p.ProporcaoH(230), Tela_Inicial.p.ProporcaoW(41),
+        		Tela_Inicial.p.ProporcaoH(16));
 
         Freq_Value_Text3.setForeground(new Color(255, 255, 255));
         Freq_Value_Text3.setText("2");
         getContentPane().add(Freq_Value_Text3);
-        Freq_Value_Text3.setBounds(p.ProporcaoW(847), p.ProporcaoH(230), p.ProporcaoW(41),
-        		p.ProporcaoH(16));
+        Freq_Value_Text3.setBounds(Tela_Inicial.p.ProporcaoW(847), 
+        		Tela_Inicial.p.ProporcaoH(230), Tela_Inicial.p.ProporcaoW(41),
+        		Tela_Inicial.p.ProporcaoH(16));
 
         Master_Value_Text.setForeground(new Color(255, 255, 255));
         Master_Value_Text.setText("50");
         getContentPane().add(Master_Value_Text);
-        Master_Value_Text.setBounds(p.ProporcaoW(604), p.ProporcaoH(574), p.ProporcaoW(21),
-        		p.ProporcaoH(16));
+        Master_Value_Text.setBounds(Tela_Inicial.p.ProporcaoW(604), 
+        		Tela_Inicial.p.ProporcaoH(574), Tela_Inicial.p.ProporcaoW(21),
+        		Tela_Inicial.p.ProporcaoH(16));
+	}
+	
+	private void redimensionarIcones() {
+		try {
+			Imagem img = new Imagem("images\\triangular.png");
+			Onda_Triangular = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Imagem img = new Imagem("images\\quadrada.png");
+			Onda_Quadrada = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Imagem img = new Imagem("images\\senoidal.png");
+			Onda_Senoidal = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			Imagem img = new Imagem("images\\dente_serra.png");
+			Onda_Dente_Serra = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void MasterStateChanged(ChangeEvent evt) {
@@ -716,40 +721,44 @@ public class Tela_Sintetizador extends JFrame{
                 
         VE_Separador1.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(VE_Separador1);
-        VE_Separador1.setBounds(p.ProporcaoW(984), p.ProporcaoH(100), p.ProporcaoW(10),
-        		p.ProporcaoH(461));
+        VE_Separador1.setBounds(Tela_Inicial.p.ProporcaoW(984), Tela_Inicial.p.ProporcaoH(100),
+        		Tela_Inicial.p.ProporcaoW(10), Tela_Inicial.p.ProporcaoH(461));
 
         VE_Separador2.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(VE_Separador2);
-        VE_Separador2.setBounds(p.ProporcaoW(1314), p.ProporcaoH(100), p.ProporcaoW(10),
-        		p.ProporcaoH(461));
+        VE_Separador2.setBounds(Tela_Inicial.p.ProporcaoW(1314), 
+        		Tela_Inicial.p.ProporcaoH(100), Tela_Inicial.p.ProporcaoW(10),
+        		Tela_Inicial.p.ProporcaoH(461));
         
         getContentPane().add(VE_Separador3);
-        VE_Separador3.setBounds(p.ProporcaoW(985), p.ProporcaoH(99), p.ProporcaoW(330),
-        		p.ProporcaoH(10));
+        VE_Separador3.setBounds(Tela_Inicial.p.ProporcaoW(985), Tela_Inicial.p.ProporcaoH(99), 
+        		Tela_Inicial.p.ProporcaoW(330), Tela_Inicial.p.ProporcaoH(10));
         
         getContentPane().add(VE_Separador4);
-        VE_Separador4.setBounds(p.ProporcaoW(985), p.ProporcaoH(560), p.ProporcaoW(330),
-        		p.ProporcaoH(10));
+        VE_Separador4.setBounds(Tela_Inicial.p.ProporcaoW(985), Tela_Inicial.p.ProporcaoH(560), 
+        		Tela_Inicial.p.ProporcaoW(330), Tela_Inicial.p.ProporcaoH(10));
 
-        Volume_Envelope_Text.setFont(new Font("Times New Roman", 1, p.ProporcaoW(24)));
+        Volume_Envelope_Text.setFont(new Font("Times New Roman", 1, 
+        		Tela_Inicial.p.ProporcaoW(24)));
         Volume_Envelope_Text.setForeground(new Color(255, 255, 255));
         Volume_Envelope_Text.setText("Volume Envelope");
         getContentPane().add(Volume_Envelope_Text);
-        Volume_Envelope_Text.setBounds(p.ProporcaoW(1059), p.ProporcaoH(125), p.ProporcaoW(180),
-        		p.ProporcaoH(25));
+        Volume_Envelope_Text.setBounds(Tela_Inicial.p.ProporcaoW(1059), 
+        		Tela_Inicial.p.ProporcaoH(125), Tela_Inicial.p.ProporcaoW(180),
+        		Tela_Inicial.p.ProporcaoH(25));
         
         Attack_Text.setForeground(new Color(255, 255, 255));
         Attack_Text.setText("Attack");
         getContentPane().add(Attack_Text);
-        Attack_Text.setBounds(p.ProporcaoW(1005), p.ProporcaoH(181), p.ProporcaoW(110), 
-        		p.ProporcaoH(15));
+        Attack_Text.setBounds(Tela_Inicial.p.ProporcaoW(1005), Tela_Inicial.p.ProporcaoH(181), 
+        		Tela_Inicial.p.ProporcaoW(110), Tela_Inicial.p.ProporcaoH(15));
 
         Attack_Value.setForeground(new Color(255, 255, 255));
-        Attack_Value.setText("   5 ms");
+        Attack_Value.setHorizontalAlignment(SwingConstants.RIGHT);
+        Attack_Value.setText("5 ms");
         getContentPane().add(Attack_Value);
-        Attack_Value.setBounds(p.ProporcaoW(1245), p.ProporcaoH(181), p.ProporcaoW(50),
-        		p.ProporcaoH(15));
+        Attack_Value.setBounds(Tela_Inicial.p.ProporcaoW(1245), Tela_Inicial.p.ProporcaoH(181), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(15));
 
         Attack_JSlider.setMaximum(4000);
         Attack_JSlider.setMinimum(5);
@@ -760,20 +769,22 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Attack_JSlider);
-        Attack_JSlider.setBounds(p.ProporcaoW(1005), p.ProporcaoH(222), p.ProporcaoW(290), 
-        		p.ProporcaoH(25));
+        Attack_JSlider.setBounds(Tela_Inicial.p.ProporcaoW(1005), 
+        		Tela_Inicial.p.ProporcaoH(222), Tela_Inicial.p.ProporcaoW(290), 
+        		Tela_Inicial.p.ProporcaoH(25));
 
         Decay_Text.setForeground(new Color(255, 255, 255));
         Decay_Text.setText("Decay");
         getContentPane().add(Decay_Text);
-        Decay_Text.setBounds(p.ProporcaoW(1005), p.ProporcaoH(273), p.ProporcaoW(70),
-        		p.ProporcaoH(15));
+        Decay_Text.setBounds(Tela_Inicial.p.ProporcaoW(1005), Tela_Inicial.p.ProporcaoH(273), 
+        		Tela_Inicial.p.ProporcaoW(70), Tela_Inicial.p.ProporcaoH(15));
 
         Decay_Value.setForeground(new Color(255, 255, 255));
-        Decay_Value.setText("   5 ms");
+        Decay_Value.setHorizontalAlignment(SwingConstants.RIGHT);
+        Decay_Value.setText("5 ms");
         getContentPane().add(Decay_Value);
-        Decay_Value.setBounds(p.ProporcaoW(1245), p.ProporcaoH(273), p.ProporcaoW(50), 
-        		p.ProporcaoH(15));
+        Decay_Value.setBounds(Tela_Inicial.p.ProporcaoW(1245), Tela_Inicial.p.ProporcaoH(273), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(15));
 
         Decay_JSlider.setMaximum(4000);
         Decay_JSlider.setMinimum(5);
@@ -784,20 +795,23 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Decay_JSlider);
-        Decay_JSlider.setBounds(p.ProporcaoW(1004), p.ProporcaoH(314), p.ProporcaoW(290), 
-        		p.ProporcaoH(25));
+        Decay_JSlider.setBounds(Tela_Inicial.p.ProporcaoW(1004), 
+        		Tela_Inicial.p.ProporcaoH(314), Tela_Inicial.p.ProporcaoW(290), 
+        		Tela_Inicial.p.ProporcaoH(25));
 
         Sustain_Text.setForeground(new Color(255, 255, 255));
         Sustain_Text.setText("Sustain");
         getContentPane().add(Sustain_Text);
-        Sustain_Text.setBounds(p.ProporcaoW(1005), p.ProporcaoH(365), p.ProporcaoW(50), 
-        		p.ProporcaoH(15));
+        Sustain_Text.setBounds(Tela_Inicial.p.ProporcaoW(1005), Tela_Inicial.p.ProporcaoH(365), 
+        		Tela_Inicial.p.ProporcaoW(50), Tela_Inicial.p.ProporcaoH(15));
 
         Sustain_Value.setForeground(new Color(255, 255, 255));
+        Sustain_Value.setHorizontalAlignment(SwingConstants.RIGHT);
         Sustain_Value.setText("100");
         getContentPane().add(Sustain_Value);
-        Sustain_Value.setBounds(p.ProporcaoW(1274), p.ProporcaoH(365), p.ProporcaoW(21), 
-        		p.ProporcaoH(15));
+        Sustain_Value.setBounds(Tela_Inicial.p.ProporcaoW(1274), 
+        		Tela_Inicial.p.ProporcaoH(365), Tela_Inicial.p.ProporcaoW(21), 
+        		Tela_Inicial.p.ProporcaoH(15));
 
         Sustain_JSlider.setValue(100);
         Sustain_JSlider.addChangeListener(new ChangeListener() {
@@ -806,20 +820,24 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sustain_JSlider);
-        Sustain_JSlider.setBounds(p.ProporcaoW(1004), p.ProporcaoH(406), p.ProporcaoW(290), 
-        		p.ProporcaoH(25));
+        Sustain_JSlider.setBounds(Tela_Inicial.p.ProporcaoW(1004), 
+        		Tela_Inicial.p.ProporcaoH(406), Tela_Inicial.p.ProporcaoW(290), 
+        		Tela_Inicial.p.ProporcaoH(25));
 
         Release_Text.setForeground(new Color(255, 255, 255));
         Release_Text.setText("Release");
         getContentPane().add(Release_Text);
-        Release_Text.setBounds(p.ProporcaoW(1005), p.ProporcaoH(457), p.ProporcaoW(50), 
-        		p.ProporcaoH(15));
+        Release_Text.setBounds(Tela_Inicial.p.ProporcaoW(1005), 
+        		Tela_Inicial.p.ProporcaoH(457), Tela_Inicial.p.ProporcaoW(50), 
+        		Tela_Inicial.p.ProporcaoH(15));
 
         Release_Value.setForeground(new Color(255, 255, 255));
+        Release_Value.setHorizontalAlignment(SwingConstants.RIGHT);
         Release_Value.setText("1000 ms");
         getContentPane().add(Release_Value);
-        Release_Value.setBounds(p.ProporcaoW(1245), p.ProporcaoH(457), p.ProporcaoW(50), 
-        		p.ProporcaoH(15));
+        Release_Value.setBounds(Tela_Inicial.p.ProporcaoW(1245), 
+        		Tela_Inicial.p.ProporcaoH(457), Tela_Inicial.p.ProporcaoW(50), 
+        		Tela_Inicial.p.ProporcaoH(15));
 
         Release_JSlider.setMaximum(4000);
         Release_JSlider.setMinimum(5);
@@ -830,8 +848,9 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Release_JSlider);
-        Release_JSlider.setBounds(p.ProporcaoW(1004), p.ProporcaoH(498), p.ProporcaoW(290), 
-        		p.ProporcaoH(25));
+        Release_JSlider.setBounds(Tela_Inicial.p.ProporcaoW(1004), 
+        		Tela_Inicial.p.ProporcaoH(498), Tela_Inicial.p.ProporcaoW(290), 
+        		Tela_Inicial.p.ProporcaoH(25));
 	}
 	
 	private void Attack_JSliderStateChanged(ChangeEvent evt) {
@@ -852,8 +871,8 @@ public class Tela_Sintetizador extends JFrame{
 	
 	private void initGravador() {		
 		gravar = new JButton();
-		gravar.setBounds(p.ProporcaoW(1384), p.ProporcaoH(100), p.ProporcaoW(400), 
-				p.ProporcaoH(115));
+		gravar.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(100), 
+				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
 		gravar.setText("Gravar");
 		gravar.setVisible(true);
 		getContentPane().add(gravar);
@@ -868,8 +887,8 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		pausar = new JButton();
-		pausar.setBounds(p.ProporcaoW(1384), p.ProporcaoH(215), p.ProporcaoW(400), 
-				p.ProporcaoH(115));
+		pausar.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(215), 
+				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
 		pausar.setText("Parar");
 		pausar.setVisible(true);
 		getContentPane().add(pausar);
@@ -885,8 +904,8 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		reproduzir = new JButton();
-		reproduzir.setBounds(p.ProporcaoW(1384), p.ProporcaoH(330), p.ProporcaoW(400), 
-				p.ProporcaoH(115));
+		reproduzir.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(330), 
+				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -919,8 +938,8 @@ public class Tela_Sintetizador extends JFrame{
 		});
 
 		genius = new JButton();
-		genius.setBounds(p.ProporcaoW(1384), p.ProporcaoH(445), p.ProporcaoW(400), 
-				p.ProporcaoH(115));
+		genius.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(445), 
+				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
 		genius.setText("Genius");
 		genius.setVisible(true);
 		getContentPane().add(genius);
@@ -1003,11 +1022,13 @@ public class Tela_Sintetizador extends JFrame{
 	private void initOutrosComponentes() {
 		sintetizador_Text = new JLabel();
 		
-		sintetizador_Text.setFont(new Font("Segoe Script", 0, 58));
+		sintetizador_Text.setFont(new Font("Segoe Script", 0, Tela_Inicial.p.ProporcaoW(58)));
 		sintetizador_Text.setForeground(new Color(255, 0, 255));
 		sintetizador_Text.setText("Sintetizador");
         getContentPane().add(sintetizador_Text);
-        sintetizador_Text.setBounds(760, 20, 400, 60);
+        sintetizador_Text.setBounds(Tela_Inicial.p.ProporcaoW(760), 
+        		Tela_Inicial.p.ProporcaoH(20), Tela_Inicial.p.ProporcaoW(400), 
+        		Tela_Inicial.p.ProporcaoH(60));
 	}
 
 	private void setAllNotFocusable() {

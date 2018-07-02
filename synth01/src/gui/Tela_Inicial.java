@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 public class Tela_Inicial extends JFrame{
 	public static Tela_Sintetizador ts;
 	public static Tela_MIDI tm;
-	private Redimensionamento p;
+	public static Redimensionamento p;
 	
 	public Tela_Inicial(){
 		p = new Redimensionamento();
