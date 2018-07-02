@@ -2,16 +2,12 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.BorderFactory;
 import javax.swing.WindowConstants;
-
 import java.awt.Dimension;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -20,7 +16,7 @@ import java.awt.event.ActionEvent;
 public class Tela_Inicial extends JFrame{
 	public static Tela_Sintetizador ts;
 	public static Tela_MIDI tm;
-	private static Redimensionamento p;
+	private Redimensionamento p;
 	
 	public Tela_Inicial(){
 		p = new Redimensionamento();
@@ -30,19 +26,15 @@ public class Tela_Inicial extends JFrame{
 		initComponents();
 	}
 	
-	public void initTela() {
+	private void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(p.ProporcaoW(1200), p.ProporcaoH(799)));
-        setResizable(false); // Impede de alterar tamanho da tela
-        setLocationRelativeTo(null); // Centro da tela
+        setResizable(false);
+        setLocationRelativeTo(null);
         setVisible(true);
         getContentPane().setLayout(null);
         verifyIfNimbusIsInstalled();
 	}
-	
-	/**
-	 * Verifiy if the LookAndFeel Nimbus is installed
-	 */
 	
 	private void verifyIfNimbusIsInstalled() {
 		try {
@@ -68,7 +60,7 @@ public class Tela_Inicial extends JFrame{
 		}
 	}
 	
-	public void initComponents(){
+	private void initComponents(){
 		JButton MIDI = new JButton();
 		JButton synth = new JButton();
 		JLabel planoFundo = new JLabel();

@@ -36,80 +36,103 @@ import synth.AudioSynth;
 public class Tela_Sintetizador extends JFrame{
 	private AudioSynth synth;
 	
-	public Teclado t;
-	public JButton button[];
+	private Teclado t;
+	private JButton button[];
 	
-	public JMenuBar Bar;
-    public JMenu menu;
-    public JMenuItem exit;
-    public JMenuItem MIDI;
+	private JMenuBar Bar;
+	private JMenu menu;
+	private JMenuItem exit;
+	private JMenuItem MIDI;
     
 	private JButton gravar;
 	private JButton reproduzir;
 	private JButton pausar;
 	private JButton genius;
 	
-	public JSlider Ampl1;
-    public JSlider Ampl2;
-    public JSlider Ampl3;
-    public JLabel Ampl_Text1;
-    public JLabel Ampl_Text2;
-    public JLabel Ampl_Text3;
+	private JSlider Ampl1;
+	private JSlider Ampl2;
+	private JSlider Ampl3;
+	private JLabel Ampl_Text1;
+	private JLabel Ampl_Text2;
+	private JLabel Ampl_Text3;
     private JLabel Ampl_Value_Text1;
     private JLabel Ampl_Value_Text2;
     private JLabel Ampl_Value_Text3;
-    public JLabel Des_Ondas1;
-    public JLabel Des_Ondas2;
-    public JLabel Des_Ondas3;
-    public JSlider Freq1;
-    public JSlider Freq2;
-    public JSlider Freq3;
-    public JLabel Freq_Text1;
-    public JLabel Freq_Text2;
-    public JLabel Freq_Text3;
-    public JLabel Freq_Value_Text1;
-    public JLabel Freq_Value_Text2;
-    public JLabel Freq_Value_Text3;
-    public JSlider Master_Slider;
-    public JLabel Master_Text;
-    public JLabel Master_Value_Text;
-    public JLabel Mixer_Text;
-    public JLabel Osc_Text1;
-    public JLabel Osc_Text2;
-    public JLabel Osc_Text3;
-    public JComboBox<String> Sel_Ondas1;
-    public JComboBox<String> Sel_Ondas2;
-    public JComboBox<String> Sel_Ondas3;
-    public JSeparator Separador1;
-    public JSeparator Separador2;
-    public JSeparator Separador3;
-    public JSeparator Separador4;
-    public JSeparator Separador5;
-    public JSeparator Separador6;
-    public JSeparator Separador7;
-    public JSeparator Separador8;
-    public JSeparator Separador9;
-    public JSeparator Separador10;
+    private JLabel Des_Ondas1;
+    private JLabel Des_Ondas2;
+    private JLabel Des_Ondas3;
+    private JSlider Freq1;
+    private JSlider Freq2;
+    private JSlider Freq3;
+    private JLabel Freq_Text1;
+    private JLabel Freq_Text2;
+    private JLabel Freq_Text3;
+    private JLabel Freq_Value_Text1;
+    private JLabel Freq_Value_Text2;
+    private JLabel Freq_Value_Text3;
+    private JSlider Master_Slider;
+    private JLabel Master_Text;
+    private JLabel Master_Value_Text;
+    private JLabel Osc_Text1;
+    private JLabel Osc_Text2;
+    private JLabel Osc_Text3;
+    private JComboBox<String> Sel_Ondas1;
+    private JComboBox<String> Sel_Ondas2;
+    private JComboBox<String> Sel_Ondas3;
+    private JSeparator Separador1;
+    private JSeparator Separador2;
+    private JSeparator Separador3;
+    private JSeparator Separador4;
+    private JSeparator Separador5;
+    private JSeparator Separador6;
+    private JSeparator Separador7;
+    private JSeparator Separador8;
+    private JSeparator Separador9;
+    private JSeparator Separador10;
     
     private Redimensionamento p;
     private Icon Onda_Triangular;
     private Icon Onda_Quadrada;
     private Icon Onda_Senoidal;
     private Icon Onda_Dente_Serra;
+    
+    private JSlider Attack_JSlider;
+    private JLabel Attack_Text;
+    private JLabel Attack_Value;
+    private JSlider Decay_JSlider;
+    private JLabel Decay_Text;
+    private JLabel Decay_Value;
+    private JSlider Release_JSlider;
+    private JLabel Release_Text;
+    private JLabel Release_Value;
+    private JSlider Sustain_JSlider;
+    private JLabel Sustain_Text;
+    private JLabel Sustain_Value;
+    private JSeparator VE_Separador1;
+    private JSeparator VE_Separador2;
+    private JSeparator VE_Separador3;
+    private JSeparator VE_Separador4;
+    private JLabel Volume_Envelope_Text;
+    
+    //private JLabel plano_de_fundo;
+    private JLabel sintetizador_Text;
 	
 	public Tela_Sintetizador() {
 		p = new Redimensionamento();
 		redimensionarIcones();
 		initTela();
-		initTeclado();
 		initMenu();
-		initGravador();
 		initMixer();
+		initEnvelope();
+		initGravador();
+		initTeclado();
+		initOutrosComponentes();
+		pack();
 		setAllNotFocusable();
 		KeyManagement.create(this, button, 1);
 	}
 	
-	public void redimensionarIcones() {
+	private void redimensionarIcones() {
 		Onda_Triangular = new ImageIcon();
 		Onda_Quadrada = new ImageIcon();
 		Onda_Senoidal = new ImageIcon();
@@ -156,19 +179,15 @@ public class Tela_Sintetizador extends JFrame{
 		}
 	}
 	
-	public void initTela() {
+	private void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(22, 24, 32));
-        setMinimumSize(new Dimension(p.ProporcaoW(1807), p.ProporcaoH(1036)));
-        setResizable(false); // Impede de alterar tamanho da tela
-        setLocationRelativeTo(null); // Centro da tela
+        setMinimumSize(new Dimension(p.ProporcaoW(1920), p.ProporcaoH(1080)));
+        setResizable(false);
+        setLocationRelativeTo(null);
         getContentPane().setLayout(null);
         verifyIfNimbusIsInstalled();
 	}
-	
-	/**
-	 * Verifiy if the LookAndFeel Nimbus is installed
-	 */
 	
 	private void verifyIfNimbusIsInstalled() {
 		try {
@@ -194,7 +213,7 @@ public class Tela_Sintetizador extends JFrame{
 		}
 	}
 	
-	public void initMenu() {		
+	private void initMenu() {		
 		Bar = new JMenuBar();
         menu = new JMenu();
         MIDI = new JMenuItem();
@@ -231,118 +250,11 @@ public class Tela_Sintetizador extends JFrame{
 		System.exit(0);
     }
 	
-	public void initGravador() {
-		gravar = new JButton();
-		gravar.setBounds(p.ProporcaoW(1100), p.ProporcaoH(100), p.ProporcaoW(100), 
-				p.ProporcaoH(50));
-		gravar.setText("Gravar");
-		gravar.setVisible(true);
-		getContentPane().add(gravar);
-
-		gravar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				KeyManagement.startRecording(0);
-
-			}
-		});
-
-		pausar = new JButton();
-		pausar.setBounds(p.ProporcaoW(1200), p.ProporcaoH(100), p.ProporcaoW(100), 
-				p.ProporcaoH(50));
-		pausar.setText("Parar");
-		pausar.setVisible(true);
-		getContentPane().add(pausar);
-
-		pausar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String nome = JOptionPane.showInputDialog("Nome do arquivo");
-				KeyManagement.stopRecording(nome);
-
-			}
-		});
-
-		reproduzir = new JButton();
-		reproduzir.setBounds(p.ProporcaoW(1300), p.ProporcaoH(100), p.ProporcaoW(100), 
-				p.ProporcaoH(50));
-		reproduzir.setText("Reproduzir");
-		reproduzir.setVisible(true);
-		getContentPane().add(reproduzir);
-
-		reproduzir.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser file = new JFileChooser(System
-						.getProperty("user.dir") + "/gravacoes");
-
-				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int i = file.showSaveDialog(null);
-				if (i == 1) {
-					// TODO nao escolheu nada
-				} else {
-					File arquivo = file.getSelectedFile();
-					int last = arquivo.getPath().lastIndexOf('\\');
-					String path = arquivo.getPath().substring(last + 1);
-					path = path.substring(0, path.indexOf('.'));
-					try {
-						KeyManagement.playRecord(path);
-					} catch (Exception e1) {
-						// TODO arquivo invalido
-						// e1.printStackTrace();
-					}
-				}
-
-			}
-		});
-
-		genius = new JButton();
-		genius.setBounds(p.ProporcaoW(1400), p.ProporcaoH(100), p.ProporcaoW(100), 
-				p.ProporcaoH(50));
-		genius.setText("Genius");
-		genius.setVisible(true);
-		getContentPane().add(genius);
-
-		genius.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser file = new JFileChooser(System
-						.getProperty("user.dir") + "/gravacoes");
-
-				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int i = file.showSaveDialog(null);
-				if (i == 1) {
-					// TODO nao escolheu nada
-				} else {
-					File arquivo = file.getSelectedFile();
-					int last = arquivo.getPath().lastIndexOf('\\');
-					String path = arquivo.getPath().substring(last + 1);
-					path = path.substring(0, path.indexOf('.'));
-					try {
-						Genius.startGenius(path);
-						// KeyManagement.playRecord(path);
-					} catch (Exception e1) {
-						// TODO arquivo invalido
-						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", 
-								JOptionPane.ERROR_MESSAGE);
-						// e1.printStackTrace();
-					}
-				}
-
-			}
-		});
-	}
-	
 	private void initMixer() {
 		synth = AudioSynth.getAudioSynth();
 		
 		Master_Slider = new JSlider();
         Master_Text = new JLabel();
-        Mixer_Text = new JLabel();
         Des_Ondas1 = new JLabel();
         Des_Ondas2 = new JLabel();
         Des_Ondas3 = new JLabel();
@@ -381,9 +293,9 @@ public class Tela_Sintetizador extends JFrame{
         Ampl_Value_Text3 = new JLabel();
         Freq_Value_Text3 = new JLabel();
         Master_Value_Text = new JLabel();
-        
+		        
         getContentPane().add(Master_Slider);
-        Master_Slider.setBounds(p.ProporcaoW(440), p.ProporcaoH(550), p.ProporcaoW(200),
+        Master_Slider.setBounds(p.ProporcaoW(425), p.ProporcaoH(550), p.ProporcaoW(200),
         		p.ProporcaoH(20));
         Master_Slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
@@ -394,29 +306,22 @@ public class Tela_Sintetizador extends JFrame{
         Master_Text.setForeground(new Color(255, 255, 255));
         Master_Text.setText("Master");
         getContentPane().add(Master_Text);
-        Master_Text.setBounds(p.ProporcaoW(525), p.ProporcaoH(574), p.ProporcaoW(50),
+        Master_Text.setBounds(p.ProporcaoW(510), p.ProporcaoH(574), p.ProporcaoW(50),
         		p.ProporcaoH(16));
-
-        Mixer_Text.setFont(new Font("Times New Roman", 0, p.ProporcaoW(48)));
-        Mixer_Text.setForeground(new Color(255, 255, 255));
-        Mixer_Text.setText("Mixer");
-        getContentPane().add(Mixer_Text);
-        Mixer_Text.setBounds(p.ProporcaoW(490), p.ProporcaoH(20), p.ProporcaoW(180),
-        		p.ProporcaoH(90));
         
         Des_Ondas1.setIcon(Onda_Triangular);
         getContentPane().add(Des_Ondas1);
-        Des_Ondas1.setBounds(p.ProporcaoW(190), p.ProporcaoH(173), p.ProporcaoW(50),
+        Des_Ondas1.setBounds(p.ProporcaoW(161), p.ProporcaoH(173), p.ProporcaoW(50),
         		p.ProporcaoH(50));
 
         Des_Ondas2.setIcon(Onda_Quadrada);
         getContentPane().add(Des_Ondas2);
-        Des_Ondas2.setBounds(p.ProporcaoW(450), p.ProporcaoH(173), p.ProporcaoW(50),
+        Des_Ondas2.setBounds(p.ProporcaoW(421), p.ProporcaoH(173), p.ProporcaoW(50),
         		p.ProporcaoH(50));
 
         Des_Ondas3.setIcon(Onda_Dente_Serra);
         getContentPane().add(Des_Ondas3);
-        Des_Ondas3.setBounds(p.ProporcaoW(710), p.ProporcaoH(173), p.ProporcaoW(50),
+        Des_Ondas3.setBounds(p.ProporcaoW(681), p.ProporcaoH(173), p.ProporcaoW(50),
         		p.ProporcaoH(50));
 
         Sel_Ondas1.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
@@ -429,7 +334,7 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas1);
-        Sel_Ondas1.setBounds(p.ProporcaoW(250), p.ProporcaoH(180), p.ProporcaoW(130),
+        Sel_Ondas1.setBounds(p.ProporcaoW(237), p.ProporcaoH(180), p.ProporcaoW(130),
         		p.ProporcaoH(30));
         
         Sel_Ondas2.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
@@ -442,7 +347,7 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas2);
-        Sel_Ondas2.setBounds(p.ProporcaoW(510), p.ProporcaoH(180), p.ProporcaoW(130),
+        Sel_Ondas2.setBounds(p.ProporcaoW(497), p.ProporcaoH(180), p.ProporcaoW(130),
         		p.ProporcaoH(30));
 
         Sel_Ondas3.setModel(new DefaultComboBoxModel<>(new String[] { "Senoidal", "Quadrada", 
@@ -455,23 +360,23 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Sel_Ondas3);
-        Sel_Ondas3.setBounds(p.ProporcaoW(770), p.ProporcaoH(180), p.ProporcaoW(130),
+        Sel_Ondas3.setBounds(p.ProporcaoW(757), p.ProporcaoH(180), p.ProporcaoW(130),
         		p.ProporcaoH(30));
 
         Ampl1.setFont(new Font("Tahoma", 0, p.ProporcaoW(10)));
         Ampl1.setOrientation(JSlider.VERTICAL);
-        Ampl1.setMinorTickSpacing(1);
-        Ampl1.setMajorTickSpacing(10);
-        Ampl1.setPaintTicks(true);
-        Ampl1.setPaintLabels(true);
-        Ampl1.setSnapToTicks(true); // Para somente sobre os ticks 
+        //Ampl1.setMinorTickSpacing(1);
+        //Ampl1.setMajorTickSpacing(10);
+        //Ampl1.setPaintTicks(true);
+        //Ampl1.setPaintLabels(true);
+        //Ampl1.setSnapToTicks(true); // Para somente sobre os ticks 
         Ampl1.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent evt) {
                 Ampl1StateChanged(evt);
             }
         });
         getContentPane().add(Ampl1);
-        Ampl1.setBounds(p.ProporcaoW(195), p.ProporcaoH(230), p.ProporcaoW(35),
+        Ampl1.setBounds(p.ProporcaoW(161), p.ProporcaoH(230), p.ProporcaoW(50),
         		p.ProporcaoH(200));
 
         Ampl2.setFont(new Font("Tahoma", 0, p.ProporcaoW(24)));
@@ -482,7 +387,7 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Ampl2);
-        Ampl2.setBounds(p.ProporcaoW(455), p.ProporcaoH(230), p.ProporcaoW(35),
+        Ampl2.setBounds(p.ProporcaoW(421), p.ProporcaoH(230), p.ProporcaoW(50),
         		p.ProporcaoH(200));
 
         Ampl3.setFont(new Font("Tahoma", 0, p.ProporcaoW(24)));
@@ -493,7 +398,7 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Ampl3);
-        Ampl3.setBounds(p.ProporcaoW(715), p.ProporcaoH(230), p.ProporcaoW(35),
+        Ampl3.setBounds(p.ProporcaoW(681), p.ProporcaoH(230), p.ProporcaoW(50),
         		p.ProporcaoH(200));
 
         Freq1.setMaximum(5);
@@ -505,7 +410,7 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq1);
-        Freq1.setBounds(p.ProporcaoW(315), p.ProporcaoH(230), p.ProporcaoW(35),
+        Freq1.setBounds(p.ProporcaoW(237), p.ProporcaoH(230), p.ProporcaoW(130),
         		p.ProporcaoH(200));
 
         Freq2.setMaximum(5);
@@ -517,7 +422,7 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq2);
-        Freq2.setBounds(p.ProporcaoW(585), p.ProporcaoH(230), p.ProporcaoW(35),
+        Freq2.setBounds(p.ProporcaoW(497), p.ProporcaoH(230), p.ProporcaoW(130),
         		p.ProporcaoH(200));
 
         Freq3.setMaximum(5);
@@ -529,153 +434,153 @@ public class Tela_Sintetizador extends JFrame{
             }
         });
         getContentPane().add(Freq3);
-        Freq3.setBounds(p.ProporcaoW(845), p.ProporcaoH(230), p.ProporcaoW(35),
+        Freq3.setBounds(p.ProporcaoW(757), p.ProporcaoH(230), p.ProporcaoW(130),
         		p.ProporcaoH(200));
 
         Osc_Text1.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
         Osc_Text1.setForeground(new Color(255, 255, 255));
         Osc_Text1.setText("Oscilador 1");
         getContentPane().add(Osc_Text1);
-        Osc_Text1.setBounds(p.ProporcaoW(210), p.ProporcaoH(140), p.ProporcaoW(130),
+        Osc_Text1.setBounds(p.ProporcaoW(209), p.ProporcaoH(125), p.ProporcaoW(110),
         		p.ProporcaoH(28));
 
         Osc_Text2.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
         Osc_Text2.setForeground(new Color(255, 255, 255));
         Osc_Text2.setText("Oscilador 2");
         getContentPane().add(Osc_Text2);
-        Osc_Text2.setBounds(p.ProporcaoW(490), p.ProporcaoH(140), p.ProporcaoW(130),
+        Osc_Text2.setBounds(p.ProporcaoW(469), p.ProporcaoH(125), p.ProporcaoW(110),
         		p.ProporcaoH(28));
 
         Osc_Text3.setFont(new Font("Times New Roman", 0, p.ProporcaoW(24)));
         Osc_Text3.setForeground(new Color(255, 255, 255));
         Osc_Text3.setText("Oscilador 3");
         getContentPane().add(Osc_Text3);
-        Osc_Text3.setBounds(p.ProporcaoW(740), p.ProporcaoH(140), p.ProporcaoW(130),
+        Osc_Text3.setBounds(p.ProporcaoW(729), p.ProporcaoH(125), p.ProporcaoW(110),
         		p.ProporcaoH(28));
 
         Ampl_Text1.setForeground(new Color(255, 255, 255));
         Ampl_Text1.setText("Amplitude");
         getContentPane().add(Ampl_Text1);
-        Ampl_Text1.setBounds(p.ProporcaoW(184), p.ProporcaoH(440), p.ProporcaoW(57),
+        Ampl_Text1.setBounds(p.ProporcaoW(158), p.ProporcaoH(440), p.ProporcaoW(55),
         		p.ProporcaoH(16));
 
         Ampl_Text2.setForeground(new Color(255, 255, 255));
         Ampl_Text2.setText("Amplitude");
         getContentPane().add(Ampl_Text2);
-        Ampl_Text2.setBounds(p.ProporcaoW(444), p.ProporcaoH(440), p.ProporcaoW(57),
+        Ampl_Text2.setBounds(p.ProporcaoW(418), p.ProporcaoH(440), p.ProporcaoW(55),
         		p.ProporcaoH(16));
 
         Ampl_Text3.setForeground(new Color(255, 255, 255));
         Ampl_Text3.setText("Amplitude");
         getContentPane().add(Ampl_Text3);
-        Ampl_Text3.setBounds(p.ProporcaoW(703), p.ProporcaoH(440), p.ProporcaoW(57),
+        Ampl_Text3.setBounds(p.ProporcaoW(678), p.ProporcaoH(440), p.ProporcaoW(55),
         		p.ProporcaoH(16));
 
         Freq_Text1.setForeground(new Color(255, 255, 255));
         Freq_Text1.setText("Frequência");
         getContentPane().add(Freq_Text1);
-        Freq_Text1.setBounds(p.ProporcaoW(302), p.ProporcaoH(440), p.ProporcaoW(70),
+        Freq_Text1.setBounds(p.ProporcaoW(271), p.ProporcaoH(440), p.ProporcaoW(62),
         		p.ProporcaoH(16));
 
         Freq_Text2.setForeground(new Color(255, 255, 255));
         Freq_Text2.setText("Frequência");
         getContentPane().add(Freq_Text2);
-        Freq_Text2.setBounds(p.ProporcaoW(572), p.ProporcaoH(440), p.ProporcaoW(70),
+        Freq_Text2.setBounds(p.ProporcaoW(531), p.ProporcaoH(440), p.ProporcaoW(62),
         		p.ProporcaoH(16));
 
         Freq_Text3.setForeground(new Color(255, 255, 255));
         Freq_Text3.setText("Frequência");
         getContentPane().add(Freq_Text3);
-        Freq_Text3.setBounds(p.ProporcaoW(835), p.ProporcaoH(440), p.ProporcaoW(70),
+        Freq_Text3.setBounds(p.ProporcaoW(791), p.ProporcaoH(440), p.ProporcaoW(62),
         		p.ProporcaoH(16));
         
         getContentPane().add(Separador1);
-        Separador1.setBounds(p.ProporcaoW(150), p.ProporcaoH(120), p.ProporcaoW(780),
+        Separador1.setBounds(p.ProporcaoW(135), p.ProporcaoH(100), p.ProporcaoW(780),
         		p.ProporcaoH(10));
         
         getContentPane().add(Separador2);
-        Separador2.setBounds(p.ProporcaoW(150), p.ProporcaoH(480), p.ProporcaoW(780),
+        Separador2.setBounds(p.ProporcaoW(135), p.ProporcaoH(480), p.ProporcaoW(780),
         		p.ProporcaoH(10));
 
         Separador3.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador3);
-        Separador3.setBounds(p.ProporcaoW(150), p.ProporcaoH(120), p.ProporcaoW(10),
-        		p.ProporcaoH(360));
+        Separador3.setBounds(p.ProporcaoW(134), p.ProporcaoH(101), p.ProporcaoW(10),
+        		p.ProporcaoH(380));
 
         Separador4.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador4);
-        Separador4.setBounds(p.ProporcaoW(410), p.ProporcaoH(120), p.ProporcaoW(30),
-        		p.ProporcaoH(360));
+        Separador4.setBounds(p.ProporcaoW(394), p.ProporcaoH(101), p.ProporcaoW(10),
+        		p.ProporcaoH(380));
 
         Separador5.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador5);
-        Separador5.setBounds(p.ProporcaoW(670), p.ProporcaoH(120), p.ProporcaoW(30),
-        		p.ProporcaoH(360));
+        Separador5.setBounds(p.ProporcaoW(654), p.ProporcaoH(101), p.ProporcaoW(10),
+        		p.ProporcaoH(380));
 
         Separador6.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador6);
-        Separador6.setBounds(p.ProporcaoW(930), p.ProporcaoH(120), p.ProporcaoW(30),
-        		p.ProporcaoH(360));
+        Separador6.setBounds(p.ProporcaoW(914), p.ProporcaoH(101), p.ProporcaoW(10),
+        		p.ProporcaoH(380));
 
         Separador7.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador7);
-        Separador7.setBounds(p.ProporcaoW(270), p.ProporcaoH(480), p.ProporcaoW(20),
+        Separador7.setBounds(p.ProporcaoW(264), p.ProporcaoH(481), p.ProporcaoW(10),
         		p.ProporcaoH(80));
 
         Separador8.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador8);
-        Separador8.setBounds(p.ProporcaoW(540), p.ProporcaoH(480), p.ProporcaoW(20),
-        		p.ProporcaoH(70));
+        Separador8.setBounds(p.ProporcaoW(524), p.ProporcaoH(481), p.ProporcaoW(10),
+        		p.ProporcaoH(80));
 
         Separador9.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(Separador9);
-        Separador9.setBounds(p.ProporcaoW(800), p.ProporcaoH(480), p.ProporcaoW(20),
+        Separador9.setBounds(p.ProporcaoW(784), p.ProporcaoH(481), p.ProporcaoW(10),
         		p.ProporcaoH(80));
         
         getContentPane().add(Separador10);
-        Separador10.setBounds(p.ProporcaoW(270), p.ProporcaoH(560), p.ProporcaoW(530),
+        Separador10.setBounds(p.ProporcaoW(265), p.ProporcaoH(560), p.ProporcaoW(520),
         		p.ProporcaoH(10));
         
         Ampl_Value_Text1.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text1.setText("50");
         getContentPane().add(Ampl_Value_Text1);
-        Ampl_Value_Text1.setBounds(p.ProporcaoW(230), p.ProporcaoH(240), p.ProporcaoW(41),
+        Ampl_Value_Text1.setBounds(p.ProporcaoW(211), p.ProporcaoH(230), p.ProporcaoW(41),
         		p.ProporcaoH(16));
 
         Freq_Value_Text1.setForeground(new Color(255, 255, 255));
         Freq_Value_Text1.setText("2");
         getContentPane().add(Freq_Value_Text1);
-        Freq_Value_Text1.setBounds(p.ProporcaoW(360), p.ProporcaoH(240), p.ProporcaoW(41),
+        Freq_Value_Text1.setBounds(p.ProporcaoW(327), p.ProporcaoH(230), p.ProporcaoW(41),
         		p.ProporcaoH(16));
 
         Ampl_Value_Text2.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text2.setText("50");
         getContentPane().add(Ampl_Value_Text2);
-        Ampl_Value_Text2.setBounds(p.ProporcaoW(480), p.ProporcaoH(240), p.ProporcaoW(41),
+        Ampl_Value_Text2.setBounds(p.ProporcaoW(471), p.ProporcaoH(230), p.ProporcaoW(41),
         		p.ProporcaoH(16));
 
         Freq_Value_Text2.setForeground(new Color(255, 255, 255));
         Freq_Value_Text2.setText("2");
         getContentPane().add(Freq_Value_Text2);
-        Freq_Value_Text2.setBounds(p.ProporcaoW(620), p.ProporcaoH(240), p.ProporcaoW(41),
+        Freq_Value_Text2.setBounds(p.ProporcaoW(587), p.ProporcaoH(230), p.ProporcaoW(41),
         		p.ProporcaoH(16));
 
         Ampl_Value_Text3.setForeground(new Color(255, 255, 255));
         Ampl_Value_Text3.setText("50");
         getContentPane().add(Ampl_Value_Text3);
-        Ampl_Value_Text3.setBounds(p.ProporcaoW(740), p.ProporcaoH(240), p.ProporcaoW(41),
+        Ampl_Value_Text3.setBounds(p.ProporcaoW(731), p.ProporcaoH(230), p.ProporcaoW(41),
         		p.ProporcaoH(16));
 
         Freq_Value_Text3.setForeground(new Color(255, 255, 255));
         Freq_Value_Text3.setText("2");
         getContentPane().add(Freq_Value_Text3);
-        Freq_Value_Text3.setBounds(p.ProporcaoW(880), p.ProporcaoH(240), p.ProporcaoW(41),
+        Freq_Value_Text3.setBounds(p.ProporcaoW(847), p.ProporcaoH(230), p.ProporcaoW(41),
         		p.ProporcaoH(16));
 
         Master_Value_Text.setForeground(new Color(255, 255, 255));
         Master_Value_Text.setText("50");
         getContentPane().add(Master_Value_Text);
-        Master_Value_Text.setBounds(p.ProporcaoW(590), p.ProporcaoH(560), p.ProporcaoW(41),
+        Master_Value_Text.setBounds(p.ProporcaoW(604), p.ProporcaoH(574), p.ProporcaoW(21),
         		p.ProporcaoH(16));
 	}
 	
@@ -790,7 +695,268 @@ public class Tela_Sintetizador extends JFrame{
 		}
 	}
 	
-	public void initTeclado() {
+	private void initEnvelope() {
+		VE_Separador1 = new JSeparator();
+        VE_Separador2 = new JSeparator();
+        VE_Separador3 = new JSeparator();
+        VE_Separador4 = new JSeparator();
+        Volume_Envelope_Text = new JLabel();
+        Attack_Text = new JLabel();
+        Attack_Value = new JLabel();
+        Attack_JSlider = new JSlider();
+        Decay_Text = new JLabel();
+        Decay_Value = new JLabel();
+        Decay_JSlider = new JSlider();
+        Sustain_Text = new JLabel();
+        Sustain_Value = new JLabel();
+        Sustain_JSlider = new JSlider();
+        Release_Text = new JLabel();
+        Release_Value = new JLabel();
+        Release_JSlider = new JSlider();
+                
+        VE_Separador1.setOrientation(SwingConstants.VERTICAL);
+        getContentPane().add(VE_Separador1);
+        VE_Separador1.setBounds(p.ProporcaoW(984), p.ProporcaoH(100), p.ProporcaoW(10),
+        		p.ProporcaoH(461));
+
+        VE_Separador2.setOrientation(SwingConstants.VERTICAL);
+        getContentPane().add(VE_Separador2);
+        VE_Separador2.setBounds(p.ProporcaoW(1314), p.ProporcaoH(100), p.ProporcaoW(10),
+        		p.ProporcaoH(461));
+        
+        getContentPane().add(VE_Separador3);
+        VE_Separador3.setBounds(p.ProporcaoW(985), p.ProporcaoH(99), p.ProporcaoW(330),
+        		p.ProporcaoH(10));
+        
+        getContentPane().add(VE_Separador4);
+        VE_Separador4.setBounds(p.ProporcaoW(985), p.ProporcaoH(560), p.ProporcaoW(330),
+        		p.ProporcaoH(10));
+
+        Volume_Envelope_Text.setFont(new Font("Times New Roman", 1, p.ProporcaoW(24)));
+        Volume_Envelope_Text.setForeground(new Color(255, 255, 255));
+        Volume_Envelope_Text.setText("Volume Envelope");
+        getContentPane().add(Volume_Envelope_Text);
+        Volume_Envelope_Text.setBounds(p.ProporcaoW(1059), p.ProporcaoH(125), p.ProporcaoW(180),
+        		p.ProporcaoH(25));
+        
+        Attack_Text.setForeground(new Color(255, 255, 255));
+        Attack_Text.setText("Attack");
+        getContentPane().add(Attack_Text);
+        Attack_Text.setBounds(p.ProporcaoW(1005), p.ProporcaoH(181), p.ProporcaoW(110), 
+        		p.ProporcaoH(15));
+
+        Attack_Value.setForeground(new Color(255, 255, 255));
+        Attack_Value.setText("   5 ms");
+        getContentPane().add(Attack_Value);
+        Attack_Value.setBounds(p.ProporcaoW(1245), p.ProporcaoH(181), p.ProporcaoW(50),
+        		p.ProporcaoH(15));
+
+        Attack_JSlider.setMaximum(4000);
+        Attack_JSlider.setMinimum(5);
+        Attack_JSlider.setValue(5);
+        Attack_JSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Attack_JSliderStateChanged(evt);
+            }
+        });
+        getContentPane().add(Attack_JSlider);
+        Attack_JSlider.setBounds(p.ProporcaoW(1005), p.ProporcaoH(222), p.ProporcaoW(290), 
+        		p.ProporcaoH(25));
+
+        Decay_Text.setForeground(new Color(255, 255, 255));
+        Decay_Text.setText("Decay");
+        getContentPane().add(Decay_Text);
+        Decay_Text.setBounds(p.ProporcaoW(1005), p.ProporcaoH(273), p.ProporcaoW(70),
+        		p.ProporcaoH(15));
+
+        Decay_Value.setForeground(new Color(255, 255, 255));
+        Decay_Value.setText("   5 ms");
+        getContentPane().add(Decay_Value);
+        Decay_Value.setBounds(p.ProporcaoW(1245), p.ProporcaoH(273), p.ProporcaoW(50), 
+        		p.ProporcaoH(15));
+
+        Decay_JSlider.setMaximum(4000);
+        Decay_JSlider.setMinimum(5);
+        Decay_JSlider.setValue(5);
+        Decay_JSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Decay_JSliderStateChanged(evt);
+            }
+        });
+        getContentPane().add(Decay_JSlider);
+        Decay_JSlider.setBounds(p.ProporcaoW(1004), p.ProporcaoH(314), p.ProporcaoW(290), 
+        		p.ProporcaoH(25));
+
+        Sustain_Text.setForeground(new Color(255, 255, 255));
+        Sustain_Text.setText("Sustain");
+        getContentPane().add(Sustain_Text);
+        Sustain_Text.setBounds(p.ProporcaoW(1005), p.ProporcaoH(365), p.ProporcaoW(50), 
+        		p.ProporcaoH(15));
+
+        Sustain_Value.setForeground(new Color(255, 255, 255));
+        Sustain_Value.setText("100");
+        getContentPane().add(Sustain_Value);
+        Sustain_Value.setBounds(p.ProporcaoW(1274), p.ProporcaoH(365), p.ProporcaoW(21), 
+        		p.ProporcaoH(15));
+
+        Sustain_JSlider.setValue(100);
+        Sustain_JSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Sustain_JSliderStateChanged(evt);
+            }
+        });
+        getContentPane().add(Sustain_JSlider);
+        Sustain_JSlider.setBounds(p.ProporcaoW(1004), p.ProporcaoH(406), p.ProporcaoW(290), 
+        		p.ProporcaoH(25));
+
+        Release_Text.setForeground(new Color(255, 255, 255));
+        Release_Text.setText("Release");
+        getContentPane().add(Release_Text);
+        Release_Text.setBounds(p.ProporcaoW(1005), p.ProporcaoH(457), p.ProporcaoW(50), 
+        		p.ProporcaoH(15));
+
+        Release_Value.setForeground(new Color(255, 255, 255));
+        Release_Value.setText("1000 ms");
+        getContentPane().add(Release_Value);
+        Release_Value.setBounds(p.ProporcaoW(1245), p.ProporcaoH(457), p.ProporcaoW(50), 
+        		p.ProporcaoH(15));
+
+        Release_JSlider.setMaximum(4000);
+        Release_JSlider.setMinimum(5);
+        Release_JSlider.setValue(1000);
+        Release_JSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                Release_JSliderStateChanged(evt);
+            }
+        });
+        getContentPane().add(Release_JSlider);
+        Release_JSlider.setBounds(p.ProporcaoW(1004), p.ProporcaoH(498), p.ProporcaoW(290), 
+        		p.ProporcaoH(25));
+	}
+	
+	private void Attack_JSliderStateChanged(ChangeEvent evt) {
+		Attack_Value.setText(String.valueOf(Attack_JSlider.getValue()) + " ms");
+	}
+	
+	private void Decay_JSliderStateChanged(ChangeEvent evt) {
+		Decay_Value.setText(String.valueOf(Decay_JSlider.getValue()) + " ms");
+	}
+	
+	private void Sustain_JSliderStateChanged(ChangeEvent evt) {
+		Sustain_Value.setText(String.valueOf(Sustain_JSlider.getValue()));
+	}
+	
+	private void Release_JSliderStateChanged(ChangeEvent evt) {
+		Release_Value.setText(String.valueOf(Release_JSlider.getValue()) + " ms");
+	}
+	
+	private void initGravador() {		
+		gravar = new JButton();
+		gravar.setBounds(p.ProporcaoW(1384), p.ProporcaoH(100), p.ProporcaoW(400), 
+				p.ProporcaoH(115));
+		gravar.setText("Gravar");
+		gravar.setVisible(true);
+		getContentPane().add(gravar);
+
+		gravar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				KeyManagement.startRecording(0);
+
+			}
+		});
+
+		pausar = new JButton();
+		pausar.setBounds(p.ProporcaoW(1384), p.ProporcaoH(215), p.ProporcaoW(400), 
+				p.ProporcaoH(115));
+		pausar.setText("Parar");
+		pausar.setVisible(true);
+		getContentPane().add(pausar);
+
+		pausar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nome = JOptionPane.showInputDialog("Nome do arquivo");
+				KeyManagement.stopRecording(nome);
+
+			}
+		});
+
+		reproduzir = new JButton();
+		reproduzir.setBounds(p.ProporcaoW(1384), p.ProporcaoH(330), p.ProporcaoW(400), 
+				p.ProporcaoH(115));
+		reproduzir.setText("Reproduzir");
+		reproduzir.setVisible(true);
+		getContentPane().add(reproduzir);
+
+		reproduzir.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser file = new JFileChooser(System
+						.getProperty("user.dir") + "/gravacoes");
+
+				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int i = file.showSaveDialog(null);
+				if (i == 1) {
+					// TODO nao escolheu nada
+				} else {
+					File arquivo = file.getSelectedFile();
+					int last = arquivo.getPath().lastIndexOf('\\');
+					String path = arquivo.getPath().substring(last + 1);
+					path = path.substring(0, path.indexOf('.'));
+					try {
+						KeyManagement.playRecord(path);
+					} catch (Exception e1) {
+						// TODO arquivo invalido
+						// e1.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+		genius = new JButton();
+		genius.setBounds(p.ProporcaoW(1384), p.ProporcaoH(445), p.ProporcaoW(400), 
+				p.ProporcaoH(115));
+		genius.setText("Genius");
+		genius.setVisible(true);
+		getContentPane().add(genius);
+
+		genius.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser file = new JFileChooser(System
+						.getProperty("user.dir") + "/gravacoes");
+
+				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int i = file.showSaveDialog(null);
+				if (i == 1) {
+					// TODO nao escolheu nada
+				} else {
+					File arquivo = file.getSelectedFile();
+					int last = arquivo.getPath().lastIndexOf('\\');
+					String path = arquivo.getPath().substring(last + 1);
+					path = path.substring(0, path.indexOf('.'));
+					try {
+						Genius.startGenius(path);
+						// KeyManagement.playRecord(path);
+					} catch (Exception e1) {
+						// TODO arquivo invalido
+						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", 
+								JOptionPane.ERROR_MESSAGE);
+						// e1.printStackTrace();
+					}
+				}
+
+			}
+		});
+	}
+	
+	private void initTeclado() {
 		t = new Teclado();
 		
 		getContentPane().add(t.DoSus1);
@@ -834,11 +1000,25 @@ public class Tela_Sintetizador extends JFrame{
         button = t.createJButtonArray();
 	}
 	
+	private void initOutrosComponentes() {
+		sintetizador_Text = new JLabel();
+		
+		sintetizador_Text.setFont(new Font("Segoe Script", 0, 58));
+		sintetizador_Text.setForeground(new Color(255, 0, 255));
+		sintetizador_Text.setText("Sintetizador");
+        getContentPane().add(sintetizador_Text);
+        sintetizador_Text.setBounds(760, 20, 400, 60);
+	}
+
 	private void setAllNotFocusable() {
-    	for (int i = 0; i < button.length; i++) {
+    	/* Botões */
+		
+		for (int i = 0; i < button.length; i++) {
 			button[i].setFocusable(false);
 		}
 		
+    	/* Gravador */
+    	
 		gravar.setFocusable(false);
 		pausar.setFocusable(false);
 		reproduzir.setFocusable(false);
@@ -851,7 +1031,7 @@ public class Tela_Sintetizador extends JFrame{
     	exit.setFocusable(false);
     	MIDI.setFocusable(false);
     	
-    	/* JSlider's */
+    	/* JSlider */
     	
     	Ampl1.setFocusable(false);
         Ampl2.setFocusable(false);
@@ -860,6 +1040,11 @@ public class Tela_Sintetizador extends JFrame{
         Freq1.setFocusable(false);
         Freq2.setFocusable(false);
         Freq3.setFocusable(false);
+        
+        Attack_JSlider.setFocusable(false);
+        Decay_JSlider.setFocusable(false);
+        Release_JSlider.setFocusable(false);
+        Sustain_JSlider.setFocusable(false);
         
         Master_Slider.setFocusable(false);
         

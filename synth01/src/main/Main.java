@@ -33,7 +33,7 @@ public class Main {
 	 * the keyboard
 	 */
 	private void start() {
-		
+		InputKeyboard.start();
 		new Tela_Inicial();
 		//verifyIfNimbusIsInstalled();
 /*

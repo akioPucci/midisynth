@@ -1,13 +1,11 @@
 package gui;
 
 import genius.Genius;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -16,29 +14,27 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
-
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-
 import key.KeyManagement;
 import midi.MidiSynth;
 
 @SuppressWarnings("serial")
 public class Tela_MIDI extends JFrame {
-	public static Teclado t;
-	public JButton button[];
+	private Teclado t;
+	private JButton button[];
 	
-	public JMenuBar Bar;
-	public JMenu menu;
-	public JMenuItem exit;
-	public JMenuItem synth;
+	private JMenuBar Bar;
+	private JMenu menu;
+	private JMenuItem exit;
+	private JMenuItem synth;
 
 	private JButton gravar;
 	private JButton reproduzir;
 	private JButton pausar;
 	private JButton genius;
 	
-	private static MidiSynth midi;
+	private MidiSynth midi;
 	
 	private JComboBox<String> Instrumentos;
     private JComboBox<String> Tipo;
@@ -49,27 +45,24 @@ public class Tela_MIDI extends JFrame {
 	public Tela_MIDI() {
 		p = new Redimensionamento();
 		initTela();
-		initTeclado();
 		initMenu();
 		initInstrumentos();
 		initGravador();
+		initTeclado();
+		pack();
 		setAllNotFocusable();
 		KeyManagement.create(this, button, 0);
 	}
 
-	public void initTela() {
+	private void initTela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(22, 24, 32));
-		setMinimumSize(new Dimension(p.ProporcaoW(1807), p.ProporcaoH(1036)));
-		setResizable(false); // Impede de alterar tamanho da tela
-		setLocationRelativeTo(null); // Centro da tela
+		setMinimumSize(new Dimension(p.ProporcaoW(1920), p.ProporcaoH(1080)));
+		setResizable(false);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		verifyIfNimbusIsInstalled();
 	}
-	
-	/**
-	 * Verifiy if the LookAndFeel Nimbus is installed
-	 */
 	
 	private void verifyIfNimbusIsInstalled() {
 		try {
@@ -95,7 +88,7 @@ public class Tela_MIDI extends JFrame {
 		}
 	}
 
-	public void initMenu() {
+	private void initMenu() {
 		Bar = new JMenuBar();
 		menu = new JMenu();
 		synth = new JMenuItem();
@@ -132,7 +125,7 @@ public class Tela_MIDI extends JFrame {
 		System.exit(0);
 	}
 	
-	public void initInstrumentos() {
+	private void initInstrumentos() {
 		midi = MidiSynth.getMidiSynth();
 		
 		Instrumentos = new JComboBox<>();
@@ -241,7 +234,7 @@ public class Tela_MIDI extends JFrame {
 		}
 	}
 	
-	public void initGravador() {
+	private void initGravador() {
 		gravar = new JButton();
 		gravar.setBounds(p.ProporcaoW(1100), p.ProporcaoH(100), p.ProporcaoW(100), 
 				p.ProporcaoH(50));
@@ -347,7 +340,7 @@ public class Tela_MIDI extends JFrame {
 		});
 	}
 
-	public void initTeclado() {
+	private void initTeclado() {
 		t = new Teclado();
 		
 		getContentPane().add(t.DoSus1);
