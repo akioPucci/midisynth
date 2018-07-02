@@ -7,55 +7,57 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Teclado{
-    public JButton Do1;
-    public JButton Do2;
-    public JButton Do3;
-    public JButton Do4;
-    public JButton DoSus1;
-    public JButton DoSus2;
-    public JButton DoSus3;
+    public static JButton Do1;
+    public static JButton Do2;
+    public static JButton Do3;
+    public static JButton Do4;
+    public static JButton DoSus1;
+    public static JButton DoSus2;
+    public static JButton DoSus3;
     
-    public JButton Fa1;
-    public JButton Fa2;
-    public JButton Fa3;
-    public JButton FaSus1;
-    public JButton FaSus2;
-    public JButton FaSus3;
+    public static JButton Fa1;
+    public static JButton Fa2;
+    public static JButton Fa3;
+    public static JButton FaSus1;
+    public static JButton FaSus2;
+    public static JButton FaSus3;
     
-    public JButton La1;
-    public JButton La2;
-    public JButton La3;
-    public JButton LaSus1;
-    public JButton LaSus2;
-    public JButton LaSus3;
+    public static JButton La1;
+    public static JButton La2;
+    public static JButton La3;
+    public static JButton LaSus1;
+    public static JButton LaSus2;
+    public static JButton LaSus3;
     
-    public JButton Mi1;
-    public JButton Mi2;
-    public JButton Mi3;
+    public static JButton Mi1;
+    public static JButton Mi2;
+    public static JButton Mi3;
     
-    public JButton Re1;
-    public JButton Re2;
-    public JButton Re3;
-    public JButton ReSus1;
-    public JButton ReSus2;
-    public JButton ReSus3;
+    public static JButton Re1;
+    public static JButton Re2;
+    public static JButton Re3;
+    public static JButton ReSus1;
+    public static JButton ReSus2;
+    public static JButton ReSus3;
     
-    public JButton Si1;
-    public JButton Si2;
-    public JButton Si3;
+    public static JButton Si1;
+    public static JButton Si2;
+    public static JButton Si3;
     
-    public JButton Sol1;
-    public JButton Sol2;
-    public JButton Sol3;
-    public JButton SolSus1;
-    public JButton SolSus2;
-    public JButton SolSus3;
-    
-    private Icon icone;
-    private Redimensionamento p;
+    public static JButton Sol1;
+    public static JButton Sol2;
+    public static JButton Sol3;
+    public static JButton SolSus1;
+    public static JButton SolSus2;
+    public static JButton SolSus3;
+        
+    public static Icon tecla_preta;
+    public static Icon tecla_branca;
+    public static Icon tecla_preta_press;
+    public static Icon tecla_branca_press;
     
     public Teclado() {
-    	p = new Redimensionamento();
+    	redimensionarIcones();
     	
     	DoSus1 = new JButton();
         ReSus1 = new JButton();
@@ -100,221 +102,239 @@ public class Teclado{
         Si3 = new JButton();
         
         Do4 = new JButton();
+                
+        DoSus1.setIcon(tecla_preta);
+        DoSus1.setBounds(Tela_Inicial.p.ProporcaoW(180), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        ReSus1.setIcon(tecla_preta);
+        ReSus1.setBounds(Tela_Inicial.p.ProporcaoW(275), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
         
-        icone = new ImageIcon();
+        FaSus1.setIcon(tecla_preta);
+        FaSus1.setBounds(Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        SolSus1.setIcon(tecla_preta);
+        SolSus1.setBounds(Tela_Inicial.p.ProporcaoW(487), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        LaSus1.setIcon(tecla_preta);
+        LaSus1.setBounds(Tela_Inicial.p.ProporcaoW(575), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+        
+        DoSus2.setIcon(tecla_preta);
+        DoSus2.setBounds(Tela_Inicial.p.ProporcaoW(700), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        ReSus2.setIcon(tecla_preta);
+        ReSus2.setBounds(Tela_Inicial.p.ProporcaoW(800), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        FaSus2.setIcon(tecla_preta);
+        FaSus2.setBounds(Tela_Inicial.p.ProporcaoW(925), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        SolSus2.setIcon(tecla_preta);
+        SolSus2.setBounds(Tela_Inicial.p.ProporcaoW(1012), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        LaSus2.setIcon(tecla_preta);
+        LaSus2.setBounds(Tela_Inicial.p.ProporcaoW(1100), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+        
+        DoSus3.setIcon(tecla_preta);
+        DoSus3.setBounds(Tela_Inicial.p.ProporcaoW(1225), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        ReSus3.setIcon(tecla_preta);
+        ReSus3.setBounds(Tela_Inicial.p.ProporcaoW(1325), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        FaSus3.setIcon(tecla_preta);
+        FaSus3.setBounds(Tela_Inicial.p.ProporcaoW(1450), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        SolSus3.setIcon(tecla_preta);
+        SolSus3.setBounds(Tela_Inicial.p.ProporcaoW(1537), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+
+        LaSus3.setIcon(tecla_preta);
+        LaSus3.setBounds(Tela_Inicial.p.ProporcaoW(1625), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(45), Tela_Inicial.p.ProporcaoH(215));
+                
+        Do1.setIcon(tecla_branca);
+        Do1.setBounds(Tela_Inicial.p.ProporcaoW(135), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Re1.setIcon(tecla_branca);
+        Re1.setBounds(Tela_Inicial.p.ProporcaoW(210), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Mi1.setIcon(tecla_branca);
+        Mi1.setBounds(Tela_Inicial.p.ProporcaoW(285), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Fa1.setIcon(tecla_branca);
+        Fa1.setBounds(Tela_Inicial.p.ProporcaoW(360), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Sol1.setIcon(tecla_branca);
+        Sol1.setBounds(Tela_Inicial.p.ProporcaoW(435), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        La1.setIcon(tecla_branca);
+        La1.setBounds(Tela_Inicial.p.ProporcaoW(510), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Si1.setIcon(tecla_branca);
+        Si1.setBounds(Tela_Inicial.p.ProporcaoW(585), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Do2.setIcon(tecla_branca);
+        Do2.setBounds(Tela_Inicial.p.ProporcaoW(660), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Re2.setIcon(tecla_branca);
+        Re2.setBounds(Tela_Inicial.p.ProporcaoW(735), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Mi2.setIcon(tecla_branca);
+        Mi2.setBounds(Tela_Inicial.p.ProporcaoW(810), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Fa2.setIcon(tecla_branca);
+        Fa2.setBounds(Tela_Inicial.p.ProporcaoW(885), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Sol2.setIcon(tecla_branca);
+        Sol2.setBounds(Tela_Inicial.p.ProporcaoW(960), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        La2.setIcon(tecla_branca);
+        La2.setBounds(Tela_Inicial.p.ProporcaoW(1035), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Si2.setIcon(tecla_branca);
+        Si2.setBounds(Tela_Inicial.p.ProporcaoW(1110), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Do3.setIcon(tecla_branca);
+        Do3.setBounds(Tela_Inicial.p.ProporcaoW(1185), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Re3.setIcon(tecla_branca);
+        Re3.setBounds(Tela_Inicial.p.ProporcaoW(1260), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Mi3.setIcon(tecla_branca);
+        Mi3.setBounds(Tela_Inicial.p.ProporcaoW(1335), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Fa3.setIcon(tecla_branca);
+        Fa3.setBounds(Tela_Inicial.p.ProporcaoW(1410), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Sol3.setIcon(tecla_branca);
+        Sol3.setBounds(Tela_Inicial.p.ProporcaoW(1485), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        La3.setIcon(tecla_branca);
+        La3.setBounds(Tela_Inicial.p.ProporcaoW(1560), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+
+        Si3.setIcon(tecla_branca);
+        Si3.setBounds(Tela_Inicial.p.ProporcaoW(1635), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+        
+        Do4.setIcon(tecla_branca);
+        Do4.setBounds(Tela_Inicial.p.ProporcaoW(1710), Tela_Inicial.p.ProporcaoH(635), 
+        		Tela_Inicial.p.ProporcaoW(75), Tela_Inicial.p.ProporcaoH(350));
+    }
+    
+    private void redimensionarIcones() {
+    	tecla_preta = new ImageIcon();
+        tecla_branca = new ImageIcon();
+        tecla_preta_press = new ImageIcon();
+        tecla_branca_press = new ImageIcon();
         
         try {
 			Imagem img = new Imagem("images\\1.jpg");
-			icone = p.redimensionarImg(img.imagem, 
-					p.ProporcaoW(img.wmax), 
-					p.ProporcaoH(img.hmax));
+			tecla_preta = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-                
-        DoSus1.setIcon(icone);
-        DoSus1.setBounds(p.ProporcaoW(180), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        ReSus1.setIcon(icone);
-        ReSus1.setBounds(p.ProporcaoW(275), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
         
-        FaSus1.setIcon(icone);
-        FaSus1.setBounds(p.ProporcaoW(400), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        SolSus1.setIcon(icone);
-        SolSus1.setBounds(p.ProporcaoW(487), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        LaSus1.setIcon(icone);
-        LaSus1.setBounds(p.ProporcaoW(575), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-        
-        DoSus2.setIcon(icone);
-        DoSus2.setBounds(p.ProporcaoW(700), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        ReSus2.setIcon(icone);
-        ReSus2.setBounds(p.ProporcaoW(800), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        FaSus2.setIcon(icone);
-        FaSus2.setBounds(p.ProporcaoW(925), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        SolSus2.setIcon(icone);
-        SolSus2.setBounds(p.ProporcaoW(1012), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        LaSus2.setIcon(icone);
-        LaSus2.setBounds(p.ProporcaoW(1100), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-        
-        DoSus3.setIcon(icone);
-        DoSus3.setBounds(p.ProporcaoW(1225), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        ReSus3.setIcon(icone);
-        ReSus3.setBounds(p.ProporcaoW(1325), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        FaSus3.setIcon(icone);
-        FaSus3.setBounds(p.ProporcaoW(1450), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        SolSus3.setIcon(icone);
-        SolSus3.setBounds(p.ProporcaoW(1537), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-
-        LaSus3.setIcon(icone);
-        LaSus3.setBounds(p.ProporcaoW(1625), p.ProporcaoH(635), p.ProporcaoW(45), 
-        		p.ProporcaoH(215));
-                
         try {
 			Imagem img = new Imagem("images\\2.png");
-			icone = p.redimensionarImg(img.imagem, 
-					p.ProporcaoW(img.wmax), 
-					p.ProporcaoH(img.hmax));
+			tecla_branca = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
-        Do1.setIcon(icone);
-        Do1.setBounds(p.ProporcaoW(135), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Re1.setIcon(icone);
-        Re1.setBounds(p.ProporcaoW(210), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Mi1.setIcon(icone);
-        Mi1.setBounds(p.ProporcaoW(285), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Fa1.setIcon(icone);
-        Fa1.setBounds(p.ProporcaoW(360), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Sol1.setIcon(icone);
-        Sol1.setBounds(p.ProporcaoW(435), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        La1.setIcon(icone);
-        La1.setBounds(p.ProporcaoW(510), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Si1.setIcon(icone);
-        Si1.setBounds(p.ProporcaoW(585), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Do2.setIcon(icone);
-        Do2.setBounds(p.ProporcaoW(660), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Re2.setIcon(icone);
-        Re2.setBounds(p.ProporcaoW(735), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Mi2.setIcon(icone);
-        Mi2.setBounds(p.ProporcaoW(810), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Fa2.setIcon(icone);
-        Fa2.setBounds(p.ProporcaoW(885), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Sol2.setIcon(icone);
-        Sol2.setBounds(p.ProporcaoW(960), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        La2.setIcon(icone);
-        La2.setBounds(p.ProporcaoW(1035), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Si2.setIcon(icone);
-        Si2.setBounds(p.ProporcaoW(1110), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Do3.setIcon(icone);
-        Do3.setBounds(p.ProporcaoW(1185), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Re3.setIcon(icone);
-        Re3.setBounds(p.ProporcaoW(1260), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Mi3.setIcon(icone);
-        Mi3.setBounds(p.ProporcaoW(1335), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Fa3.setIcon(icone);
-        Fa3.setBounds(p.ProporcaoW(1410), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Sol3.setIcon(icone);
-        Sol3.setBounds(p.ProporcaoW(1485), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        La3.setIcon(icone);
-        La3.setBounds(p.ProporcaoW(1560), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-
-        Si3.setIcon(icone);
-        Si3.setBounds(p.ProporcaoW(1635), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
-        
-        Do4.setIcon(icone);
-        Do4.setBounds(p.ProporcaoW(1710), p.ProporcaoH(635), p.ProporcaoW(75), 
-        		p.ProporcaoH(350));
+        try {
+			Imagem img = new Imagem("images\\2-press.png");
+			tecla_branca_press = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
+    //0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 26, 28, 29, 31, 33, 35, 36
     
-	public JButton[] createJButtonArray() {
+    
+    //1, 3, 6, 8, 10, 13, 15, 18, 20, 22, 25, 27, 30, 32, 34
+	public static JButton[] createJButtonArray() {
 		JButton button[] = new JButton[37];
 
-		button[0] = this.Do1;
-		button[1] = this.DoSus1;
-		button[2] = this.Re1;
-		button[3] = this.ReSus1;
-		button[4] = this.Mi1;
-		button[5] = this.Fa1;
-		button[6] = this.FaSus1;
-		button[7] = this.Sol1;
-		button[8] = this.SolSus1;
-		button[9] = this.La1;
-		button[10] = this.LaSus1;
-		button[11] = this.Si1;
+		button[0] = Do1;
+		button[1] = DoSus1;
+		button[2] = Re1;
+		button[3] = ReSus1;
+		button[4] = Mi1;
+		button[5] = Fa1;
+		button[6] = FaSus1;
+		button[7] = Sol1;
+		button[8] = SolSus1;
+		button[9] = La1;
+		button[10] = LaSus1;
+		button[11] = Si1;
 
-		button[12] = this.Do2;
-		button[13] = this.DoSus2;
-		button[14] = this.Re2;
-		button[15] = this.ReSus2;
-		button[16] = this.Mi2;
-		button[17] = this.Fa2;
-		button[18] = this.FaSus2;
-		button[19] = this.Sol2;
-		button[20] = this.SolSus2;
-		button[21] = this.La2;
-		button[22] = this.LaSus2;
-		button[23] = this.Si2;
+		button[12] = Do2;
+		button[13] = DoSus2;
+		button[14] = Re2;
+		button[15] = ReSus2;
+		button[16] = Mi2;
+		button[17] = Fa2;
+		button[18] = FaSus2;
+		button[19] = Sol2;
+		button[20] = SolSus2;
+		button[21] = La2;
+		button[22] = LaSus2;
+		button[23] = Si2;
 
-		button[24] = this.Do3;
-		button[25] = this.DoSus3;
-		button[26] = this.Re3;
-		button[27] = this.ReSus3;
-		button[28] = this.Mi3;
-		button[29] = this.Fa3;
-		button[30] = this.FaSus3;
-		button[31] = this.Sol3;
-		button[32] = this.SolSus3;
-		button[33] = this.La3;
-		button[34] = this.LaSus3;
-		button[35] = this.Si3;
+		button[24] = Do3;
+		button[25] = DoSus3;
+		button[26] = Re3;
+		button[27] = ReSus3;
+		button[28] = Mi3;
+		button[29] = Fa3;
+		button[30] = FaSus3;
+		button[31] = Sol3;
+		button[32] = SolSus3;
+		button[33] = La3;
+		button[34] = LaSus3;
+		button[35] = Si3;
 
-		button[36] = this.Do4;
+		button[36] = Do4;
 
 		return button;
 	}
