@@ -100,8 +100,8 @@ public class Oscillator {
 		this.sampleCounter = 0;
 		this.sampleRate = sampleRate;
 		
-		//drawn wave
-		drawnWaveSample = new double[1000];
+		this.drawnWaveSample = new double[1000];
+		
 	}
 	
 	public String getName() {
@@ -157,7 +157,6 @@ public class Oscillator {
 	}
 	
 	public void setAmp(double value) {
-		System.out.println("amplificacao: " + value);
 		this.amp = value;
 	}
 
@@ -202,63 +201,6 @@ public class Oscillator {
 	 * @param keyEnable
 	 * @return
 	 */
-	double [] oscillate(boolean[] keyEnable) {
-		double[] synthData = new double[38];
-		
-		
-		
-		
-		switch(type) {
-		case "sine":
-			for(int i = 0; i < 38; i++) {
-				if(keyEnable[i]) {
-					synthData[i] = getAmp()*(Math.sin(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
-				}
-				
-			}
-			break;
-			
-		case "square":
-			for(int i = 0; i < 38; i++) {
-				if(keyEnable[i]) {
-					synthData[i] = getAmp()*(squareWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
-				}
-				
-			}
-			break;
-			
-		case "triangle":
-			for(int i = 0; i < 38; i++) {
-				if(keyEnable[i]) {
-					synthData[i] = getAmp()*(triangleWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
-				}
-				
-			}
-			break;
-			
-		case "saw":
-			for(int i = 0; i < 38; i++) {
-				if(keyEnable[i]) {
-					synthData[i] = getAmp()*(sawWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
-				}
-				
-			}
-			break;
-			
-		case "drawn":
-			for(int i = 0; i < 38; i++) {
-				if(keyEnable[i]) {
-					synthData[i] = getAmp()*(drawnWave(2 * Math.PI * (noteFrequency[i]*frequencyMult) * time));
-				}
-				
-			}
-		}
-		
-		countTime();
-		
-		return synthData;
-	}
-	
 	void oscillate(ConcurrentHashMap<Integer, Note> notesPlaying) {
 		
 		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
@@ -285,6 +227,7 @@ public class Oscillator {
 				
 			case "drawn":
 				note.setChannelSample(getName(), getAmp()*(drawnWave(2 * Math.PI * (noteFrequency[note.getNote()]*frequencyMult) * time))); 
+				break;
 			}
 
 		}
@@ -350,6 +293,6 @@ public class Oscillator {
 	 * @return
 	 */
 	double drawnWave(double rad) {
-		return drawnWaveSample[(int)((rad % 2*Math.PI) * (1000/(2*Math.PI)))];
+		return drawnWaveSample[(int)((rad % (2*Math.PI))*(1000/(2*Math.PI)))];
 	}
 }

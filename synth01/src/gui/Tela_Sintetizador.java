@@ -854,18 +854,26 @@ public class Tela_Sintetizador extends JFrame{
 	
 	private void Attack_JSliderStateChanged(ChangeEvent evt) {
 		Attack_Value.setText(String.valueOf(Attack_JSlider.getValue()) + " ms");
+		synth.setAttackEnvTime(((double)Attack_JSlider.getValue()) / 1000);
 	}
 	
 	private void Decay_JSliderStateChanged(ChangeEvent evt) {
 		Decay_Value.setText(String.valueOf(Decay_JSlider.getValue()) + " ms");
+		synth.setDecayEnvTime(((double) Decay_JSlider.getValue()) / 1000);
+
 	}
 	
 	private void Sustain_JSliderStateChanged(ChangeEvent evt) {
 		Sustain_Value.setText(String.valueOf(Sustain_JSlider.getValue()));
+		synth.setSustainEnvAmp(((double) Sustain_JSlider.getValue()) / 100);
+
+		
 	}
 	
 	private void Release_JSliderStateChanged(ChangeEvent evt) {
 		Release_Value.setText(String.valueOf(Release_JSlider.getValue()) + " ms");
+		synth.setReleaseEnvTime(((double) Release_JSlider.getValue()) / 1000);
+
 	}
 	
 	private void initGravador() {		
