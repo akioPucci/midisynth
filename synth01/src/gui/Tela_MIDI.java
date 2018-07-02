@@ -21,7 +21,6 @@ import midi.MidiSynth;
 
 @SuppressWarnings("serial")
 public class Tela_MIDI extends JFrame {
-    private Teclado t;
     private JButton button[];
     
     private JMenuBar Bar;
@@ -190,7 +189,7 @@ public class Tela_MIDI extends JFrame {
             }
         });
         getContentPane().add(Instrumentos);
-        Instrumentos.setBounds(Tela_Inicial.p.ProporcaoW(74), Tela_Inicial.p.ProporcaoH(62), 
+        Instrumentos.setBounds(Tela_Inicial.p.ProporcaoW(135), Tela_Inicial.p.ProporcaoH(100), 
         		Tela_Inicial.p.ProporcaoW(175), Tela_Inicial.p.ProporcaoH(25));
 
         Tipo.setModel(new DefaultComboBoxModel<>(new String[] { "Piano", "Chromatic Percussion",
@@ -202,7 +201,7 @@ public class Tela_MIDI extends JFrame {
             }
         });
         getContentPane().add(Tipo);
-        Tipo.setBounds(Tela_Inicial.p.ProporcaoW(257), Tela_Inicial.p.ProporcaoH(62), 
+        Tipo.setBounds(Tela_Inicial.p.ProporcaoW(310), Tela_Inicial.p.ProporcaoH(100), 
         		Tela_Inicial.p.ProporcaoW(175), Tela_Inicial.p.ProporcaoH(25));
     }
     
@@ -233,154 +232,154 @@ public class Tela_MIDI extends JFrame {
         }
     }
     
-    private void initGravador() {
-        gravar = new JButton();
-        gravar.setBounds(Tela_Inicial.p.ProporcaoW(1100), Tela_Inicial.p.ProporcaoH(100), 
-        		Tela_Inicial.p.ProporcaoW(100), Tela_Inicial.p.ProporcaoH(50));
-        gravar.setText("Gravar");
-        gravar.setVisible(true);
-        getContentPane().add(gravar);
+    private void initGravador() {		
+		gravar = new JButton();
+		gravar.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(100), 
+				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
+		gravar.setText("Gravar");
+		gravar.setVisible(true);
+		getContentPane().add(gravar);
 
-        gravar.addActionListener(new ActionListener() {
+		gravar.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                KeyManagement.startRecording(0);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				KeyManagement.startRecording(0);
 
-            }
-        });
+			}
+		});
 
-        pausar = new JButton();
-        pausar.setBounds(Tela_Inicial.p.ProporcaoW(1200), Tela_Inicial.p.ProporcaoH(100), 
-        		Tela_Inicial.p.ProporcaoW(100), Tela_Inicial.p.ProporcaoH(50));
-        pausar.setText("Parar");
-        pausar.setVisible(true);
-        getContentPane().add(pausar);
+		pausar = new JButton();
+		pausar.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(215), 
+				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
+		pausar.setText("Parar");
+		pausar.setVisible(true);
+		getContentPane().add(pausar);
 
-        pausar.addActionListener(new ActionListener() {
+		pausar.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nome = JOptionPane.showInputDialog("Nome do arquivo");
-                KeyManagement.stopRecording(nome);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nome = JOptionPane.showInputDialog("Nome do arquivo");
+				KeyManagement.stopRecording(nome);
 
-            }
-        });
+			}
+		});
 
-        reproduzir = new JButton();
-        reproduzir.setBounds(Tela_Inicial.p.ProporcaoW(1300), Tela_Inicial.p.ProporcaoH(100), 
-        		Tela_Inicial.p.ProporcaoW(100), Tela_Inicial.p.ProporcaoH(50));
-        reproduzir.setText("Reproduzir");
-        reproduzir.setVisible(true);
-        getContentPane().add(reproduzir);
+		reproduzir = new JButton();
+		reproduzir.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(330), 
+				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
+		reproduzir.setText("Reproduzir");
+		reproduzir.setVisible(true);
+		getContentPane().add(reproduzir);
 
-        reproduzir.addActionListener(new ActionListener() {
+		reproduzir.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser file = new JFileChooser(System
-                        .getProperty("user.dir") + "/gravacoes");
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser file = new JFileChooser(System
+						.getProperty("user.dir") + "/gravacoes");
 
-                file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int i = file.showSaveDialog(null);
-                if (i == 1) {
-                    // TODO nao escolheu nada
-                } else {
-                    File arquivo = file.getSelectedFile();
-                    int last = arquivo.getPath().lastIndexOf('\\');
-                    String path = arquivo.getPath().substring(last + 1);
-                    path = path.substring(0, path.indexOf('.'));
-                    try {
-                        KeyManagement.playRecord(path);
-                    } catch (Exception e1) {
-                        // TODO arquivo invalido
-                        // e1.printStackTrace();
-                    }
-                }
+				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int i = file.showSaveDialog(null);
+				if (i == 1) {
+					// TODO nao escolheu nada
+				} else {
+					File arquivo = file.getSelectedFile();
+					int last = arquivo.getPath().lastIndexOf('\\');
+					String path = arquivo.getPath().substring(last + 1);
+					path = path.substring(0, path.indexOf('.'));
+					try {
+						KeyManagement.playRecord(path);
+					} catch (Exception e1) {
+						// TODO arquivo invalido
+						// e1.printStackTrace();
+					}
+				}
 
-            }
-        });
+			}
+		});
 
-        genius = new JButton();
-        genius.setBounds(Tela_Inicial.p.ProporcaoW(1400), Tela_Inicial.p.ProporcaoH(100), 
-        		Tela_Inicial.p.ProporcaoW(100), Tela_Inicial.p.ProporcaoH(50));
-        genius.setText("Genius");
-        genius.setVisible(true);
-        getContentPane().add(genius);
+		genius = new JButton();
+		genius.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(445), 
+				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
+		genius.setText("Genius");
+		genius.setVisible(true);
+		getContentPane().add(genius);
 
-        genius.addActionListener(new ActionListener() {
+		genius.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser file = new JFileChooser(System
-                        .getProperty("user.dir") + "/gravacoes");
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser file = new JFileChooser(System
+						.getProperty("user.dir") + "/gravacoes");
 
-                file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int i = file.showSaveDialog(null);
-                if (i == 1) {
-                    // TODO nao escolheu nada
-                } else {
-                    File arquivo = file.getSelectedFile();
-                    int last = arquivo.getPath().lastIndexOf('\\');
-                    String path = arquivo.getPath().substring(last + 1);
-                    path = path.substring(0, path.indexOf('.'));
-                    try {
-                        Genius.startGenius(path);
-                        // KeyManagement.playRecord(path);
-                    } catch (Exception e1) {
-                        // TODO arquivo invalido
-                        JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", 
-                                JOptionPane.ERROR_MESSAGE);
-                        // e1.printStackTrace();
-                    }
-                }
+				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int i = file.showSaveDialog(null);
+				if (i == 1) {
+					// TODO nao escolheu nada
+				} else {
+					File arquivo = file.getSelectedFile();
+					int last = arquivo.getPath().lastIndexOf('\\');
+					String path = arquivo.getPath().substring(last + 1);
+					path = path.substring(0, path.indexOf('.'));
+					try {
+						Genius.startGenius(path);
+						// KeyManagement.playRecord(path);
+					} catch (Exception e1) {
+						// TODO arquivo invalido
+						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", 
+								JOptionPane.ERROR_MESSAGE);
+						// e1.printStackTrace();
+					}
+				}
 
-            }
-        });
-    }
+			}
+		});
+	}
 
     private void initTeclado() {
-        t = new Teclado();
+    	new Teclado();
+    	
+        getContentPane().add(Teclado.DoSus1);
+        getContentPane().add(Teclado.ReSus1);
+        getContentPane().add(Teclado.FaSus1);
+        getContentPane().add(Teclado.SolSus1);
+        getContentPane().add(Teclado.LaSus1);
+        getContentPane().add(Teclado.DoSus2);
+        getContentPane().add(Teclado.ReSus2);
+        getContentPane().add(Teclado.FaSus2);
+        getContentPane().add(Teclado.SolSus2);
+        getContentPane().add(Teclado.LaSus2);
+        getContentPane().add(Teclado.DoSus3);
+        getContentPane().add(Teclado.ReSus3);
+        getContentPane().add(Teclado.FaSus3);
+        getContentPane().add(Teclado.SolSus3);
+        getContentPane().add(Teclado.LaSus3);
+        getContentPane().add(Teclado.Do1);
+        getContentPane().add(Teclado.Re1);
+        getContentPane().add(Teclado.Mi1);
+        getContentPane().add(Teclado.Fa1);
+        getContentPane().add(Teclado.Sol1);
+        getContentPane().add(Teclado.La1);
+        getContentPane().add(Teclado.Si1);
+        getContentPane().add(Teclado.Do2);
+        getContentPane().add(Teclado.Re2);
+        getContentPane().add(Teclado.Mi2);
+        getContentPane().add(Teclado.Fa2);
+        getContentPane().add(Teclado.Sol2);
+        getContentPane().add(Teclado.La2);
+        getContentPane().add(Teclado.Si2);
+        getContentPane().add(Teclado.Do3);
+        getContentPane().add(Teclado.Re3);
+        getContentPane().add(Teclado.Mi3);
+        getContentPane().add(Teclado.Fa3);
+        getContentPane().add(Teclado.Sol3);
+        getContentPane().add(Teclado.La3);
+        getContentPane().add(Teclado.Si3);
+        getContentPane().add(Teclado.Do4);
         
-        getContentPane().add(t.DoSus1);
-        getContentPane().add(t.ReSus1);
-        getContentPane().add(t.FaSus1);
-        getContentPane().add(t.SolSus1);
-        getContentPane().add(t.LaSus1);
-        getContentPane().add(t.DoSus2);
-        getContentPane().add(t.ReSus2);
-        getContentPane().add(t.FaSus2);
-        getContentPane().add(t.SolSus2);
-        getContentPane().add(t.LaSus2);
-        getContentPane().add(t.DoSus3);
-        getContentPane().add(t.ReSus3);
-        getContentPane().add(t.FaSus3);
-        getContentPane().add(t.SolSus3);
-        getContentPane().add(t.LaSus3);
-        getContentPane().add(t.Do1);
-        getContentPane().add(t.Re1);
-        getContentPane().add(t.Mi1);
-        getContentPane().add(t.Fa1);
-        getContentPane().add(t.Sol1);
-        getContentPane().add(t.La1);
-        getContentPane().add(t.Si1);
-        getContentPane().add(t.Do2);
-        getContentPane().add(t.Re2);
-        getContentPane().add(t.Mi2);
-        getContentPane().add(t.Fa2);
-        getContentPane().add(t.Sol2);
-        getContentPane().add(t.La2);
-        getContentPane().add(t.Si2);
-        getContentPane().add(t.Do3);
-        getContentPane().add(t.Re3);
-        getContentPane().add(t.Mi3);
-        getContentPane().add(t.Fa3);
-        getContentPane().add(t.Sol3);
-        getContentPane().add(t.La3);
-        getContentPane().add(t.Si3);
-        getContentPane().add(t.Do4);
-        
-        button = t.createJButtonArray();
+        button = Teclado.createJButtonArray();
     }
 
     private void setAllNotFocusable() {

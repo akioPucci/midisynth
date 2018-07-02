@@ -34,7 +34,6 @@ import synth.AudioSynth;
 public class Tela_Sintetizador extends JFrame{
 	private AudioSynth synth;
 	
-	private Teclado t;
 	private JButton button[];
 	
 	private JMenuBar Bar;
@@ -976,48 +975,48 @@ public class Tela_Sintetizador extends JFrame{
 	}
 	
 	private void initTeclado() {
-		t = new Teclado();
+		new Teclado();
 		
-		getContentPane().add(t.DoSus1);
-        getContentPane().add(t.ReSus1);
-        getContentPane().add(t.FaSus1);
-        getContentPane().add(t.SolSus1);
-        getContentPane().add(t.LaSus1);
-        getContentPane().add(t.DoSus2);
-        getContentPane().add(t.ReSus2);
-        getContentPane().add(t.FaSus2);
-        getContentPane().add(t.SolSus2);
-        getContentPane().add(t.LaSus2);
-        getContentPane().add(t.DoSus3);
-        getContentPane().add(t.ReSus3);
-        getContentPane().add(t.FaSus3);
-        getContentPane().add(t.SolSus3);
-        getContentPane().add(t.LaSus3);
-        getContentPane().add(t.Do1);
-        getContentPane().add(t.Re1);
-        getContentPane().add(t.Mi1);
-        getContentPane().add(t.Fa1);
-        getContentPane().add(t.Sol1);
-        getContentPane().add(t.La1);
-        getContentPane().add(t.Si1);
-        getContentPane().add(t.Do2);
-        getContentPane().add(t.Re2);
-        getContentPane().add(t.Mi2);
-        getContentPane().add(t.Fa2);
-        getContentPane().add(t.Sol2);
-        getContentPane().add(t.La2);
-        getContentPane().add(t.Si2);
-        getContentPane().add(t.Do3);
-        getContentPane().add(t.Re3);
-        getContentPane().add(t.Mi3);
-        getContentPane().add(t.Fa3);
-        getContentPane().add(t.Sol3);
-        getContentPane().add(t.La3);
-        getContentPane().add(t.Si3);
-        getContentPane().add(t.Do4);
+        getContentPane().add(Teclado.DoSus1);
+        getContentPane().add(Teclado.ReSus1);
+        getContentPane().add(Teclado.FaSus1);
+        getContentPane().add(Teclado.SolSus1);
+        getContentPane().add(Teclado.LaSus1);
+        getContentPane().add(Teclado.DoSus2);
+        getContentPane().add(Teclado.ReSus2);
+        getContentPane().add(Teclado.FaSus2);
+        getContentPane().add(Teclado.SolSus2);
+        getContentPane().add(Teclado.LaSus2);
+        getContentPane().add(Teclado.DoSus3);
+        getContentPane().add(Teclado.ReSus3);
+        getContentPane().add(Teclado.FaSus3);
+        getContentPane().add(Teclado.SolSus3);
+        getContentPane().add(Teclado.LaSus3);
+        getContentPane().add(Teclado.Do1);
+        getContentPane().add(Teclado.Re1);
+        getContentPane().add(Teclado.Mi1);
+        getContentPane().add(Teclado.Fa1);
+        getContentPane().add(Teclado.Sol1);
+        getContentPane().add(Teclado.La1);
+        getContentPane().add(Teclado.Si1);
+        getContentPane().add(Teclado.Do2);
+        getContentPane().add(Teclado.Re2);
+        getContentPane().add(Teclado.Mi2);
+        getContentPane().add(Teclado.Fa2);
+        getContentPane().add(Teclado.Sol2);
+        getContentPane().add(Teclado.La2);
+        getContentPane().add(Teclado.Si2);
+        getContentPane().add(Teclado.Do3);
+        getContentPane().add(Teclado.Re3);
+        getContentPane().add(Teclado.Mi3);
+        getContentPane().add(Teclado.Fa3);
+        getContentPane().add(Teclado.Sol3);
+        getContentPane().add(Teclado.La3);
+        getContentPane().add(Teclado.Si3);
+        getContentPane().add(Teclado.Do4);
         
-        button = t.createJButtonArray();
-	}
+        button = Teclado.createJButtonArray();
+    }
 	
 	private void initOutrosComponentes() {
 		sintetizador_Text = new JLabel();
