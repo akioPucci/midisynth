@@ -269,6 +269,16 @@ public class Teclado{
 		}
         
         try {
+			Imagem img = new Imagem("images\\1-press.png");
+			tecla_preta_press = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try {
 			Imagem img = new Imagem("images\\2.png");
 			tecla_branca = Tela_Inicial.p.redimensionarImg(img.imagem, 
 					Tela_Inicial.p.ProporcaoW(img.wmax), 
@@ -288,10 +298,7 @@ public class Teclado{
 			e.printStackTrace();
 		}
     }
-    //0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 26, 28, 29, 31, 33, 35, 36
     
-    
-    //1, 3, 6, 8, 10, 13, 15, 18, 20, 22, 25, 27, 30, 32, 34
 	public static JButton[] createJButtonArray() {
 		JButton button[] = new JButton[37];
 
