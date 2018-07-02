@@ -1,6 +1,6 @@
 package tecla;
 
-import gui.Tela_MIDI;
+import gui.Teclado;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -138,7 +138,14 @@ public class Tecla implements KeyListener {
 		else
 			synth.noteOn(note);
 		playing = true;
-		button.setVisible(false);
+
+		int i = note % 12;
+		
+		if (i == 1 || i == 3 || i == 6 || i == 8 || i == 10) {
+			button.setIcon(Teclado.tecla_preta_press);
+		} else {
+			button.setIcon(Teclado.tecla_branca_press);
+		}
 		//Tela_MIDI.setNotVisible(note);
 		//System.out.println("Deixando falso: " + button.isVisible());
 		recordOn();
@@ -154,7 +161,14 @@ public class Tecla implements KeyListener {
 			midi.noteOff(note);
 		else
 			synth.noteOff(note);
-		button.setVisible(true);
+		
+		int i = note % 12;
+		
+		if (i == 1 || i == 3 || i == 6 || i == 8 || i == 10) {
+			button.setIcon(Teclado.tecla_preta);
+		} else {
+			button.setIcon(Teclado.tecla_branca);
+		}
 		recordOff();
 		if (waitingClick) {
 			semaphore.release();

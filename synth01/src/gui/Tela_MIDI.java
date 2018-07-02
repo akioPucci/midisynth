@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -91,8 +92,10 @@ public class Tela_MIDI extends JFrame {
         synth = new JMenuItem();
         exit = new JMenuItem();
 
+        menu.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
         menu.setText("Menu");
 
+        synth.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
         synth.setText("Sintetizador");
         menu.add(synth);
         synth.addActionListener(new ActionListener() {
@@ -101,6 +104,7 @@ public class Tela_MIDI extends JFrame {
             }
         });
 
+        exit.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
         exit.setText("Sair");
         menu.add(exit);
         exit.addActionListener(new ActionListener() {
@@ -182,6 +186,7 @@ public class Tela_MIDI extends JFrame {
         Ins[14] = new String[] {"Reverse Cymbal", "Guitar Fret Noise", "Breath Noise",
                 "Seashore", "Bird Tweet", "Telephone Ring", "Helicopter", "Applause", "Gunshot"};
         
+        Instrumentos.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
         Instrumentos.setModel(new DefaultComboBoxModel<>((String[]) Ins[0]));
         Instrumentos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -192,6 +197,7 @@ public class Tela_MIDI extends JFrame {
         Instrumentos.setBounds(Tela_Inicial.p.ProporcaoW(135), Tela_Inicial.p.ProporcaoH(100), 
         		Tela_Inicial.p.ProporcaoW(175), Tela_Inicial.p.ProporcaoH(25));
 
+        Tipo.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
         Tipo.setModel(new DefaultComboBoxModel<>(new String[] { "Piano", "Chromatic Percussion",
                 "Organ", "Guitar", "Bass", "Strings", "Brass", "Reed", "Pipe", "Synth Lead",
                 "Synth Pad", "Synth Effects", "Ethnic", "Percussive", "Sound effects"}));
@@ -236,6 +242,7 @@ public class Tela_MIDI extends JFrame {
 		gravar = new JButton();
 		gravar.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(100), 
 				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
+		gravar.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(20)));
 		gravar.setText("Gravar");
 		gravar.setVisible(true);
 		getContentPane().add(gravar);
@@ -252,6 +259,7 @@ public class Tela_MIDI extends JFrame {
 		pausar = new JButton();
 		pausar.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(215), 
 				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
+		pausar.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(20)));
 		pausar.setText("Parar");
 		pausar.setVisible(true);
 		getContentPane().add(pausar);
@@ -269,6 +277,7 @@ public class Tela_MIDI extends JFrame {
 		reproduzir = new JButton();
 		reproduzir.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(330), 
 				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
+		reproduzir.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(20)));
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -303,6 +312,7 @@ public class Tela_MIDI extends JFrame {
 		genius = new JButton();
 		genius.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(445), 
 				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
+		genius.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(20)));
 		genius.setText("Genius");
 		genius.setVisible(true);
 		getContentPane().add(genius);
