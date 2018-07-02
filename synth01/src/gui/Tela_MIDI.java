@@ -10,6 +10,7 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -40,12 +41,15 @@ public class Tela_MIDI extends JFrame {
     private JComboBox<String> Tipo;
     private String[][] Ins;
     
+    private JLabel MIDI_Text;
+    
     public Tela_MIDI() {
         initTela();
         initMenu();
         initInstrumentos();
         initGravador();
         initTeclado();
+        initOutrosComponentes();
         pack();
         setAllNotFocusable();
         KeyManagement.create(this, button, 0);
@@ -186,7 +190,7 @@ public class Tela_MIDI extends JFrame {
         Ins[14] = new String[] {"Reverse Cymbal", "Guitar Fret Noise", "Breath Noise",
                 "Seashore", "Bird Tweet", "Telephone Ring", "Helicopter", "Applause", "Gunshot"};
         
-        Instrumentos.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
+        Instrumentos.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(48)));
         Instrumentos.setModel(new DefaultComboBoxModel<>((String[]) Ins[0]));
         Instrumentos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -195,9 +199,9 @@ public class Tela_MIDI extends JFrame {
         });
         getContentPane().add(Instrumentos);
         Instrumentos.setBounds(Tela_Inicial.p.ProporcaoW(135), Tela_Inicial.p.ProporcaoH(100), 
-        		Tela_Inicial.p.ProporcaoW(175), Tela_Inicial.p.ProporcaoH(25));
+        		Tela_Inicial.p.ProporcaoW(550), Tela_Inicial.p.ProporcaoH(50));
 
-        Tipo.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
+        Tipo.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(48)));
         Tipo.setModel(new DefaultComboBoxModel<>(new String[] { "Piano", "Chromatic Percussion",
                 "Organ", "Guitar", "Bass", "Strings", "Brass", "Reed", "Pipe", "Synth Lead",
                 "Synth Pad", "Synth Effects", "Ethnic", "Percussive", "Sound effects"}));
@@ -207,8 +211,8 @@ public class Tela_MIDI extends JFrame {
             }
         });
         getContentPane().add(Tipo);
-        Tipo.setBounds(Tela_Inicial.p.ProporcaoW(310), Tela_Inicial.p.ProporcaoH(100), 
-        		Tela_Inicial.p.ProporcaoW(175), Tela_Inicial.p.ProporcaoH(25));
+        Tipo.setBounds(Tela_Inicial.p.ProporcaoW(685), Tela_Inicial.p.ProporcaoH(100), 
+        		Tela_Inicial.p.ProporcaoW(550), Tela_Inicial.p.ProporcaoH(50));
     }
     
     private void InstrumentosActionPerformed(ActionEvent evt) {
@@ -391,6 +395,18 @@ public class Tela_MIDI extends JFrame {
         
         button = Teclado.createJButtonArray();
     }
+    
+    private void initOutrosComponentes() {
+    	MIDI_Text = new JLabel();
+		
+    	MIDI_Text.setFont(new Font("Segoe Script", 0, Tela_Inicial.p.ProporcaoW(58)));
+    	MIDI_Text.setForeground(new Color(255, 0, 255));
+    	MIDI_Text.setText("MIDI");
+        getContentPane().add(MIDI_Text);
+        MIDI_Text.setBounds(Tela_Inicial.p.ProporcaoW(888), 
+        		Tela_Inicial.p.ProporcaoH(20), Tela_Inicial.p.ProporcaoW(145), 
+        		Tela_Inicial.p.ProporcaoH(60));
+	}
 
     private void setAllNotFocusable() {
         for (int i = 0; i < button.length; i++) {

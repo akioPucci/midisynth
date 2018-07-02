@@ -110,7 +110,7 @@ public class AudioSynth extends JFrame {
 		osc[1] = new Oscillator("osc2", "square",   2, sampleRate);
 		osc[2] = new Oscillator("osc3", "triangle",   2, sampleRate);
 		
-		env = new Envelope(sampleRate, 0.05, 0.1, 1, 0.1);
+		env = new Envelope(sampleRate, 0.005, 0.001, 1, 1);
 		
 		outputChannel = new AudioChannel[3];
 		outputChannel[0] = new AudioChannel();

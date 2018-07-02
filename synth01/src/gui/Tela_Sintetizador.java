@@ -110,7 +110,6 @@ public class Tela_Sintetizador extends JFrame{
     private JSeparator VE_Separador4;
     private JLabel Volume_Envelope_Text;
     
-    //private JLabel plano_de_fundo;
     private JLabel sintetizador_Text;
 	
 	public Tela_Sintetizador() {
@@ -425,21 +424,21 @@ public class Tela_Sintetizador extends JFrame{
         Ampl_Text1.setText("Amplitude");
         getContentPane().add(Ampl_Text1);
         Ampl_Text1.setBounds(Tela_Inicial.p.ProporcaoW(158), Tela_Inicial.p.ProporcaoH(440), 
-        		Tela_Inicial.p.ProporcaoW(55), Tela_Inicial.p.ProporcaoH(16));
+        		Tela_Inicial.p.ProporcaoW(56), Tela_Inicial.p.ProporcaoH(16));
 
         Ampl_Text2.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(12)));
         Ampl_Text2.setForeground(new Color(255, 255, 255));
         Ampl_Text2.setText("Amplitude");
         getContentPane().add(Ampl_Text2);
         Ampl_Text2.setBounds(Tela_Inicial.p.ProporcaoW(418), Tela_Inicial.p.ProporcaoH(440), 
-        		Tela_Inicial.p.ProporcaoW(55), Tela_Inicial.p.ProporcaoH(16));
+        		Tela_Inicial.p.ProporcaoW(56), Tela_Inicial.p.ProporcaoH(16));
 
         Ampl_Text3.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(12)));
         Ampl_Text3.setForeground(new Color(255, 255, 255));
         Ampl_Text3.setText("Amplitude");
         getContentPane().add(Ampl_Text3);
         Ampl_Text3.setBounds(Tela_Inicial.p.ProporcaoW(678), Tela_Inicial.p.ProporcaoH(440), 
-        		Tela_Inicial.p.ProporcaoW(55), Tela_Inicial.p.ProporcaoH(16));
+        		Tela_Inicial.p.ProporcaoW(56), Tela_Inicial.p.ProporcaoH(16));
 
         Freq_Text1.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(12)));
         Freq_Text1.setForeground(new Color(255, 255, 255));
@@ -763,7 +762,7 @@ public class Tela_Sintetizador extends JFrame{
         Volume_Envelope_Text.setText("Volume Envelope");
         getContentPane().add(Volume_Envelope_Text);
         Volume_Envelope_Text.setBounds(Tela_Inicial.p.ProporcaoW(1059), 
-        		Tela_Inicial.p.ProporcaoH(125), Tela_Inicial.p.ProporcaoW(180),
+        		Tela_Inicial.p.ProporcaoH(125), Tela_Inicial.p.ProporcaoW(183),
         		Tela_Inicial.p.ProporcaoH(25));
         
         Attack_Text.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
@@ -888,14 +887,11 @@ public class Tela_Sintetizador extends JFrame{
 	private void Decay_JSliderStateChanged(ChangeEvent evt) {
 		Decay_Value.setText(String.valueOf(Decay_JSlider.getValue()) + " ms");
 		synth.setDecayEnvTime(((double) Decay_JSlider.getValue()) / 1000);
-
 	}
 	
 	private void Sustain_JSliderStateChanged(ChangeEvent evt) {
 		Sustain_Value.setText(String.valueOf(Sustain_JSlider.getValue()));
 		synth.setSustainEnvAmp(((double) Sustain_JSlider.getValue()) / 100);
-
-		
 	}
 	
 	private void Release_JSliderStateChanged(ChangeEvent evt) {
