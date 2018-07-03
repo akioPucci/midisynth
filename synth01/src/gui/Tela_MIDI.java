@@ -223,7 +223,7 @@ public class Tela_MIDI extends JFrame {
         Tipo_Text.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(36)));
         Tipo_Text.setText("Tipo");
         getContentPane().add(Tipo_Text);
-        Tipo_Text.setBounds(Tela_Inicial.p.ProporcaoW(910), Tela_Inicial.p.ProporcaoH(30), 
+        Tipo_Text.setBounds(Tela_Inicial.p.ProporcaoW(980), Tela_Inicial.p.ProporcaoH(30), 
         		Tela_Inicial.p.ProporcaoW(100), Tela_Inicial.p.ProporcaoH(50));
 
         Tipo.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(48)));
@@ -236,7 +236,7 @@ public class Tela_MIDI extends JFrame {
             }
         });
         getContentPane().add(Tipo);
-        Tipo.setBounds(Tela_Inicial.p.ProporcaoW(685), Tela_Inicial.p.ProporcaoH(100), 
+        Tipo.setBounds(Tela_Inicial.p.ProporcaoW(755), Tela_Inicial.p.ProporcaoH(100), 
         		Tela_Inicial.p.ProporcaoW(550), Tela_Inicial.p.ProporcaoH(50));
     }
     
