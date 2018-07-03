@@ -28,7 +28,7 @@ import tecla.Tecla;
  * @author Carolina Arenas Okawa
  * @author Eric
  * @author Fernando Akio
- * @author Vinícius
+ * @author Vinï¿½cius
  */
 public class KeyManagement {
 
@@ -209,9 +209,7 @@ public class KeyManagement {
 		
 		tecla[getNote(code)].setSemaphore(semaphore);
 		try {
-			System.out.println("Esperando");
 			semaphore.acquire();
-			System.out.println("Pronto");
 
 			TimeUnit.MILLISECONDS.sleep(500);
 

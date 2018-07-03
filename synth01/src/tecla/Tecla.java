@@ -24,7 +24,7 @@ import synth.AudioSynth;
  * @author Carolina Arenas Okawa
  * @author Eric
  * @author Fernando Akio
- * @author Vinícius
+ * @author Vinï¿½cius
  */
 
 public class Tecla implements KeyListener {
@@ -148,8 +148,6 @@ public class Tecla implements KeyListener {
 		}
 
 		
-		//Tela_MIDI.setNotVisible(note);
-		//System.out.println("is visible: " + button.isVisible());
 		recordOn();
 	}
 
@@ -168,10 +166,8 @@ public class Tecla implements KeyListener {
 		
 		if (i == 1 || i == 3 || i == 6 || i == 8 || i == 10) {
 			button.setIcon(Teclado.tecla_preta);
-			System.out.println("setando preta");
 		} else {
 			button.setIcon(Teclado.tecla_branca);
-			System.out.println("setando branca");
 		}
 		
 		recordOff();
@@ -211,7 +207,7 @@ public class Tecla implements KeyListener {
 	/**
 	 * set recording parameter
 	 * @param recording
-	 * 					flag if recording is actvated
+	 * 					flag if recording is activated
 	 */
 	public void setRecording(boolean recording) {
 		this.recording = recording;
@@ -243,7 +239,6 @@ public class Tecla implements KeyListener {
 	}
 
 	public void setSemaphore(Semaphore semaphore) {
-		//System.out.println("semaforo sendo setado");
 		if (semaphore == null)
 			//System.out.println("is null");
 		this.semaphore = semaphore;
