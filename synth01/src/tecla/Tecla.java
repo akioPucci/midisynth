@@ -173,8 +173,11 @@ public class Tecla implements KeyListener {
 			button.setIcon(Teclado.tecla_branca);
 			System.out.println("setando branca");
 		}
+		
 		recordOff();
 		if (waitingClick) {
+			if (semaphore == null)
+				semaphore = KeyManagement.getSemaphore();
 			semaphore.release();
 			geniusClicked = true;
 			waitingClick = false;

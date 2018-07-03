@@ -209,9 +209,9 @@ public class KeyManagement {
 		
 		tecla[getNote(code)].setSemaphore(semaphore);
 		try {
-			// System.out.println("Esperando");
+			System.out.println("Esperando");
 			semaphore.acquire();
-			// System.out.println("Pronto");
+			System.out.println("Pronto");
 
 			TimeUnit.MILLISECONDS.sleep(500);
 
@@ -311,6 +311,10 @@ public class KeyManagement {
 			tecla[note].pause();
 	}
 
+	public static Semaphore getSemaphore() {
+		return semaphore;
+	}
+ 	
 	public static int getNote(int code) {
 		switch (code) {
 		case 90:
