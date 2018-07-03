@@ -625,7 +625,7 @@ public class TelaSintetizador extends JFrame {
 
 	private void redimensionarIcones() {
 		try {
-			Imagem img = new Imagem("images\\triangular.png");
+			Imagem img = new Imagem("images/triangular.png");
 			Onda_Triangular = TelaInicial.p.redimensionarImg(img.imagem,
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));
@@ -634,7 +634,7 @@ public class TelaSintetizador extends JFrame {
 		}
 
 		try {
-			Imagem img = new Imagem("images\\quadrada.png");
+			Imagem img = new Imagem("images/quadrada.png");
 			Onda_Quadrada = TelaInicial.p.redimensionarImg(img.imagem,
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));
@@ -643,7 +643,7 @@ public class TelaSintetizador extends JFrame {
 		}
 
 		try {
-			Imagem img = new Imagem("images\\senoidal.png");
+			Imagem img = new Imagem("images/senoidal.png");
 			Onda_Senoidal = TelaInicial.p.redimensionarImg(img.imagem,
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));
@@ -652,7 +652,7 @@ public class TelaSintetizador extends JFrame {
 		}
 
 		try {
-			Imagem img = new Imagem("images\\dente_serra.png");
+			Imagem img = new Imagem("images/dente_serra.png");
 			Onda_Dente_Serra = TelaInicial.p.redimensionarImg(img.imagem,
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));

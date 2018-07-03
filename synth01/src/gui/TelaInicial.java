@@ -96,7 +96,7 @@ public class TelaInicial extends JFrame {
         synth.setBounds(p.ProporcaoW(650), p.ProporcaoH(300), p.ProporcaoW(350), p.ProporcaoH(200));
         
         try {
-			Imagem img = new Imagem("images\\music.jpg");
+			Imagem img = new Imagem("images/music.jpg");
 			planoFundo.setIcon(p.redimensionarImg(img.imagem, p.ProporcaoW(img.wmax),
 					p.ProporcaoH(img.hmax)));
 		} catch (IOException e) {

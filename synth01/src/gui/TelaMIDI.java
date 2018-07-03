@@ -456,7 +456,7 @@ public class TelaMIDI extends JFrame {
 		MIDI_Icon = new ImageIcon();
 
 		try {
-			Imagem img = new Imagem("images\\MIDI.png");
+			Imagem img = new Imagem("images/MIDI.png");
 			MIDI_Icon = TelaInicial.p.redimensionarImg(img.imagem,
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));

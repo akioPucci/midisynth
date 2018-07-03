@@ -259,7 +259,7 @@ public class Teclado {
         tecla_branca_press = new ImageIcon();
         
         try {
-			Imagem img = new Imagem("images\\1.jpg");
+			Imagem img = new Imagem("images/1.jpg");
 			tecla_preta = TelaInicial.p.redimensionarImg(img.imagem, 
 					TelaInicial.p.ProporcaoW(img.wmax), 
 					TelaInicial.p.ProporcaoH(img.hmax));
@@ -268,7 +268,7 @@ public class Teclado {
 		}
         
         try {
-			Imagem img = new Imagem("images\\1-press.png");
+			Imagem img = new Imagem("images/1-press.png");
 			tecla_preta_press = TelaInicial.p.redimensionarImg(img.imagem, 
 					TelaInicial.p.ProporcaoW(img.wmax), 
 					TelaInicial.p.ProporcaoH(img.hmax));
@@ -277,7 +277,7 @@ public class Teclado {
 		}
         
         try {
-			Imagem img = new Imagem("images\\2.png");
+			Imagem img = new Imagem("images/2.png");
 			tecla_branca = TelaInicial.p.redimensionarImg(img.imagem, 
 					TelaInicial.p.ProporcaoW(img.wmax), 
 					TelaInicial.p.ProporcaoH(img.hmax));
@@ -286,7 +286,7 @@ public class Teclado {
 		}
         
         try {
-			Imagem img = new Imagem("images\\2-press.png");
+			Imagem img = new Imagem("images/2-press.png");
 			tecla_branca_press = TelaInicial.p.redimensionarImg(img.imagem, 
 					TelaInicial.p.ProporcaoW(img.wmax), 
 					TelaInicial.p.ProporcaoH(img.hmax));
