@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
 public class Teclado {
     public static JButton Do1;
@@ -265,7 +264,6 @@ public class Teclado {
 					TelaInicial.p.ProporcaoW(img.wmax), 
 					TelaInicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
