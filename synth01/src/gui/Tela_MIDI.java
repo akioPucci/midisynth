@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,6 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import key.KeyManagement;
 import midi.MidiSynth;
 
@@ -37,11 +42,14 @@ public class Tela_MIDI extends JFrame {
     
     private MidiSynth midi;
     
+    private JLabel Instrumentos_Text;
+    private JLabel Tipo_Text;
     private JComboBox<String> Instrumentos;
     private JComboBox<String> Tipo;
     private String[][] Ins;
     
-    private JLabel MIDI_Text;
+    private JLabel MIDI_JLabel;
+    private Icon MIDI_Icon;
     
     public Tela_MIDI() {
         initTela();
@@ -133,6 +141,9 @@ public class Tela_MIDI extends JFrame {
     private void initInstrumentos() {
         midi = MidiSynth.getMidiSynth();
         
+        Instrumentos_Text = new JLabel();
+        Tipo_Text = new JLabel();
+        
         Instrumentos = new JComboBox<>();
         Tipo = new JComboBox<>();
         
@@ -190,6 +201,13 @@ public class Tela_MIDI extends JFrame {
         Ins[14] = new String[] {"Reverse Cymbal", "Guitar Fret Noise", "Breath Noise",
                 "Seashore", "Bird Tweet", "Telephone Ring", "Helicopter", "Applause", "Gunshot"};
         
+        Instrumentos_Text.setForeground(new Color(255, 255, 255));
+        Instrumentos_Text.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(36)));
+        Instrumentos_Text.setText("Instrumentos");
+        getContentPane().add(Instrumentos_Text);
+        Instrumentos_Text.setBounds(Tela_Inicial.p.ProporcaoW(285), Tela_Inicial.p.ProporcaoH(30), 
+        		Tela_Inicial.p.ProporcaoW(250), Tela_Inicial.p.ProporcaoH(50));
+        
         Instrumentos.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(48)));
         Instrumentos.setModel(new DefaultComboBoxModel<>((String[]) Ins[0]));
         Instrumentos.addActionListener(new ActionListener() {
@@ -200,6 +218,13 @@ public class Tela_MIDI extends JFrame {
         getContentPane().add(Instrumentos);
         Instrumentos.setBounds(Tela_Inicial.p.ProporcaoW(135), Tela_Inicial.p.ProporcaoH(100), 
         		Tela_Inicial.p.ProporcaoW(550), Tela_Inicial.p.ProporcaoH(50));
+        
+        Tipo_Text.setForeground(new Color(255, 255, 255));
+        Tipo_Text.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(36)));
+        Tipo_Text.setText("Tipo");
+        getContentPane().add(Tipo_Text);
+        Tipo_Text.setBounds(Tela_Inicial.p.ProporcaoW(910), Tela_Inicial.p.ProporcaoH(30), 
+        		Tela_Inicial.p.ProporcaoW(100), Tela_Inicial.p.ProporcaoH(50));
 
         Tipo.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(48)));
         Tipo.setModel(new DefaultComboBoxModel<>(new String[] { "Piano", "Chromatic Percussion",
@@ -397,15 +422,25 @@ public class Tela_MIDI extends JFrame {
     }
     
     private void initOutrosComponentes() {
-    	MIDI_Text = new JLabel();
-		
-    	MIDI_Text.setFont(new Font("Segoe Script", 0, Tela_Inicial.p.ProporcaoW(58)));
-    	MIDI_Text.setForeground(new Color(255, 0, 255));
-    	MIDI_Text.setText("MIDI");
-        getContentPane().add(MIDI_Text);
-        MIDI_Text.setBounds(Tela_Inicial.p.ProporcaoW(888), 
-        		Tela_Inicial.p.ProporcaoH(20), Tela_Inicial.p.ProporcaoW(145), 
-        		Tela_Inicial.p.ProporcaoH(60));
+    	MIDI_JLabel = new JLabel();
+        
+    	MIDI_Icon = new ImageIcon();
+    	
+    	try {
+			Imagem img = new Imagem("images\\MIDI.png");
+			MIDI_Icon = Tela_Inicial.p.redimensionarImg(img.imagem, 
+					Tela_Inicial.p.ProporcaoW(img.wmax), 
+					Tela_Inicial.p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	MIDI_JLabel.setIcon(MIDI_Icon);
+    	getContentPane().add(MIDI_JLabel);
+    	MIDI_JLabel.setBounds(Tela_Inicial.p.ProporcaoW(335), 
+        		Tela_Inicial.p.ProporcaoH(200), Tela_Inicial.p.ProporcaoW(729), 
+        		Tela_Inicial.p.ProporcaoH(366));
 	}
 
     private void setAllNotFocusable() {
