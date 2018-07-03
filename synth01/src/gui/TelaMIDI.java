@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,6 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import key.KeyManagement;
 import midi.MidiSynth;
 
@@ -37,12 +42,15 @@ public class TelaMIDI extends JFrame {
     
     private MidiSynth midi;
     
+    private JLabel Instrumentos_Text;
+    private JLabel Tipo_Text;
     private JComboBox<String> Instrumentos;
     private JComboBox<String> Tipo;
     private String[][] Ins;
     
-    private JLabel MIDI_Text;
-    
+    private JLabel MIDI_JLabel;
+    private Icon MIDI_Icon;
+
     private String path;
     
     public TelaMIDI() {
@@ -124,9 +132,8 @@ public class TelaMIDI extends JFrame {
     }
 
     private void synthActionPerformed(ActionEvent evt) {
-        TelaInicial.ts = new TelaSintetizador();
         TelaInicial.ts.setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }
 
     private void exitActionPerformed(ActionEvent evt) {
@@ -135,6 +142,9 @@ public class TelaMIDI extends JFrame {
     
     private void initInstrumentos() {
         midi = MidiSynth.getMidiSynth();
+        
+        Instrumentos_Text = new JLabel();
+        Tipo_Text = new JLabel();
         
         Instrumentos = new JComboBox<>();
         Tipo = new JComboBox<>();
@@ -193,6 +203,13 @@ public class TelaMIDI extends JFrame {
         Ins[14] = new String[] {"Reverse Cymbal", "Guitar Fret Noise", "Breath Noise",
                 "Seashore", "Bird Tweet", "Telephone Ring", "Helicopter", "Applause", "Gunshot"};
         
+        Instrumentos_Text.setForeground(new Color(255, 255, 255));
+        Instrumentos_Text.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(36)));
+        Instrumentos_Text.setText("Instrumentos");
+        getContentPane().add(Instrumentos_Text);
+        Instrumentos_Text.setBounds(TelaInicial.p.ProporcaoW(285), TelaInicial.p.ProporcaoH(30), 
+        		TelaInicial.p.ProporcaoW(250), TelaInicial.p.ProporcaoH(50));
+        
         Instrumentos.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(48)));
         Instrumentos.setModel(new DefaultComboBoxModel<>((String[]) Ins[0]));
         Instrumentos.addActionListener(new ActionListener() {
@@ -203,6 +220,13 @@ public class TelaMIDI extends JFrame {
         getContentPane().add(Instrumentos);
         Instrumentos.setBounds(TelaInicial.p.ProporcaoW(135), TelaInicial.p.ProporcaoH(100), 
         		TelaInicial.p.ProporcaoW(550), TelaInicial.p.ProporcaoH(50));
+        
+        Tipo_Text.setForeground(new Color(255, 255, 255));
+        Tipo_Text.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(36)));
+        Tipo_Text.setText("Tipo");
+        getContentPane().add(Tipo_Text);
+        Tipo_Text.setBounds(TelaInicial.p.ProporcaoW(980), TelaInicial.p.ProporcaoH(30), 
+        		TelaInicial.p.ProporcaoW(100), TelaInicial.p.ProporcaoH(50));
 
         Tipo.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(48)));
         Tipo.setModel(new DefaultComboBoxModel<>(new String[] { "Piano", "Chromatic Percussion",
@@ -214,7 +238,7 @@ public class TelaMIDI extends JFrame {
             }
         });
         getContentPane().add(Tipo);
-        Tipo.setBounds(TelaInicial.p.ProporcaoW(685), TelaInicial.p.ProporcaoH(100), 
+        Tipo.setBounds(TelaInicial.p.ProporcaoW(755), TelaInicial.p.ProporcaoH(100), 
         		TelaInicial.p.ProporcaoW(550), TelaInicial.p.ProporcaoH(50));
     }
     
@@ -307,14 +331,14 @@ public class TelaMIDI extends JFrame {
 					path = path.substring(0, path.indexOf('.'));
 					try {
 						Thread t = new Thread(new Runnable() {
-							
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								KeyManagement.playRecord(path);
-							}
-						});
-						t.start();
+                            
+                            @Override
+                            public void run() {
+                                // TODO Auto-generated method stub
+                                KeyManagement.playRecord(path);
+                            }
+                        });
+                        t.start();
 					} catch (Exception e1) {
 						// TODO arquivo invalido
 						// e1.printStackTrace();
@@ -349,22 +373,22 @@ public class TelaMIDI extends JFrame {
 					path = arquivo.getPath().substring(last + 1);
 					path = path.substring(0, path.indexOf('.'));
 					try {
-						Thread t = new Thread(new Runnable() {
-							
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								Genius.startGenius(path);
-							}
-						});
-						t.start();
-						// KeyManagement.playRecord(path);
-					} catch (Exception e1) {
-						// TODO arquivo invalido
-						JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", 
-								JOptionPane.ERROR_MESSAGE);
-						// e1.printStackTrace();
-					}
+                        Thread t = new Thread(new Runnable() {
+                            
+                            @Override
+                            public void run() {
+                                // TODO Auto-generated method stub
+                                Genius.startGenius(path);
+                            }
+                        });
+                        t.start();
+                        // KeyManagement.playRecord(path);
+                    } catch (Exception e1) {
+                        // TODO arquivo invalido
+                        JOptionPane.showMessageDialog(null, "Erro", "Arquivo invalido", 
+                                JOptionPane.ERROR_MESSAGE);
+                        // e1.printStackTrace();
+                    }
 				}
 
 			}
@@ -416,15 +440,25 @@ public class TelaMIDI extends JFrame {
     }
     
     private void initOutrosComponentes() {
-    	MIDI_Text = new JLabel();
-		
-    	MIDI_Text.setFont(new Font("Segoe Script", 0, TelaInicial.p.ProporcaoW(58)));
-    	MIDI_Text.setForeground(new Color(255, 0, 255));
-    	MIDI_Text.setText("MIDI");
-        getContentPane().add(MIDI_Text);
-        MIDI_Text.setBounds(TelaInicial.p.ProporcaoW(888), 
-        		TelaInicial.p.ProporcaoH(20), TelaInicial.p.ProporcaoW(145), 
-        		TelaInicial.p.ProporcaoH(60));
+    	MIDI_JLabel = new JLabel();
+        
+    	MIDI_Icon = new ImageIcon();
+    	
+    	try {
+			Imagem img = new Imagem("images\\MIDI.png");
+			MIDI_Icon = TelaInicial.p.redimensionarImg(img.imagem, 
+					TelaInicial.p.ProporcaoW(img.wmax), 
+					TelaInicial.p.ProporcaoH(img.hmax));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	MIDI_JLabel.setIcon(MIDI_Icon);
+    	getContentPane().add(MIDI_JLabel);
+    	MIDI_JLabel.setBounds(TelaInicial.p.ProporcaoW(335), 
+        		TelaInicial.p.ProporcaoH(200), TelaInicial.p.ProporcaoW(729), 
+        		TelaInicial.p.ProporcaoH(366));
 	}
 
     private void setAllNotFocusable() {
