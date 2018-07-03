@@ -4,7 +4,7 @@ import java.awt.RenderingHints.Key;
 import java.util.Scanner;
 
 import genius.Genius;
-import gui.Tela_Inicial;
+import gui.TelaInicial;
 import input.InputKeyboard;
 import key.KeyManagement;
 
@@ -14,7 +14,7 @@ import key.KeyManagement;
  * @author Carolina Arenas Okawa
  * @author Eric
  * @author Fernando Akio
- * @author Vin�cius
+ * @author Vinicius
  */
 public class Main {
 
@@ -34,7 +34,7 @@ public class Main {
 	 */
 	private void start() {
 		InputKeyboard.start();
-		new Tela_Inicial();
+		new TelaInicial();
 		//verifyIfNimbusIsInstalled();
 /*
 		java.awt.EventQueue.invokeLater(new Runnable() {

@@ -22,7 +22,7 @@ import key.KeyManagement;
 import midi.MidiSynth;
 
 @SuppressWarnings("serial")
-public class Tela_MIDI extends JFrame {
+public class TelaMIDI extends JFrame {
     private JButton button[];
     
     private JMenuBar Bar;
@@ -43,7 +43,9 @@ public class Tela_MIDI extends JFrame {
     
     private JLabel MIDI_Text;
     
-    public Tela_MIDI() {
+    private String path;
+    
+    public TelaMIDI() {
         initTela();
         initMenu();
         initInstrumentos();
@@ -58,8 +60,8 @@ public class Tela_MIDI extends JFrame {
     private void initTela() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(22, 24, 32));
-        setMinimumSize(new Dimension(Tela_Inicial.p.ProporcaoW(1920), 
-        		Tela_Inicial.p.ProporcaoH(1080)));
+        setMinimumSize(new Dimension(TelaInicial.p.ProporcaoW(1920), 
+        		TelaInicial.p.ProporcaoH(1080)));
         setResizable(false);
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
@@ -76,16 +78,16 @@ public class Tela_MIDI extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tela_MIDI.class.getName()).log(
+            java.util.logging.Logger.getLogger(TelaMIDI.class.getName()).log(
                     java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tela_MIDI.class.getName()).log(
+            java.util.logging.Logger.getLogger(TelaMIDI.class.getName()).log(
                     java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tela_MIDI.class.getName()).log(
+            java.util.logging.Logger.getLogger(TelaMIDI.class.getName()).log(
                     java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tela_MIDI.class.getName()).log(
+            java.util.logging.Logger.getLogger(TelaMIDI.class.getName()).log(
                     java.util.logging.Level.SEVERE, null, ex);
         }
     }
@@ -96,10 +98,10 @@ public class Tela_MIDI extends JFrame {
         synth = new JMenuItem();
         exit = new JMenuItem();
 
-        menu.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
+        menu.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
         menu.setText("Menu");
 
-        synth.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
+        synth.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
         synth.setText("Sintetizador");
         menu.add(synth);
         synth.addActionListener(new ActionListener() {
@@ -108,7 +110,7 @@ public class Tela_MIDI extends JFrame {
             }
         });
 
-        exit.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(13)));
+        exit.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
         exit.setText("Sair");
         menu.add(exit);
         exit.addActionListener(new ActionListener() {
@@ -122,8 +124,9 @@ public class Tela_MIDI extends JFrame {
     }
 
     private void synthActionPerformed(ActionEvent evt) {
-        Tela_Inicial.ts.setVisible(true);
-        this.setVisible(false);
+        TelaInicial.ts = new TelaSintetizador();
+        TelaInicial.ts.setVisible(true);
+        this.dispose();
     }
 
     private void exitActionPerformed(ActionEvent evt) {
@@ -190,7 +193,7 @@ public class Tela_MIDI extends JFrame {
         Ins[14] = new String[] {"Reverse Cymbal", "Guitar Fret Noise", "Breath Noise",
                 "Seashore", "Bird Tweet", "Telephone Ring", "Helicopter", "Applause", "Gunshot"};
         
-        Instrumentos.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(48)));
+        Instrumentos.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(48)));
         Instrumentos.setModel(new DefaultComboBoxModel<>((String[]) Ins[0]));
         Instrumentos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -198,10 +201,10 @@ public class Tela_MIDI extends JFrame {
             }
         });
         getContentPane().add(Instrumentos);
-        Instrumentos.setBounds(Tela_Inicial.p.ProporcaoW(135), Tela_Inicial.p.ProporcaoH(100), 
-        		Tela_Inicial.p.ProporcaoW(550), Tela_Inicial.p.ProporcaoH(50));
+        Instrumentos.setBounds(TelaInicial.p.ProporcaoW(135), TelaInicial.p.ProporcaoH(100), 
+        		TelaInicial.p.ProporcaoW(550), TelaInicial.p.ProporcaoH(50));
 
-        Tipo.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(48)));
+        Tipo.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(48)));
         Tipo.setModel(new DefaultComboBoxModel<>(new String[] { "Piano", "Chromatic Percussion",
                 "Organ", "Guitar", "Bass", "Strings", "Brass", "Reed", "Pipe", "Synth Lead",
                 "Synth Pad", "Synth Effects", "Ethnic", "Percussive", "Sound effects"}));
@@ -211,8 +214,8 @@ public class Tela_MIDI extends JFrame {
             }
         });
         getContentPane().add(Tipo);
-        Tipo.setBounds(Tela_Inicial.p.ProporcaoW(685), Tela_Inicial.p.ProporcaoH(100), 
-        		Tela_Inicial.p.ProporcaoW(550), Tela_Inicial.p.ProporcaoH(50));
+        Tipo.setBounds(TelaInicial.p.ProporcaoW(685), TelaInicial.p.ProporcaoH(100), 
+        		TelaInicial.p.ProporcaoW(550), TelaInicial.p.ProporcaoH(50));
     }
     
     private void InstrumentosActionPerformed(ActionEvent evt) {
@@ -244,9 +247,9 @@ public class Tela_MIDI extends JFrame {
     
     private void initGravador() {		
 		gravar = new JButton();
-		gravar.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(100), 
-				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
-		gravar.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(20)));
+		gravar.setBounds(TelaInicial.p.ProporcaoW(1384), TelaInicial.p.ProporcaoH(100), 
+				TelaInicial.p.ProporcaoW(400), TelaInicial.p.ProporcaoH(115));
+		gravar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		gravar.setText("Gravar");
 		gravar.setVisible(true);
 		getContentPane().add(gravar);
@@ -261,9 +264,9 @@ public class Tela_MIDI extends JFrame {
 		});
 
 		pausar = new JButton();
-		pausar.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(215), 
-				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
-		pausar.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(20)));
+		pausar.setBounds(TelaInicial.p.ProporcaoW(1384), TelaInicial.p.ProporcaoH(215), 
+				TelaInicial.p.ProporcaoW(400), TelaInicial.p.ProporcaoH(115));
+		pausar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		pausar.setText("Parar");
 		pausar.setVisible(true);
 		getContentPane().add(pausar);
@@ -279,9 +282,9 @@ public class Tela_MIDI extends JFrame {
 		});
 
 		reproduzir = new JButton();
-		reproduzir.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(330), 
-				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
-		reproduzir.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(20)));
+		reproduzir.setBounds(TelaInicial.p.ProporcaoW(1384), TelaInicial.p.ProporcaoH(330), 
+				TelaInicial.p.ProporcaoW(400), TelaInicial.p.ProporcaoH(115));
+		reproduzir.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -300,10 +303,18 @@ public class Tela_MIDI extends JFrame {
 				} else {
 					File arquivo = file.getSelectedFile();
 					int last = arquivo.getPath().lastIndexOf('\\');
-					String path = arquivo.getPath().substring(last + 1);
+					path = arquivo.getPath().substring(last + 1);
 					path = path.substring(0, path.indexOf('.'));
 					try {
-						KeyManagement.playRecord(path);
+						Thread t = new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								KeyManagement.playRecord(path);
+							}
+						});
+						t.start();
 					} catch (Exception e1) {
 						// TODO arquivo invalido
 						// e1.printStackTrace();
@@ -314,9 +325,9 @@ public class Tela_MIDI extends JFrame {
 		});
 
 		genius = new JButton();
-		genius.setBounds(Tela_Inicial.p.ProporcaoW(1384), Tela_Inicial.p.ProporcaoH(445), 
-				Tela_Inicial.p.ProporcaoW(400), Tela_Inicial.p.ProporcaoH(115));
-		genius.setFont(new Font("Tahoma", 0, Tela_Inicial.p.ProporcaoW(20)));
+		genius.setBounds(TelaInicial.p.ProporcaoW(1384), TelaInicial.p.ProporcaoH(445), 
+				TelaInicial.p.ProporcaoW(400), TelaInicial.p.ProporcaoH(115));
+		genius.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		genius.setText("Genius");
 		genius.setVisible(true);
 		getContentPane().add(genius);
@@ -335,10 +346,18 @@ public class Tela_MIDI extends JFrame {
 				} else {
 					File arquivo = file.getSelectedFile();
 					int last = arquivo.getPath().lastIndexOf('\\');
-					String path = arquivo.getPath().substring(last + 1);
+					path = arquivo.getPath().substring(last + 1);
 					path = path.substring(0, path.indexOf('.'));
 					try {
-						Genius.startGenius(path);
+						Thread t = new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								Genius.startGenius(path);
+							}
+						});
+						t.start();
 						// KeyManagement.playRecord(path);
 					} catch (Exception e1) {
 						// TODO arquivo invalido
@@ -399,13 +418,13 @@ public class Tela_MIDI extends JFrame {
     private void initOutrosComponentes() {
     	MIDI_Text = new JLabel();
 		
-    	MIDI_Text.setFont(new Font("Segoe Script", 0, Tela_Inicial.p.ProporcaoW(58)));
+    	MIDI_Text.setFont(new Font("Segoe Script", 0, TelaInicial.p.ProporcaoW(58)));
     	MIDI_Text.setForeground(new Color(255, 0, 255));
     	MIDI_Text.setText("MIDI");
         getContentPane().add(MIDI_Text);
-        MIDI_Text.setBounds(Tela_Inicial.p.ProporcaoW(888), 
-        		Tela_Inicial.p.ProporcaoH(20), Tela_Inicial.p.ProporcaoW(145), 
-        		Tela_Inicial.p.ProporcaoH(60));
+        MIDI_Text.setBounds(TelaInicial.p.ProporcaoW(888), 
+        		TelaInicial.p.ProporcaoH(20), TelaInicial.p.ProporcaoW(145), 
+        		TelaInicial.p.ProporcaoH(60));
 	}
 
     private void setAllNotFocusable() {

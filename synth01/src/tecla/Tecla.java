@@ -64,14 +64,14 @@ public class Tecla implements KeyListener {
 	 * chama evento de tecla
 	 */
 	private void addListener() {
-		final ButtonModel b = button.getModel();
+		ButtonModel b = button.getModel();
 		b.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
 
 				if (b.isPressed() && !playing) {
-						play();
+					play();
 				} else if (!b.isPressed() && playing) {
 					pause();
 				}
@@ -146,8 +146,10 @@ public class Tecla implements KeyListener {
 		} else {
 			button.setIcon(Teclado.tecla_branca_press);
 		}
+
+		
 		//Tela_MIDI.setNotVisible(note);
-		//System.out.println("Deixando falso: " + button.isVisible());
+		System.out.println("is visible: " + button.isVisible());
 		recordOn();
 	}
 
@@ -166,8 +168,10 @@ public class Tecla implements KeyListener {
 		
 		if (i == 1 || i == 3 || i == 6 || i == 8 || i == 10) {
 			button.setIcon(Teclado.tecla_preta);
+			System.out.println("setando preta");
 		} else {
 			button.setIcon(Teclado.tecla_branca);
+			System.out.println("setando branca");
 		}
 		recordOff();
 		if (waitingClick) {

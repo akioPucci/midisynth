@@ -206,6 +206,7 @@ public class KeyManagement {
 		semaphore = new Semaphore(0);
 		if (getNote(code) < 0)
 			return;
+		
 		tecla[getNote(code)].setSemaphore(semaphore);
 		try {
 			// System.out.println("Esperando");

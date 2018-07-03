@@ -13,15 +13,13 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class Tela_Inicial extends JFrame{
-	public static Tela_Sintetizador ts;
-	public static Tela_MIDI tm;
+public class TelaInicial extends JFrame {
+	public static TelaSintetizador ts;
+	public static TelaMIDI tm;
 	public static Redimensionamento p;
 	
-	public Tela_Inicial(){
+	public TelaInicial(){
 		p = new Redimensionamento();
-		tm = new Tela_MIDI();
-		ts = new Tela_Sintetizador();
 		initTela();
 		initComponents();
 	}
@@ -46,16 +44,16 @@ public class Tela_Inicial extends JFrame{
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+			java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+			java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+			java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Tela_Inicial.class.getName()).log(
+			java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(
 					java.util.logging.Level.SEVERE, null, ex);
 		}
 	}
@@ -112,11 +110,13 @@ public class Tela_Inicial extends JFrame{
 	}
 	
 	private void MIDIActionPerformed(ActionEvent evt) {
+		tm = new TelaMIDI();
 		tm.setVisible(true);
 		this.setVisible(false);
     }                                    
 
     private void synthActionPerformed(ActionEvent evt) {
+    	ts = new TelaSintetizador();
     	ts.setVisible(true);
     	this.setVisible(false);
     }

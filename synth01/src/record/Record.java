@@ -22,6 +22,7 @@ public class Record {
 	public Record(int wave) {
 		this.wave = wave;
 		notes = new ArrayList<String>();
+		System.out.println("recording");
 	}
 
 	/**

@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import key.KeyManagement;
 import key.Pair;
 
@@ -67,6 +69,7 @@ public class Genius {
 				KeyManagement.waitClick(changes.get(0).getThird());
 				changes.remove(0);
 			}
+			JOptionPane.showMessageDialog(null, "Parabéns! Você conseguiu!");
 			//TODO mensagem de parabéns vc terminou
 			System.out.println("fim!");
 		} catch (FileNotFoundException e) {
