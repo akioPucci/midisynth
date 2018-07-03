@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Carolina Arenas Okawa
  * @author Eric
  * @author Fernando Akio
- * @author Vinícius
+ * @author Vinï¿½cius
  */
 public class Mixer {
 	
@@ -90,11 +90,9 @@ public class Mixer {
 
 
 	/**
-	 * returns a mix of all the channels
-	 * @param channel1SynthData
-	 * @param channel2SynthData
-	 * @param channel3SynthData
-	 * @return
+	 * mix all channels into one
+	 * @param notesPlaying
+	 * 				table of notes playing
 	 */
 	public void mixSynthChannels(ConcurrentHashMap<Integer, Note> notesPlaying) {
 		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
@@ -110,10 +108,8 @@ public class Mixer {
 	
 	/**
 	 * returns a mix ready to be processed (audio processed)
-	 * @param channel1SynthData
-	 * @param channel2SynthData
-	 * @param channel3SynthData
-	 * @return
+	 * @param notesPlaying
+	 * 				table of notes playing
 	 */
 	public double mixOutputSample(ConcurrentHashMap<Integer, Note> notesPlaying) {
 		double mixedSample = 0;

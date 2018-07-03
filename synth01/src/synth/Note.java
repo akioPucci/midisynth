@@ -2,16 +2,22 @@ package synth;
 
 import java.util.HashMap;
 
+/**
+ * Synthesizer note object, contains the core parameter to communicate with all the others objects
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vin�cius
+ */
 public class Note {
 	int noteNumber;
 	HashMap<String, Double> currentChannelSample;
 	double currentSample;
+	double initTime;
 	double currentTime;
 	double releaseStartTime;
 	
-
-
-	double initTime;
 	//envelopes states:
 	//0 - attack
 	//1 - decay
@@ -95,20 +101,24 @@ public class Note {
 	public int getEnvState() {
 		return this.envState;
 	}
-	
+
+	/**
+	 * set which envelope state the note holds
+	 * @param state
+	 * 1 - attack
+	 * 2 - decay
+	 * 3 - sustain
+	 * 4 - release
+	 */
 	public void setEnvState(int state) {
 		switch(state) {
 		case 0:
-			System.out.println("attack");
 			break;
 		case 1:
-			System.out.println("decay");
 			break;
 		case 2:
-			System.out.println("sustain");
 			break;
 		case 3:
-			System.out.println("release");
 			break;
 		}
 		this.envState = state;

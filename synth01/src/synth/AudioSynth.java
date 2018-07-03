@@ -25,7 +25,7 @@ import javax.swing.JFrame;
  * @author Carolina Arenas Okawa
  * @author Eric
  * @author Fernando Akio
- * @author Vinícius
+ * @author Vinï¿½cius
  */
 
 public class AudioSynth extends JFrame {
@@ -47,14 +47,11 @@ public class AudioSynth extends JFrame {
 	//TODO implementar hash de notas
 	private ConcurrentHashMap<Integer, Note> notesPlaying;
 	private Oscillator[] osc;
-	private AudioChannel[] outputChannel;
 	private Envelope env;
 	private Mixer mixer;
 	
-	//Informações Teclado
+	//Informaï¿½ï¿½es Teclado
 	private int keysEnabled;
-	private int numOfKeys;
-	private boolean keyEnable[];
 
 	//buffer entrada
 	private byte inBuffer[];
@@ -65,7 +62,6 @@ public class AudioSynth extends JFrame {
 	private byte outBuffer[];
 	
 	private int blockSize;
-	private int inputBlockCounter;
 
 	//semaforos
 	private Semaphore input_sem;
@@ -98,11 +94,9 @@ public class AudioSynth extends JFrame {
 		
 		
 		
-		//Informações Teclado
+		//Informaï¿½ï¿½es Teclado
 		notesPlaying = new ConcurrentHashMap<Integer, Note>();
 		keysEnabled = 0;
-		numOfKeys = 38;
-		keyEnable = new boolean[numOfKeys];
 		
 		osc = new Oscillator[3];
 		osc[0] = new Oscillator("osc1", "sine",   2, sampleRate);
@@ -111,11 +105,8 @@ public class AudioSynth extends JFrame {
 		
 		env = new Envelope(sampleRate, 0.005, 0.001, 1, 1);
 		
-		outputChannel = new AudioChannel[3];
-		outputChannel[0] = new AudioChannel();
-		outputChannel[1] = new AudioChannel();
-		outputChannel[2] = new AudioChannel();
-		mixer = new Mixer(outputChannel.length);
+		//3 sound channels
+		mixer = new Mixer(3);
 		
 		//block communications
 		blockSize = 2;
@@ -151,15 +142,29 @@ public class AudioSynth extends JFrame {
 		}
 
 	}
-	
+
+	/**
+	 * @return
+	 * 			number of keys in action
+	 */
 	private int getKeysEnabled() {
 		return keysEnabled;
 	}
 	
+	/**
+	 * sets number of keys in action
+	 * @param n
+	 * 			number of keys
+	 */
 	private void setKeysEnabled(int n) {
 		this.keysEnabled = n;
 	}
 	
+	/**
+	 * pop keys from the pressed table and put them in release state
+	 * @param note
+	 * 				note number (from the piano row)
+	 */
 	private void popKey(int note) {
 		Note n = notesPlaying.remove(note);
 		n.setEnvState(3);
@@ -173,6 +178,11 @@ public class AudioSynth extends JFrame {
 
 	}
 	
+	/**
+	 * pushes key to the pressed table
+	 * @param note
+	 * 				note number (from piano row)
+	 */
 	private void pushKey(int note) {
 		notesPlaying.put(note, new Note(note));
 		setKeysEnabled(getKeysEnabled()+1);;
@@ -181,17 +191,16 @@ public class AudioSynth extends JFrame {
 	/**
 	 * play a note
 	 * @param note
+	 * 				note number (from piano row)
 	 */
 	public void noteOn(int note) {
 		try {
 			keyPressed_sem.acquire();
 			pushKey(note);
 			
-			//TODO AAAAAAA, QUERO TIRAR ESSA BOSTA
 			sourceDataLine.flush();
 			
 			if (sourceDataLine.isRunning() == false) {
-				System.out.println("ouvindo...");
 				sourceDataLine.start();
 			}
 			
@@ -205,6 +214,7 @@ public class AudioSynth extends JFrame {
 	/**
 	 * stop a note
 	 * @param note
+	 * 				note number (from piano row)
 	 */
 	public void noteOff(int note) {
 		try {
@@ -215,6 +225,11 @@ public class AudioSynth extends JFrame {
 
 	}
 	
+	/**
+	 * kill dead notes (ie. a note that has stopped playing)
+	 * @param notesPlaying
+	 * 						table of notes playing
+	 */
 	public void killDeadNotes(ConcurrentHashMap<Integer, Note> notesPlaying) {
 		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
 			int key = entry.getKey();
@@ -237,6 +252,7 @@ public class AudioSynth extends JFrame {
 	/**
 	 * sets the main volume
 	 * @param value
+	 * 				(0 to 1)
 	 */
 	public void setVolumeMaster(double value) {
 		mixer.setVolumeMaster(value);
@@ -245,7 +261,9 @@ public class AudioSynth extends JFrame {
 	/**
 	 * sets the type of Oscillator (sine, square, triangle, saw or drawn)
 	 * @param oscNum
+	 * 				number of the oscillator
 	 * @param type
+	 * 				type of oscillator
 	 */
 	public void setOscType(int oscNum, String type) {
 		osc[oscNum].setType(type);
@@ -254,7 +272,9 @@ public class AudioSynth extends JFrame {
 	/**
 	 * sets the oscillator amplitude
 	 * @param oscNum
+	 * 				number of the oscillator
 	 * @param value
+	 * 				amplitude from oscillator
 	 */
 	public void setOscAmp(int oscNum, double value) {
 		osc[oscNum].setAmp(value);
@@ -263,7 +283,9 @@ public class AudioSynth extends JFrame {
 	/**
 	 * sets the oscillator octave base
 	 * @param oscNum
+	 * 				number of the oscillator
 	 * @param octave
+	 * 				number of the octave
 	 */
 	public void setOscOctave(int oscNum, int octave) {
 		osc[oscNum].setOctave(octave);
@@ -273,24 +295,46 @@ public class AudioSynth extends JFrame {
 	/**
 	 * sets the sample to be oscillated
 	 * @param oscNum
+	 * 				number of the oscillator
 	 * @param sample
+	 * 				array of samples from the drawn wave
 	 */
 	public void setOscDrawnSample(int oscNum, double[] sample) {
 		osc[oscNum].setDrawnWaveSample(sample);
 	}
 	
+	/**
+	 * sets attack time
+	 * @param attackTime
+	 * 				time in milisseconds
+	 */
 	public void setAttackEnvTime(double attackTime) {
 		env.setAttackTime(attackTime);
 	}
 	
+	/**
+	 * sets decay time
+	 * @param decayTime
+	 * 				time in milisseconds
+	 */
 	public void setDecayEnvTime(double decayTime) {
 		env.setDecayTime(decayTime);
 	}
 	
+	/**
+	 * sets sustain amplitude
+	 * @param sustainAmp
+	 * 				amplitude (0 to 1)
+	 */
 	public void setSustainEnvAmp(double sustainAmp) {
 		env.setSustainAmp(sustainAmp);
 	}
 	
+	/**
+	 * sets release time
+	 * @param releaseTime
+	 * 				time in milisseconds
+	 */
 	public void setReleaseEnvTime(double releaseTime) {
 		env.setReleaseTime(releaseTime);
 	}
@@ -300,7 +344,7 @@ public class AudioSynth extends JFrame {
 	 * @author Carolina Arenas Okawa
 	 * @author Eric
 	 * @author Fernando Akio
-	 * @author Vinícius
+	 * @author Vinï¿½cius
 	 */
 	class InputThread extends Thread {
 		
@@ -379,7 +423,7 @@ public class AudioSynth extends JFrame {
 	 * @author Carolina Arenas Okawa
 	 * @author Eric
 	 * @author Fernando Akio
-	 * @author Vinícius
+	 * @author Vinï¿½cius
 	 */
 	class OutputThread extends Thread {
 		public void run() {

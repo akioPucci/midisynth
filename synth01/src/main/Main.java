@@ -35,30 +35,6 @@ public class Main {
 	private void start() {
 		InputKeyboard.start();
 		new TelaInicial();
-		//verifyIfNimbusIsInstalled();
-/*
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				GUI g = new GUI();
-				g.setVisible(true);
-				g.setFocusable(true);
-				KeyManagement.create(g, g.createJButtonArray());
-				InputKeyboard.start();
-				
-				
-			}
-		});
-		
-		Scanner s = new Scanner(System.in);
-		System.out.println("Record?");
-		s.nextLine();
-		KeyManagement.startRecording(0);
-		System.out.println("Pause?");
-		String l = s.nextLine();
-		KeyManagement.stopRecording(l);
-		System.out.println("Genius?");
-		Genius.startGenius(s.nextLine());*/
-		
 	}
 
 }

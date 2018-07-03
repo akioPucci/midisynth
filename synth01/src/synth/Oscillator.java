@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Carolina Arenas Okawa
  * @author Eric
  * @author Fernando Akio
- * @author Vinícius
+ * @author Vinï¿½cius
  */
 public class Oscillator {
 	
@@ -187,8 +187,9 @@ public class Oscillator {
 	}
 	
 	/**
-	 * gets the sampled data
+	 * sets the sampled data
 	 * @param sample
+	 * 				array of sample from the drawn wave
 	 */
 	public void setDrawnWaveSample(double[] sample) {
 		this.drawnWaveSample = sample;
@@ -198,10 +199,10 @@ public class Oscillator {
 	/**
 	 * returns a array of samples(for each keyboard key)
 	 * the oscillator differs, depending on the type of oscillator
-	 * @param keyEnable
-	 * @return
+	 * @param notesPlaying
+	 * 				table of notes playing
 	 */
-	void oscillate(ConcurrentHashMap<Integer, Note> notesPlaying) {
+	public void oscillate(ConcurrentHashMap<Integer, Note> notesPlaying) {
 		
 		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
 		    Note note = entry.getValue();
@@ -238,8 +239,10 @@ public class Oscillator {
 	/**
 	 * square function
 	 * @param rad
-	 * @return
-	 */
+	 * 			radians
+	 * @return	
+	 * 			value from the function
+	 */			
 	double squareWave(double rad) {
 		double square_function = 0;
 		
@@ -253,7 +256,9 @@ public class Oscillator {
 	/**
 	 * triangle function
 	 * @param rad
+	 * 			randians
 	 * @return
+	 * 			value from the function
 	 */
 	double triangleWave(double rad) {
 		double triangle_function = 0;
@@ -273,7 +278,9 @@ public class Oscillator {
 	/**
 	 * saw wave function
 	 * @param rad
+	 * 			radians
 	 * @return
+	 * 			value from the function
 	 */
 	double sawWave(double rad) {
 		double saw_function = 0;
@@ -290,7 +297,9 @@ public class Oscillator {
 	 * mapping of the sampled data into a 2*PI interval, 
 	 * simulates a approximated function of the sampled wave
 	 * @param rad
+	 * 			radians
 	 * @return
+	 * 			value from the map
 	 */
 	double drawnWave(double rad) {
 		return drawnWaveSample[(int)((rad % (2*Math.PI))*(1000/(2*Math.PI)))];

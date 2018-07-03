@@ -254,15 +254,6 @@ public class Paint {
 		this.x = x;
 	}
 
-	public static void main(String[] args) {
-		JFrame f = new JFrame();
-		f.setBounds(10, 10, 1200, 1200);
-
-		Paint p = new Paint();
-		double x[] = p.open(f);
-		System.out.println("size: " + x.length);
-	}
-
 	/**
 	 * draw into canvas
 	 * 

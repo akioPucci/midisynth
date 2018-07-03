@@ -12,7 +12,14 @@ import javax.sound.midi.Synthesizer;
 import javax.swing.JFrame;
 
 
-
+/**
+ * Paint Canvas to draw the wave
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vinicius
+ */
 public class MidiSynth {
 	
 	private static MidiSynth midisynth;
@@ -63,11 +70,23 @@ public class MidiSynth {
     	
     	return midisynth;
     }
-    
+   
+    /**
+     * Get status of a specific note
+     * @param note
+     * 				note number (from the piano row)
+     * @return
+     * 				true if is playing, otherwise false
+     */
     public boolean getNoteStatus(int note) {
     	return keyEnable[note];
     }
     
+    /**
+     * turns on/off the note status
+     * @param note
+     * 				note number (from the piano row)
+     */
     public void switchNoteStatus(int note) {
     	if(getNoteStatus(note))
     		keyEnable[note] = false;
@@ -76,17 +95,33 @@ public class MidiSynth {
     }
 
 
+    /**
+     * plays the note
+     * @param note
+     * 				note number (from the piano row)
+     */
     public void noteOn(int note) {
     	if(getNoteStatus(note) == false) {
     		midiChannels[0].noteOn(note + noteOffset, 600);
     		switchNoteStatus(note);
     	}
     }
+    
+    /**
+     * stops the note
+     * @param note
+     * 				note number (from the piano row)
+     */
     public void noteOff(int note) {
     	midiChannels[0].noteOff(note + noteOffset, 600);
     	switchNoteStatus(note);
     }
     
+    /**
+     * change midi's instrument
+     * @param instrumentNumber
+     * 				number from the instrument (there are 128 different instruments)
+     */
     public void changeInstrument(int instrumentNumber) {
         synthesizer.getChannels()[0].programChange(instrumentNumber);
     }

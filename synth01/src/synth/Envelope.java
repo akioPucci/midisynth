@@ -3,6 +3,14 @@ package synth;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Synth Envelope
+ * 
+ * @author Carolina Arenas Okawa
+ * @author Eric
+ * @author Fernando Akio
+ * @author Vin�cius
+ */
 public class Envelope {
 	double envTime;
 	double sampleCounter;
@@ -57,7 +65,9 @@ public class Envelope {
 		this.releaseTime = releaseTime;
 	}
 
-	
+	/**
+	 * counts time in seconds, increase sample Counter
+	 */
 	public void countTime() {
 		envTime = (sampleCounter / sampleRate);
 		sampleCounter++;
@@ -68,6 +78,11 @@ public class Envelope {
 		return envTime;
 	}
 	
+	/**
+	 * apply the envelope to all notes playing
+	 * @param notesPlaying
+	 * 				table of notes playing
+	 */
 	public void apply(ConcurrentHashMap<Integer, Note> notesPlaying) {
 		for(Map.Entry<Integer, Note> entry : notesPlaying.entrySet()) {
 		    Note note = entry.getValue();
