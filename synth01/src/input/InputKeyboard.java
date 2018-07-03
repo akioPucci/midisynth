@@ -34,7 +34,7 @@ public class InputKeyboard {
 				device = MidiSystem.getMidiDevice(infos[i]);
 				// does the device have any transmitters?
 				// if it does, add it to the device list
-				System.out.println(infos[i]);
+				//System.out.println(infos[i]);
 
 				// get all transmitters
 				List<Transmitter> transmitters = device.getTransmitters();
@@ -56,7 +56,7 @@ public class InputKeyboard {
 				device.open();
 				// if code gets this far without throwing an exception
 				// print a success message
-				System.out.println(device.getDeviceInfo() + " Was Opened");
+				//System.out.println(device.getDeviceInfo() + " Was Opened");
 
 			} catch (MidiUnavailableException e) {
 				//e.printStackTrace();

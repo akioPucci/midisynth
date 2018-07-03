@@ -152,21 +152,21 @@ public class TelaSintetizador extends JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(
-					TelaSintetizador.class.getName()).log(
-					java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger
+					.getLogger(TelaSintetizador.class.getName()).log(
+							java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(
-					TelaSintetizador.class.getName()).log(
-					java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger
+					.getLogger(TelaSintetizador.class.getName()).log(
+							java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(
-					TelaSintetizador.class.getName()).log(
-					java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger
+					.getLogger(TelaSintetizador.class.getName()).log(
+							java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(
-					TelaSintetizador.class.getName()).log(
-					java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger
+					.getLogger(TelaSintetizador.class.getName()).log(
+							java.util.logging.Level.SEVERE, null, ex);
 		}
 	}
 
@@ -299,8 +299,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(173), TelaInicial.p.ProporcaoW(50),
 				TelaInicial.p.ProporcaoH(50));
 
-		Sel_Ondas1
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
+		Sel_Ondas1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Sel_Ondas1.setModel(new DefaultComboBoxModel<>(new String[] {
 				"Senoidal", "Quadrada", "Triangular", "Dente de Serra",
 				"Desenhar" }));
@@ -316,8 +315,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(180), TelaInicial.p.ProporcaoW(130),
 				TelaInicial.p.ProporcaoH(30));
 
-		Sel_Ondas2
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
+		Sel_Ondas2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Sel_Ondas2.setModel(new DefaultComboBoxModel<>(new String[] {
 				"Senoidal", "Quadrada", "Triangular", "Dente de Serra",
 				"Desenhar" }));
@@ -333,8 +331,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(180), TelaInicial.p.ProporcaoW(130),
 				TelaInicial.p.ProporcaoH(30));
 
-		Sel_Ondas3
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
+		Sel_Ondas3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Sel_Ondas3.setModel(new DefaultComboBoxModel<>(new String[] {
 				"Senoidal", "Quadrada", "Triangular", "Dente de Serra",
 				"Desenhar" }));
@@ -457,8 +454,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(125), TelaInicial.p.ProporcaoW(110),
 				TelaInicial.p.ProporcaoH(28));
 
-		Ampl_Text1
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
+		Ampl_Text1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Ampl_Text1.setForeground(new Color(255, 255, 255));
 		Ampl_Text1.setText("Amplitude");
 		getContentPane().add(Ampl_Text1);
@@ -466,8 +462,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(56),
 				TelaInicial.p.ProporcaoH(16));
 
-		Ampl_Text2
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
+		Ampl_Text2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Ampl_Text2.setForeground(new Color(255, 255, 255));
 		Ampl_Text2.setText("Amplitude");
 		getContentPane().add(Ampl_Text2);
@@ -475,8 +470,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(56),
 				TelaInicial.p.ProporcaoH(16));
 
-		Ampl_Text3
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
+		Ampl_Text3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Ampl_Text3.setForeground(new Color(255, 255, 255));
 		Ampl_Text3.setText("Amplitude");
 		getContentPane().add(Ampl_Text3);
@@ -484,8 +478,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(56),
 				TelaInicial.p.ProporcaoH(16));
 
-		Freq_Text1
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
+		Freq_Text1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Freq_Text1.setForeground(new Color(255, 255, 255));
 		Freq_Text1.setText("Frequência");
 		getContentPane().add(Freq_Text1);
@@ -493,8 +486,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(62),
 				TelaInicial.p.ProporcaoH(16));
 
-		Freq_Text2
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
+		Freq_Text2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Freq_Text2.setForeground(new Color(255, 255, 255));
 		Freq_Text2.setText("Frequência");
 		getContentPane().add(Freq_Text2);
@@ -502,8 +494,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(62),
 				TelaInicial.p.ProporcaoH(16));
 
-		Freq_Text3
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
+		Freq_Text3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Freq_Text3.setForeground(new Color(255, 255, 255));
 		Freq_Text3.setText("Frequência");
 		getContentPane().add(Freq_Text3);
@@ -639,7 +630,6 @@ public class TelaSintetizador extends JFrame {
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -649,7 +639,6 @@ public class TelaSintetizador extends JFrame {
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -659,7 +648,6 @@ public class TelaSintetizador extends JFrame {
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -669,7 +657,6 @@ public class TelaSintetizador extends JFrame {
 					TelaInicial.p.ProporcaoW(img.wmax),
 					TelaInicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -845,8 +832,8 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(181), TelaInicial.p.ProporcaoW(110),
 				TelaInicial.p.ProporcaoH(15));
 
-		Attack_Value.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoW(13)));
+		Attack_Value
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Attack_Value.setForeground(new Color(255, 255, 255));
 		Attack_Value.setHorizontalAlignment(SwingConstants.RIGHT);
 		Attack_Value.setText("5 ms");
@@ -868,8 +855,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(222), TelaInicial.p.ProporcaoW(290),
 				TelaInicial.p.ProporcaoH(25));
 
-		Decay_Text
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
+		Decay_Text.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Decay_Text.setForeground(new Color(255, 255, 255));
 		Decay_Text.setText("Decay");
 		getContentPane().add(Decay_Text);
@@ -900,8 +886,8 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(314), TelaInicial.p.ProporcaoW(290),
 				TelaInicial.p.ProporcaoH(25));
 
-		Sustain_Text.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoW(13)));
+		Sustain_Text
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Sustain_Text.setForeground(new Color(255, 255, 255));
 		Sustain_Text.setText("Sustain");
 		getContentPane().add(Sustain_Text);
@@ -930,8 +916,8 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(406), TelaInicial.p.ProporcaoW(290),
 				TelaInicial.p.ProporcaoH(25));
 
-		Release_Text.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoW(13)));
+		Release_Text
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Release_Text.setForeground(new Color(255, 255, 255));
 		Release_Text.setText("Release");
 		getContentPane().add(Release_Text);
@@ -1027,8 +1013,7 @@ public class TelaSintetizador extends JFrame {
 		reproduzir.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(330), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		reproduzir
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
+		reproduzir.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -1042,9 +1027,7 @@ public class TelaSintetizador extends JFrame {
 
 				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int i = file.showSaveDialog(null);
-				if (i == 1) {
-					// TODO nao escolheu nada
-				} else {
+				if (i != 1) {
 					File arquivo = file.getSelectedFile();
 					int last = arquivo.getPath().lastIndexOf('\\');
 					path = arquivo.getPath().substring(last + 1);
@@ -1054,14 +1037,13 @@ public class TelaSintetizador extends JFrame {
 
 							@Override
 							public void run() {
-								// TODO Auto-generated method stub
 								KeyManagement.playRecord(path);
 							}
 						});
 						t.start();
 					} catch (Exception e1) {
-						// TODO arquivo invalido
-						// e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Erro",
+								"Arquivo invalido", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
@@ -1086,9 +1068,7 @@ public class TelaSintetizador extends JFrame {
 
 				file.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int i = file.showSaveDialog(null);
-				if (i == 1) {
-					// TODO nao escolheu nada
-				} else {
+				if (i != 1) {
 					File arquivo = file.getSelectedFile();
 					int last = arquivo.getPath().lastIndexOf('\\');
 					path = arquivo.getPath().substring(last + 1);
@@ -1098,17 +1078,15 @@ public class TelaSintetizador extends JFrame {
 
 							@Override
 							public void run() {
-								// TODO Auto-generated method stub
 								Genius.startGenius(path);
 							}
 						});
 						t.start();
-						// KeyManagement.playRecord(path);
+
 					} catch (Exception e1) {
-						// TODO arquivo invalido
 						JOptionPane.showMessageDialog(null, "Erro",
 								"Arquivo invalido", JOptionPane.ERROR_MESSAGE);
-						// e1.printStackTrace();
+
 					}
 				}
 

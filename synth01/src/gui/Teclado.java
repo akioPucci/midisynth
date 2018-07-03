@@ -275,7 +275,6 @@ public class Teclado {
 					TelaInicial.p.ProporcaoW(img.wmax), 
 					TelaInicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
@@ -285,7 +284,6 @@ public class Teclado {
 					TelaInicial.p.ProporcaoW(img.wmax), 
 					TelaInicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
@@ -295,7 +293,6 @@ public class Teclado {
 					TelaInicial.p.ProporcaoW(img.wmax), 
 					TelaInicial.p.ProporcaoH(img.hmax));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

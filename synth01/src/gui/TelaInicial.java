@@ -100,7 +100,6 @@ public class TelaInicial extends JFrame {
 			planoFundo.setIcon(p.redimensionarImg(img.imagem, p.ProporcaoW(img.wmax),
 					p.ProporcaoH(img.hmax)));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         getContentPane().add(planoFundo);

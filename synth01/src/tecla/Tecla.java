@@ -149,7 +149,7 @@ public class Tecla implements KeyListener {
 
 		
 		//Tela_MIDI.setNotVisible(note);
-		System.out.println("is visible: " + button.isVisible());
+		//System.out.println("is visible: " + button.isVisible());
 		recordOn();
 	}
 
@@ -240,9 +240,9 @@ public class Tecla implements KeyListener {
 	}
 
 	public void setSemaphore(Semaphore semaphore) {
-		System.out.println("semaforo sendo setado");
+		//System.out.println("semaforo sendo setado");
 		if (semaphore == null)
-			System.out.println("is null");
+			//System.out.println("is null");
 		this.semaphore = semaphore;
 	}
 	

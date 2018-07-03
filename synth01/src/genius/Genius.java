@@ -39,38 +39,38 @@ public class Genius {
 						.parseLong(note[0])), Integer.parseInt(note[2])));
 			}
 
-			Collections.sort(changes, new Comparator<Triple<Long, Long, Integer>>() {
+			Collections.sort(changes,
+					new Comparator<Triple<Long, Long, Integer>>() {
 
-				@Override
-				public int compare(Triple<Long, Long, Integer> p0,
-						Triple<Long, Long, Integer> p1) {
-					if (p0.getFirst() > p1.getFirst())
-						return 1;
-					else if (p0.getFirst() < p1.getFirst())
-						return -1;
-					else if (p0.getSecond() > p1.getSecond())
-						return 1;
-					else if (p0.getSecond() < p1.getSecond())
-						return -1;
-					return p0.getThird() - p1.getThird();
-				}
-			});
+						@Override
+						public int compare(Triple<Long, Long, Integer> p0,
+								Triple<Long, Long, Integer> p1) {
+							if (p0.getFirst() > p1.getFirst())
+								return 1;
+							else if (p0.getFirst() < p1.getFirst())
+								return -1;
+							else if (p0.getSecond() > p1.getSecond())
+								return 1;
+							else if (p0.getSecond() < p1.getSecond())
+								return -1;
+							return p0.getThird() - p1.getThird();
+						}
+					});
 
 			Long i = (long) 0;
 			for (Triple<Long, Long, Integer> triple : changes) {
 				triple.setFirst(i);
 				i++;
-				//System.out.println("Triple depois: " + triple.getFirst() + " Time: " + triple.getSecond() + " Note: " + triple.getThird());
 			}
 
 			while (changes.size() > 0) {
 
-				KeyManagement.playForMilliseconds(changes.get(0).getThird(), changes.get(0).getSecond());
+				KeyManagement.playForMilliseconds(changes.get(0).getThird(),
+						changes.get(0).getSecond());
 				KeyManagement.waitClick(changes.get(0).getThird());
 				changes.remove(0);
 			}
 			JOptionPane.showMessageDialog(null, "Parabéns! Você conseguiu!");
-			//TODO mensagem de parabéns vc terminou
 			System.out.println("fim!");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

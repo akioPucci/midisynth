@@ -255,7 +255,7 @@ public class KeyManagement {
 		tecla[29] = new Tecla(KeyEvent.VK_OPEN_BRACKET, synth, midi, midiOrSynth);
 		tecla[30] = new Tecla(KeyEvent.VK_EQUALS, synth, midi, midiOrSynth);
 		tecla[31] = new Tecla(KeyEvent.VK_CLOSE_BRACKET, synth, midi, midiOrSynth);
-		// TODO verificar teclas com -1
+		// teclas com -1
 		tecla[32] = new Tecla(1, synth, midi, midiOrSynth);
 		tecla[33] = new Tecla(2, synth, midi, midiOrSynth);
 		tecla[34] = new Tecla(3, synth, midi, midiOrSynth);
