@@ -36,7 +36,7 @@ public class Redimensionamento {
 	public int ProporcaoFonte(int pt) {
 		double pw, w = 1920.0;
 		
-		pw = (d.width / w) * (3/4);
+		pw = (d.width / w) * (3/4.0);
 		
 		return (int)(pt*pw);
 	}
