@@ -63,7 +63,7 @@ public class TelaInicial extends JFrame {
 		JButton synth = new JButton();
 		JLabel planoFundo = new JLabel();
 		
-		MIDI.setFont(new Font("Segoe Script", 0, p.ProporcaoFonte(48)));
+		MIDI.setFont(new Font("Segoe Script", 0, p.ProporcaoW(48)));
         MIDI.setForeground(new Color(255, 0, 255));
         MIDI.setText("MIDI");
         MIDI.setBorder(BorderFactory.createBevelBorder
@@ -79,7 +79,7 @@ public class TelaInicial extends JFrame {
         getContentPane().add(MIDI);
         MIDI.setBounds(p.ProporcaoW(175), p.ProporcaoH(300), p.ProporcaoW(350), p.ProporcaoH(200));
 
-        synth.setFont(new Font("Segoe Script", 0, p.ProporcaoFonte(48)));
+        synth.setFont(new Font("Segoe Script", 0, p.ProporcaoW(48)));
         synth.setForeground(new Color(255, 0, 255));
         synth.setText("Sintetizador");
         synth.setBorder(BorderFactory.createBevelBorder

@@ -176,10 +176,10 @@ public class TelaSintetizador extends JFrame {
 		MIDI = new JMenuItem();
 		exit = new JMenuItem();
 
-		menu.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+		menu.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		menu.setText("Menu");
 
-		MIDI.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+		MIDI.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		MIDI.setText("MIDI");
 		menu.add(MIDI);
 		MIDI.addActionListener(new ActionListener() {
@@ -188,7 +188,7 @@ public class TelaSintetizador extends JFrame {
 			}
 		});
 
-		exit.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+		exit.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		exit.setText("Sair");
 		menu.add(exit);
 		exit.addActionListener(new ActionListener() {
@@ -274,7 +274,7 @@ public class TelaSintetizador extends JFrame {
 
 		Master_Text.setForeground(new Color(255, 255, 255));
 		Master_Text
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Master_Text.setText("Master");
 		getContentPane().add(Master_Text);
 		Master_Text.setBounds(TelaInicial.p.ProporcaoW(510),
@@ -299,7 +299,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(173), TelaInicial.p.ProporcaoW(50),
 				TelaInicial.p.ProporcaoH(50));
 
-		Sel_Ondas1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+		Sel_Ondas1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Sel_Ondas1.setModel(new DefaultComboBoxModel<>(new String[] {
 				"Senoidal", "Quadrada", "Triangular", "Dente de Serra",
 				"Desenhar" }));
@@ -315,7 +315,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(180), TelaInicial.p.ProporcaoW(130),
 				TelaInicial.p.ProporcaoH(30));
 
-		Sel_Ondas2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+		Sel_Ondas2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Sel_Ondas2.setModel(new DefaultComboBoxModel<>(new String[] {
 				"Senoidal", "Quadrada", "Triangular", "Dente de Serra",
 				"Desenhar" }));
@@ -331,7 +331,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(180), TelaInicial.p.ProporcaoW(130),
 				TelaInicial.p.ProporcaoH(30));
 
-		Sel_Ondas3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+		Sel_Ondas3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Sel_Ondas3.setModel(new DefaultComboBoxModel<>(new String[] {
 				"Senoidal", "Quadrada", "Triangular", "Dente de Serra",
 				"Desenhar" }));
@@ -347,7 +347,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(180), TelaInicial.p.ProporcaoW(130),
 				TelaInicial.p.ProporcaoH(30));
 
-		Ampl1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(10)));
+		Ampl1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(10)));
 		Ampl1.setOrientation(JSlider.VERTICAL);
 		// Ampl1.setMinorTickSpacing(1);
 		// Ampl1.setMajorTickSpacing(10);
@@ -364,7 +364,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(230), TelaInicial.p.ProporcaoW(50),
 				TelaInicial.p.ProporcaoH(200));
 
-		Ampl2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(24)));
+		Ampl2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(24)));
 		Ampl2.setOrientation(JSlider.VERTICAL);
 		Ampl2.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent evt) {
@@ -376,7 +376,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(230), TelaInicial.p.ProporcaoW(50),
 				TelaInicial.p.ProporcaoH(200));
 
-		Ampl3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(24)));
+		Ampl3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(24)));
 		Ampl3.setOrientation(JSlider.VERTICAL);
 		Ampl3.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent evt) {
@@ -428,7 +428,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(200));
 
 		Osc_Text1.setFont(new Font("Times New Roman", 0, TelaInicial.p
-				.ProporcaoFonte(24)));
+				.ProporcaoW(24)));
 		Osc_Text1.setForeground(new Color(255, 255, 255));
 		Osc_Text1.setText("Oscilador 1");
 		getContentPane().add(Osc_Text1);
@@ -437,7 +437,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(28));
 
 		Osc_Text2.setFont(new Font("Times New Roman", 0, TelaInicial.p
-				.ProporcaoFonte(24)));
+				.ProporcaoW(24)));
 		Osc_Text2.setForeground(new Color(255, 255, 255));
 		Osc_Text2.setText("Oscilador 2");
 		getContentPane().add(Osc_Text2);
@@ -446,7 +446,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(28));
 
 		Osc_Text3.setFont(new Font("Times New Roman", 0, TelaInicial.p
-				.ProporcaoFonte(24)));
+				.ProporcaoW(24)));
 		Osc_Text3.setForeground(new Color(255, 255, 255));
 		Osc_Text3.setText("Oscilador 3");
 		getContentPane().add(Osc_Text3);
@@ -454,7 +454,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(125), TelaInicial.p.ProporcaoW(110),
 				TelaInicial.p.ProporcaoH(28));
 
-		Ampl_Text1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(12)));
+		Ampl_Text1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Ampl_Text1.setForeground(new Color(255, 255, 255));
 		Ampl_Text1.setText("Amplitude");
 		getContentPane().add(Ampl_Text1);
@@ -462,7 +462,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(56),
 				TelaInicial.p.ProporcaoH(16));
 
-		Ampl_Text2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(12)));
+		Ampl_Text2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Ampl_Text2.setForeground(new Color(255, 255, 255));
 		Ampl_Text2.setText("Amplitude");
 		getContentPane().add(Ampl_Text2);
@@ -470,7 +470,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(56),
 				TelaInicial.p.ProporcaoH(16));
 
-		Ampl_Text3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(12)));
+		Ampl_Text3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Ampl_Text3.setForeground(new Color(255, 255, 255));
 		Ampl_Text3.setText("Amplitude");
 		getContentPane().add(Ampl_Text3);
@@ -478,7 +478,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(56),
 				TelaInicial.p.ProporcaoH(16));
 
-		Freq_Text1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(12)));
+		Freq_Text1.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Freq_Text1.setForeground(new Color(255, 255, 255));
 		Freq_Text1.setText("Frequência");
 		getContentPane().add(Freq_Text1);
@@ -486,7 +486,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(62),
 				TelaInicial.p.ProporcaoH(16));
 
-		Freq_Text2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(12)));
+		Freq_Text2.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Freq_Text2.setForeground(new Color(255, 255, 255));
 		Freq_Text2.setText("Frequência");
 		getContentPane().add(Freq_Text2);
@@ -494,7 +494,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(440), TelaInicial.p.ProporcaoW(62),
 				TelaInicial.p.ProporcaoH(16));
 
-		Freq_Text3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(12)));
+		Freq_Text3.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(12)));
 		Freq_Text3.setForeground(new Color(255, 255, 255));
 		Freq_Text3.setText("Frequência");
 		getContentPane().add(Freq_Text3);
@@ -560,7 +560,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(10));
 
 		Ampl_Value_Text1.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Ampl_Value_Text1.setForeground(new Color(255, 255, 255));
 		Ampl_Value_Text1.setText("50");
 		getContentPane().add(Ampl_Value_Text1);
@@ -569,7 +569,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(16));
 
 		Freq_Value_Text1.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Freq_Value_Text1.setForeground(new Color(255, 255, 255));
 		Freq_Value_Text1.setText("2");
 		getContentPane().add(Freq_Value_Text1);
@@ -578,7 +578,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(16));
 
 		Ampl_Value_Text2.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Ampl_Value_Text2.setForeground(new Color(255, 255, 255));
 		Ampl_Value_Text2.setText("50");
 		getContentPane().add(Ampl_Value_Text2);
@@ -587,7 +587,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(16));
 
 		Freq_Value_Text2.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Freq_Value_Text2.setForeground(new Color(255, 255, 255));
 		Freq_Value_Text2.setText("2");
 		getContentPane().add(Freq_Value_Text2);
@@ -596,7 +596,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(16));
 
 		Ampl_Value_Text3.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Ampl_Value_Text3.setForeground(new Color(255, 255, 255));
 		Ampl_Value_Text3.setText("50");
 		getContentPane().add(Ampl_Value_Text3);
@@ -605,7 +605,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(16));
 
 		Freq_Value_Text3.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Freq_Value_Text3.setForeground(new Color(255, 255, 255));
 		Freq_Value_Text3.setText("2");
 		getContentPane().add(Freq_Value_Text3);
@@ -614,7 +614,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(16));
 
 		Master_Value_Text.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Master_Value_Text.setForeground(new Color(255, 255, 255));
 		Master_Value_Text.setText("50");
 		getContentPane().add(Master_Value_Text);
@@ -815,7 +815,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(10));
 
 		Volume_Envelope_Text.setFont(new Font("Times New Roman", 1,
-				TelaInicial.p.ProporcaoFonte(24)));
+				TelaInicial.p.ProporcaoW(24)));
 		Volume_Envelope_Text.setForeground(new Color(255, 255, 255));
 		Volume_Envelope_Text.setText("Volume Envelope");
 		getContentPane().add(Volume_Envelope_Text);
@@ -824,7 +824,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(25));
 
 		Attack_Text
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Attack_Text.setForeground(new Color(255, 255, 255));
 		Attack_Text.setText("Attack");
 		getContentPane().add(Attack_Text);
@@ -833,7 +833,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(15));
 
 		Attack_Value
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Attack_Value.setForeground(new Color(255, 255, 255));
 		Attack_Value.setHorizontalAlignment(SwingConstants.RIGHT);
 		Attack_Value.setText("5 ms");
@@ -855,7 +855,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(222), TelaInicial.p.ProporcaoW(290),
 				TelaInicial.p.ProporcaoH(25));
 
-		Decay_Text.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+		Decay_Text.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Decay_Text.setForeground(new Color(255, 255, 255));
 		Decay_Text.setText("Decay");
 		getContentPane().add(Decay_Text);
@@ -864,7 +864,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(15));
 
 		Decay_Value
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Decay_Value.setForeground(new Color(255, 255, 255));
 		Decay_Value.setHorizontalAlignment(SwingConstants.RIGHT);
 		Decay_Value.setText("5 ms");
@@ -887,7 +887,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(25));
 
 		Sustain_Text
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Sustain_Text.setForeground(new Color(255, 255, 255));
 		Sustain_Text.setText("Sustain");
 		getContentPane().add(Sustain_Text);
@@ -896,7 +896,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(15));
 
 		Sustain_Value.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Sustain_Value.setForeground(new Color(255, 255, 255));
 		Sustain_Value.setHorizontalAlignment(SwingConstants.RIGHT);
 		Sustain_Value.setText("100");
@@ -917,7 +917,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(25));
 
 		Release_Text
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
+				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
 		Release_Text.setForeground(new Color(255, 255, 255));
 		Release_Text.setText("Release");
 		getContentPane().add(Release_Text);
@@ -926,7 +926,7 @@ public class TelaSintetizador extends JFrame {
 				TelaInicial.p.ProporcaoH(15));
 
 		Release_Value.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoFonte(13)));
+				.ProporcaoW(13)));
 		Release_Value.setForeground(new Color(255, 255, 255));
 		Release_Value.setHorizontalAlignment(SwingConstants.RIGHT);
 		Release_Value.setText("1000 ms");
@@ -976,7 +976,7 @@ public class TelaSintetizador extends JFrame {
 		gravar.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(100), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		gravar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(20)));
+		gravar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		gravar.setText("Gravar");
 		gravar.setVisible(true);
 		getContentPane().add(gravar);
@@ -994,7 +994,7 @@ public class TelaSintetizador extends JFrame {
 		pausar.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(215), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		pausar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(20)));
+		pausar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		pausar.setText("Parar");
 		pausar.setVisible(true);
 		getContentPane().add(pausar);
@@ -1013,7 +1013,7 @@ public class TelaSintetizador extends JFrame {
 		reproduzir.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(330), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		reproduzir.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(20)));
+		reproduzir.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -1054,7 +1054,7 @@ public class TelaSintetizador extends JFrame {
 		genius.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(445), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		genius.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(20)));
+		genius.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
 		genius.setText("Genius");
 		genius.setVisible(true);
 		getContentPane().add(genius);
@@ -1142,7 +1142,7 @@ public class TelaSintetizador extends JFrame {
 		sintetizador_Text = new JLabel();
 
 		sintetizador_Text.setFont(new Font("Segoe Script", 0, TelaInicial.p
-				.ProporcaoFonte(58)));
+				.ProporcaoW(58)));
 		sintetizador_Text.setForeground(new Color(255, 0, 255));
 		sintetizador_Text.setText("Sintetizador");
 		getContentPane().add(sintetizador_Text);
