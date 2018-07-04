@@ -106,10 +106,10 @@ public class TelaMIDI extends JFrame {
 		synth = new JMenuItem();
 		exit = new JMenuItem();
 
-		menu.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
+		menu.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
 		menu.setText("Menu");
 
-		synth.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
+		synth.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
 		synth.setText("Sintetizador");
 		menu.add(synth);
 		synth.addActionListener(new ActionListener() {
@@ -118,7 +118,7 @@ public class TelaMIDI extends JFrame {
 			}
 		});
 
-		exit.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(13)));
+		exit.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(13)));
 		exit.setText("Sair");
 		menu.add(exit);
 		exit.addActionListener(new ActionListener() {
@@ -213,16 +213,14 @@ public class TelaMIDI extends JFrame {
 				"Helicopter", "Applause", "Gunshot" };
 
 		Instrumentos_Text.setForeground(new Color(255, 255, 255));
-		Instrumentos_Text.setFont(new Font("Tahoma", 0, TelaInicial.p
-				.ProporcaoW(36)));
+		Instrumentos_Text.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(36)));
 		Instrumentos_Text.setText("Instrumentos");
 		getContentPane().add(Instrumentos_Text);
 		Instrumentos_Text.setBounds(TelaInicial.p.ProporcaoW(285),
 				TelaInicial.p.ProporcaoH(30), TelaInicial.p.ProporcaoW(250),
 				TelaInicial.p.ProporcaoH(50));
 
-		Instrumentos
-				.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(48)));
+		Instrumentos.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(48)));
 		Instrumentos.setModel(new DefaultComboBoxModel<>((String[]) Ins[0]));
 		Instrumentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -235,14 +233,14 @@ public class TelaMIDI extends JFrame {
 				TelaInicial.p.ProporcaoH(50));
 
 		Tipo_Text.setForeground(new Color(255, 255, 255));
-		Tipo_Text.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(36)));
+		Tipo_Text.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(36)));
 		Tipo_Text.setText("Tipo");
 		getContentPane().add(Tipo_Text);
 		Tipo_Text.setBounds(TelaInicial.p.ProporcaoW(980),
 				TelaInicial.p.ProporcaoH(30), TelaInicial.p.ProporcaoW(100),
 				TelaInicial.p.ProporcaoH(50));
 
-		Tipo.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(48)));
+		Tipo.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(48)));
 		Tipo.setModel(new DefaultComboBoxModel<>(new String[] { "Piano",
 				"Chromatic Percussion", "Organ", "Guitar", "Bass", "Strings",
 				"Brass", "Reed", "Pipe", "Synth Lead", "Synth Pad",
@@ -290,7 +288,7 @@ public class TelaMIDI extends JFrame {
 		gravar.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(100), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		gravar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
+		gravar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(20)));
 		gravar.setText("Gravar");
 		gravar.setVisible(true);
 		getContentPane().add(gravar);
@@ -308,7 +306,7 @@ public class TelaMIDI extends JFrame {
 		pausar.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(215), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		pausar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
+		pausar.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(20)));
 		pausar.setText("Parar");
 		pausar.setVisible(true);
 		getContentPane().add(pausar);
@@ -327,7 +325,7 @@ public class TelaMIDI extends JFrame {
 		reproduzir.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(330), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		reproduzir.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
+		reproduzir.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(20)));
 		reproduzir.setText("Reproduzir");
 		reproduzir.setVisible(true);
 		getContentPane().add(reproduzir);
@@ -368,7 +366,7 @@ public class TelaMIDI extends JFrame {
 		genius.setBounds(TelaInicial.p.ProporcaoW(1384),
 				TelaInicial.p.ProporcaoH(445), TelaInicial.p.ProporcaoW(400),
 				TelaInicial.p.ProporcaoH(115));
-		genius.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoW(20)));
+		genius.setFont(new Font("Tahoma", 0, TelaInicial.p.ProporcaoFonte(20)));
 		genius.setText("Genius");
 		genius.setVisible(true);
 		getContentPane().add(genius);

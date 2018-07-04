@@ -33,6 +33,14 @@ public class Redimensionamento {
 		return (int)(ph*y);
 	}
 	
+	public int ProporcaoFonte(int pt) {
+		double pw, w = 1920.0;
+		
+		pw = (d.width / w) * (3/4);
+		
+		return (int)(pt*pw);
+	}
+	
 	public ImageIcon redimensionarImg(Image img, int new_w, int new_h) throws IOException {
 		BufferedImage new_img = new BufferedImage(new_w, new_h, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = new_img.createGraphics();
